@@ -45,6 +45,7 @@ public class Main {
         System.out.println("Hello there");
         System.out.println("Atom coding push test");
         //System.out.println("Hello ms.Khan");
+	System.out.printnln("Masood Test");
 
         System.out.print("\nAfter merge the array is :");
         for(int i = 0; i < size3; i++)
