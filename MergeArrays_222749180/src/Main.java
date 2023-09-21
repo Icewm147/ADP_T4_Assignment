@@ -1,5 +1,5 @@
 public class Main {
-    
+
 
     static int merge(int arr1[], int arr2[], int arr3[]){
         int i = 0, j = 0, k = 0;
@@ -41,9 +41,10 @@ public class Main {
             System.out.print(arr2[i] + " ");
 
         size3 = merge(arr1, arr2, arr3);
-        
+
         System.out.println("Hello there");
-        System.out.println("Hello ms.Khan");
+        System.out.println("Atom coding push test");
+        //System.out.println("Hello ms.Khan");
 
         System.out.print("\nAfter merge the array is :");
         for(int i = 0; i < size3; i++)
