@@ -43,6 +43,7 @@ public class Main {
         size3 = merge(arr1, arr2, arr3);
         
         System.out.println("Hello there");
+        System.out.println("Hello ms.Khan");
 
         System.out.print("\nAfter merge the array is :");
         for(int i = 0; i < size3; i++)
