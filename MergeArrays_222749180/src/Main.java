@@ -47,6 +47,7 @@ public class Main {
         //System.out.println("Hello ms.Khan");
 	System.out.printnln("Masood Test");
 	System.out.printnln("Masood Test 2");
+	System.out.printnln("Masood Test 3");
         System.out.print("\nAfter merge the array is :");
         for(int i = 0; i < size3; i++)
             System.out.print(arr3[i] + " ");
