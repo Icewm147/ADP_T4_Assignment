@@ -10,4 +10,12 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+    <dependecies>
+        <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derbyclient</artifactId>
+        <version>10.14.2.0</version>
+        </dependency>
+    </dependecies>
+
 </project>
