@@ -10,5 +10,5 @@ package za.ac.cput.adp2_t4_assignment_rmn.Client;
  */
 public class Client {
 
-    // hello
+  
 }
