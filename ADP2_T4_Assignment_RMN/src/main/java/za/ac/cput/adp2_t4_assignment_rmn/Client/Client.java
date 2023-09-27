@@ -6,7 +6,7 @@ package za.ac.cput.adp2_t4_assignment_rmn.Client;
 
 /**
  *
- * @author nicho
+ * @author Raeesah Khan 219308101
  */
 public class Client {
     
