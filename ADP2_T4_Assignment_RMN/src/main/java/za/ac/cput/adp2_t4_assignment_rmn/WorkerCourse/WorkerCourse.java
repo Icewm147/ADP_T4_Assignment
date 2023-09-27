@@ -28,4 +28,6 @@ public class WorkerCourse {
     public void setCourseCode(String CourseCode) {
         this.CourseCode = CourseCode;
     }
+System.out.println("testing 1, 2");
+
 }
