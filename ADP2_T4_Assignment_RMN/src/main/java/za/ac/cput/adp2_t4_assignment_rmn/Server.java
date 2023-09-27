@@ -59,7 +59,7 @@ public class Server {
         }
     }
       public static void main(String[] args) {
-        WorkerStudent srs = new WorkerStudent();
+        Server srs = new Server();
         srs.getStreams();
         srs.processClient();
 
