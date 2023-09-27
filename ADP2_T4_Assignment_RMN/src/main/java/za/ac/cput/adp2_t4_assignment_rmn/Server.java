@@ -62,7 +62,7 @@ public class Server {
         WorkerStudent srs = new WorkerStudent();
         srs.getStreams();
         srs.processClient();
-        WorkerCourse wc = new WorkerCourse();
+
     }
 
 }
