@@ -45,7 +45,7 @@ public class Server {
     
     
     /*in process client,
-    Authenticate user login
+    ----Authenticate user login
     (Under admin)
     add student
     search student
@@ -62,11 +62,28 @@ public class Server {
         while(true){
             try{
                 receivedObject  = in.readObject();
-             if(receivedObject instanceof WorkerLogin) {
+                
+                //Authentication
+                
+             if(receivedObject instanceof WorkerLogin) 
+             {
                  String userSearch = (String) receivedObject;
                  for (WorkerLogin worker : /*DB */){
-                     if()
+                     if(Worker.getUsername().equalsIgnoreCase(/*DB */) && (Worker.getPassword().equalsIgnoreCase(/*DB */)){
+                         out.writeObject("Success");
+                         out.flush();
+                     }else{
+                        out.writeObject("Failed");
+                         out.flush(); 
+                     }
                  }
+                 
+                 //Add Student
+                 
+             }else if(receivedObject instanceof WorkerStudent)
+             {
+              WorkerStudent stud = (WorkerStudent) receivedObject; 
+              //DB code to add to DB
              }  
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,11 +116,7 @@ public class Server {
 		
 
     }
-    //client login method
-   LoginGui lg = new LoginGui();
-   String username = lg.getUserbnametxt();
-String password = lg.getPasswordtxt();
 
-WorkerLogin wl = new wl(us,pass);
+
 
 }
