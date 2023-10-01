@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -42,7 +44,39 @@ public class Server {
     }
     
     
+    /*in process client,
+    Authenticate user login
+    (Under admin)
+    add student
+    search student
+    retrieve student
+    add course
+    retrieve course
+    (Under Student)
+    search course
     
+    
+    */
+    
+    public void processClient(){
+        while(true){
+            try{
+                receivedObject  = in.readObject();
+             if(receivedObject instanceof WorkerLogin) {
+                 String userSearch = (String) receivedObject;
+                 for (WorkerLogin worker : /*DB */){
+                     if()
+                 }
+             }  
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+    }
      private static void closeConnection() {
         try {
             out.writeObject("Server has closed");
@@ -62,10 +96,14 @@ public class Server {
         Server srs = new Server();
         srs.getStreams();
         srs.processClient();
-		//edit 1
+		
 
     }
+    //client login method
+   LoginGui lg = new LoginGui();
+   String username = lg.getUserbnametxt();
+String password = lg.getPasswordtxt();
 
-   
+WorkerLogin wl = new wl(us,pass);
 
 }
