@@ -25,7 +25,6 @@ public class Server {
         try {
             serverSocket = new ServerSocket(12345);
             System.out.println("Server is listening....");
-
             clientSocket = serverSocket.accept();
 
         } catch (IOException ex) {
@@ -83,7 +82,9 @@ public class Server {
              }else if(receivedObject instanceof WorkerStudent)
              {
               WorkerStudent stud = (WorkerStudent) receivedObject; 
-              //DB code to add to DB
+              //DB code to add to DB             
+              out.writeObject("Student Added successfully");
+              out.flush();
              }  
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
