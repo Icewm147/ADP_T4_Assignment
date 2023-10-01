@@ -3,22 +3,21 @@ package za.ac.cput.adp2_t4_assignment_rmn.Client;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
-
+import za.ac.cput.adp2_t4_assignment_rmn.WorkerLogin.WorkerLogin;
 
 /**
  *
  * @author Raeesah Khan 219308101
  */
-public class Client extends JFrame implements ActionListener{
+public class Client extends JFrame implements ActionListener {
 
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
     private static Socket server;
     private static Object recievedObject;
-    
-    
-
 
     public Client() {
 
@@ -27,20 +26,12 @@ public class Client extends JFrame implements ActionListener{
         } catch (IOException ex) {
             System.out.println("IOException >>" + ex.getMessage());
         }
-        
-        
-        
-        
-        
 
     }
-    
-    
-    public void setGui(){
-        
+
+    public void setGui() {
+
     }
-    
-    
 
     public void getStreams() {
         try {
@@ -66,8 +57,8 @@ public class Client extends JFrame implements ActionListener{
         }
 
     }
-    
-     public void actionPerformed(ActionEvent e) {
+
+    public void actionPerformed(ActionEvent e) {
 //        if (e.getSource() == btnVote) {
 //            castVote(cboCarFinalists.getSelectedItem().toString());
 //        }
@@ -79,18 +70,40 @@ public class Client extends JFrame implements ActionListener{
 //        }
 
     }
-    
+
+    public static void authenticationLogin() {
+        WorkerLogin login = new WorkerLogin();
+        String user = login.getUsername();
+        String password = login.getPassword();
+        
+        
+        try {
+            WorkerLogin log = new WorkerLogin(user,password);
+            out.writeObject(log);
+            out.flush();
+            
+            
+        String recievedMsg = (String)in.readObject();
+        if(recievedMsg.equalsIgnoreCase("success")){
+            
+        }else{
+            
+            
+        }
+            
+        } catch (IOException ex) {
+             System.out.println("IOException" + ex.getMessage()); 
+        } catch (ClassNotFoundException ex) {
+          System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
+        
+        
+        
+        
+    }
+
     public static void main(String[] args) {
         Client srs = new Client();
-        
-        
-        
-        
-        
-        
-        
-        
 
     }
-} 
-
+}
