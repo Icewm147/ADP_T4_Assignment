@@ -1,4 +1,4 @@
-package za.ac.cput.adp2_t4_assignment_rmn.WorkerCourse;
+package za.ac.cput.adp2_t4_assignment_rmn.WorkerClass;
 
 /**
  *
@@ -29,5 +29,11 @@ public class WorkerCourse {
         this.CourseCode = CourseCode;
     }
 
-
+    @Override
+    public String toString() {
+        return "WorkerCourse{" +
+                "courseName='" + courseName + '\'' +
+                ", CourseCode='" + CourseCode + '\'' +
+                '}';
+    }
 }
