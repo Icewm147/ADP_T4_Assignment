@@ -59,14 +59,14 @@ public class Client extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == btnVote) {
-//            castVote(cboCarFinalists.getSelectedItem().toString());
+//        if (e.getSource() == ) {
+//            
 //        }
 //        if (e.getSource() == btnRetrieve) {
-//            retrieveStudentRecords();
+//            
 //        }
-//        if (e.getSource() == btnExit) {
-//            closeConnection();
+//        if (e.getSource() == ) {
+//            
 //        }
 
     }
@@ -75,35 +75,35 @@ public class Client extends JFrame implements ActionListener {
         WorkerLogin login = new WorkerLogin();
         String user = login.getUsername();
         String password = login.getPassword();
-        
-        
+
         try {
-            WorkerLogin log = new WorkerLogin(user,password);
+            WorkerLogin log = new WorkerLogin(user, password);
             out.writeObject(log);
             out.flush();
-            
-            
-        String recievedMsg = (String)in.readObject();
-        if(recievedMsg.equalsIgnoreCase("success")){
-            
-        }else{
-            
-            
-        }
-            
+
+            String recievedMsg = (String) in.readObject();
+            if (recievedMsg.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Login successful.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or Password.");
+
+            }
+
         } catch (IOException ex) {
-             System.out.println("IOException" + ex.getMessage()); 
+            System.out.println("IOException" + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-          System.out.println("ClassNotFoundException" + ex.getMessage());
+            System.out.println("ClassNotFoundException" + ex.getMessage());
         }
-        
-        
-        
-        
+
     }
 
     public static void main(String[] args) {
         Client srs = new Client();
-
+        LoginGui log = new LoginGui();
+        log.setTitle("Login");
+        log.setSize(300, 250);
+        log.setGui();
+        log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        log.setVisible(true);
     }
 }
