@@ -2,9 +2,11 @@ package za.ac.cput.adp2_t4_assignment_rmn.WorkerClass;
 
 /**
  *
- * @author nicho
+ * @author Nicholas van der Nest (222749180)
  */
+
 public class WorkerCourse {
+    
     private String courseName;
     private String CourseCode;
 
