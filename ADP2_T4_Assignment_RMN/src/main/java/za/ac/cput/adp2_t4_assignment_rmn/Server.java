@@ -7,11 +7,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import za.ac.cput.adp2_t4_assignment_rmn.WorkerClass.WorkerStudent;
+import za.ac.cput.adp2_t4_assignment_rmn.WorkerLogin.WorkerLogin;
 
 /**
  *
- * @authors -Nicholas van der Nest (222749180) -Raeesah Khan (219) -Mogammad
- * Mas'ood Lamera (221376321)
+ * @authors -Nicholas van der Nest (222749180), Raeesah Khan (219), Moegamad Mas'ood Lamera (221376321)
  */
 public class Server {
 
@@ -95,6 +96,7 @@ public class Server {
         }
         
     }
+    
      private static void closeConnection() {
         try {
             out.writeObject("Server has closed");
@@ -107,17 +109,12 @@ public class Server {
 
         } catch (IOException ex) {
             System.out.println("Server cannot close. Error " + ex.getMessage());
-
         }
     }
+     
       public static void main(String[] args) {
         Server srs = new Server();
         srs.getStreams();
         srs.processClient();
-		
-
     }
-
-
-
 }
