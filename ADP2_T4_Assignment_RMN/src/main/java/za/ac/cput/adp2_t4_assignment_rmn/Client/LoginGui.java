@@ -31,7 +31,7 @@ public class LoginGui extends JFrame {
         usernameTxt = new JTextField();
         passwordTxt = new JTextField();
 
-        cbo = new JComboBox(new String[]{"Admin,Student"});
+        cbo = new JComboBox(new String[]{"Admin", "Student"});
 
         btnLogin = new JButton("LOGIN");
 
@@ -39,7 +39,25 @@ public class LoginGui extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
-                    password.setVisible(false);
+
+                    if (cbo.getSelectedItem() == "Student") {
+
+                        Client run = new Client();
+                        run.setTitle("Login");
+                        run.setSize(300, 250);
+                        run.setGuiStudent();
+                        run.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        setVisible(false);
+                        run.setVisible(true);
+                    } else {
+                        Client run = new Client();
+                        run.setTitle("Login");
+                        run.setSize(300, 250);
+                        run.setGuiAdmin();
+                        run.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        setVisible(false);
+                        run.setVisible(true);
+                    }
 
                 }
             }

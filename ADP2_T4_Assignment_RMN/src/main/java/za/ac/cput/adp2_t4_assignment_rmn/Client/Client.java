@@ -3,8 +3,6 @@ package za.ac.cput.adp2_t4_assignment_rmn.Client;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.*;
 import za.ac.cput.adp2_t4_assignment_rmn.WorkerLogin.WorkerLogin;
 
@@ -26,11 +24,19 @@ public class Client extends JFrame implements ActionListener {
         } catch (IOException ex) {
             System.out.println("IOException >>" + ex.getMessage());
         }
+        
+        
+        
+        
 
     }
 
-    public void setGui() {
+    public void setGuiAdmin() {
 
+    }
+    
+    public void setGuiStudent(){
+        
     }
 
     public void getStreams() {
