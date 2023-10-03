@@ -54,7 +54,7 @@ public class Server {
     retrieve course
     (Under Student)
     search course
-    
+    *Enroll for course?
     
     */
     
@@ -73,7 +73,7 @@ public class Server {
                          out.writeObject("Success");
                          out.flush();
                      }else{
-                        out.writeObject("Failed");
+                        out.writeObject("Login Failed");
                          out.flush(); 
                      }
                  }
@@ -83,7 +83,7 @@ public class Server {
              }else if(receivedObject instanceof WorkerStudent)
              {
               WorkerStudent stud = (WorkerStudent) receivedObject; 
-              //DB code to add to DB             
+              //DB code to add to DB
               out.writeObject("Student Added successfully");
               out.flush();
              }  
