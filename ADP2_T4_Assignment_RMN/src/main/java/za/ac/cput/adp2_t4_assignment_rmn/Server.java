@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.*;
 import za.ac.cput.adp2_t4_assignment_rmn.WorkerLogin.WorkerLogin;
 
 /**
@@ -55,8 +56,24 @@ public class Server {
     (Under Student)
     search course
     *Enroll for course?
-    
+    //(accept enrollment requests from client(students), storing enrollment data in the Derby DB, Retrieving enrollment data from the DB, Authentication of admin and student users)
     */
+    public Connection connectToDB(){
+	Connection conn = null;
+	try {
+		String url = ""; // add DB url
+		String username = ""; // add DB username
+		String password = ""; // add DB password
+
+		conn = DriverManager.getConnection(url, username, password);
+		if(conn != null){
+			System.out.println("Connected to DB");
+		} catch(SQLException ex) {
+			ex.printStackTrace();
+                        System.out.println("Failed to connect to the database.");
+		}
+	} return conn;
+    }
     
     public void processClient(){
         while(true){
@@ -80,7 +97,7 @@ public class Server {
                  
                  //Add Student
                  
-             }else if(receivedObject instanceof WorkerStudent)
+             }else if(receivedObject instanceof WorkerStudent) 
              {
               WorkerStudent stud = (WorkerStudent) receivedObject; 
               //DB code to add to DB
