@@ -84,7 +84,7 @@ public class Server {
 		ps.setString(student.getName());
 		ps.setString(student.getCourse());
 
-		isAdded = ps.executeUpdate() == 1;
+		isAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
 	}catch(SQLException e){
 		e.printStackTrace();
 	}
@@ -119,6 +119,7 @@ public class Server {
              {
               WorkerStudent stud = (WorkerStudent) receivedObject; 
               //DB code to add to DB
+	      //addStudentToDB(stud); <---------------------------------------------------------------check pls
               out.writeObject("Student Added successfully");
               out.flush();
              }  
