@@ -27,17 +27,35 @@ public class DAO {
 	} return conn;
     }
 
+	//Student Functions
+
     public boolean addStudentToDB(WorkerStudent student){
-    	boolean isAdded = false;
+    	boolean studentIsAdded = false;
 	String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
 	try{
-	PreparedStatement statement = dbConnection.prepareStatement(query);
-		ps.setInt(student.getStudentNumber());
-		ps.setString(student.getName());
-		ps.setString(student.getCourse());
+	PreparedStatement statement = connectToDB.prepareStatement(query);
+		ps.setInt(1, student.getStudentNumber());
+		ps.setString(2, student.getName());
+		ps.setString(3, student.getCourse());
 
-		isAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
+		studentIsAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
 	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return isAdded;
+    }
+
+    public boolean addCourseToDB(){
+    	boolean courseIsAdded = false;
+	String query = "INSERT INTO Course (CourseID, CourseName, CourseDescription)";
+	try{
+		PreparedStatement statement = connectToDB.preparedStatement(query);
+		statement.setInt(1, courseID);
+		statement.setInt(2, courseName);
+		statement.setInt(3, courseDescription);
+
+		isAdded = statement.executeUpdate() == 1;
+	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	return isAdded;
@@ -47,7 +65,7 @@ public class DAO {
     List<WorkerStudent> students = new ArrayList<>();
     String query = "SELECT * FROM Students";
     try {
-        Statement stmt = dbConnection.createStatement();
+        Statement stmt = connectToDB.createStatement();
         ResultSet rs = stmt.executeQuery(query);
         
         while (rs.next()) {
@@ -64,4 +82,5 @@ public class DAO {
     }
     return students;
 }
+	//Admin Functions
 }
