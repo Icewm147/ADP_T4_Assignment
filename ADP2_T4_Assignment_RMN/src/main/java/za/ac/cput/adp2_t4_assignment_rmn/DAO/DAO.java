@@ -42,4 +42,26 @@ public class DAO {
 	}
 	return isAdded;
     }
+
+    public List<WorkerStudent> getAllStudents() {
+    List<WorkerStudent> students = new ArrayList<>();
+    String query = "SELECT * FROM Students";
+    try {
+        Statement stmt = dbConnection.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        
+        while (rs.next()) {
+            int studentNumber = rs.getInt("Student_Number");
+            String name = rs.getString("Name");
+            String course = rs.getString("Course");
+            
+            WorkerStudent student = new WorkerStudent(studentNumber, name, course);
+            students.add(student);
+        }
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return students;
+}
 }
