@@ -74,6 +74,24 @@ public class Server {
 		}
 	} return conn;
     }
+
+    public boolean addStudentToDB(WorkerStudent student){
+    	boolean isAdded = false;
+	String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
+	try{
+	PreparedStatement statement = dbConnection.prepareStatement(query);
+		ps.setInt(student.getStudentNumber());
+		ps.setString(student.getName());
+		ps.setString(student.getCourse());
+
+		isAdded = ps.executeUpdate() == 1;
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return isAdded;
+    }
+
+    //added code up above
     
     public void processClient(){
         while(true){
