@@ -6,7 +6,7 @@ package za.ac.cput.adp2_t4_assignment_rmn.DAO;
 
 /**
  *
- * @author nicho
+ * @author Nicholas van der Nest (222749180)
  */
 public class DAO {
     
@@ -27,8 +27,6 @@ public class DAO {
 	} return conn;
     }
 
-	//Student Functions
-
     public boolean addStudentToDB(WorkerStudent student){
     	boolean studentIsAdded = false;
 	String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
@@ -43,6 +41,20 @@ public class DAO {
 		e.printStackTrace();
 	}
 	return isAdded;
+    }
+
+    public boolean deleteCourseFromDB(int courseID){
+    	boolean courseDeleted = false;
+        String query = "DELETE FROM Course WHERE CourseID = ?";
+
+	try {
+	  PreparedStatement statement = connectToDB.prepareStatement(query);
+	  statement.setInt(1, courseID);
+
+	  courseDeleted = statement.executeUpdate() == 1;
+	} catch (SQLException e) {
+	  e.printStackTrace();
+	}
     }
 
     public boolean addCourseToDB(){
@@ -82,5 +94,4 @@ public class DAO {
     }
     return students;
 }
-	//Admin Functions
 }
