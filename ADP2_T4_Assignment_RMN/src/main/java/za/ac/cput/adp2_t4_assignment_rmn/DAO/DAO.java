@@ -77,16 +77,38 @@ public class DAO {
     List<WorkerStudent> students = new ArrayList<>();
     String query = "SELECT * FROM Students";
     try {
-        Statement stmt = connectToDB.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
+        Statement statement = connectToDB.createStatement();
+        ResultSet result = stmt.executeQuery(query);
         
-        while (rs.next()) {
-            int studentNumber = rs.getInt("Student_Number");
-            String name = rs.getString("Name");
-            String course = rs.getString("Course");
+        while (result.next()) {
+            int studentNumber = result.getInt("Student_Number");
+            String name = result.getString("Name");
+            String course = result.getString("Course");
             
             WorkerStudent student = new WorkerStudent(studentNumber, name, course);
             students.add(student);
+        }
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return students;
+    }
+
+    public List<WorkerCourse> getAllCourses() {
+    List<WorkerStudent> courses = new ArrayList<>();
+    String query = "SELECT * FROM Course";
+    try {
+        Statement statement = connectToDB.createStatement();
+        ResultSet result = stmt.executeQuery(query);
+        
+        while (result.next()) {
+            int courseID = rs.getInt("CourseNumber");
+            String courseName = rs.getString("CourseName");
+            String courseDescription = rs.getString("CourseDescription");
+            
+            WorkerCourse course = new WorkerCourse(courseID, courseName, courseDescription);
+            coursess.add(course);
         }
         
     } catch (SQLException e) {
