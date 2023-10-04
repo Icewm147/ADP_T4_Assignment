@@ -2,9 +2,11 @@
 
 /**
  *
- * @author nicho
+ * @author Nicholas van der Nest (222749180)
  */
+
 public class WorkerCourse {
+    
     private String courseName;
     private String CourseCode;
 
