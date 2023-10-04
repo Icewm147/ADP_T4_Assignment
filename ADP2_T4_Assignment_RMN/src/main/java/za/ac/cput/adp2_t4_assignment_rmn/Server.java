@@ -8,6 +8,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
+import javax.swing.JOptionPane;
+import za.ac.cput.adp2_t4_assignment_rmn.WorkerClass.WorkerStudent;
 import za.ac.cput.adp2_t4_assignment_rmn.WorkerLogin.WorkerLogin;
 
 /**
@@ -48,11 +50,10 @@ public class Server {
     ----Authenticate user login
     (Under admin)
     ----add student
-    ----retrieve all student
-    retrieve 1 student  
-    search student    
-    add course
-    retrieve course
+    ----retrieve all student 
+    ----search student    
+    ----add course
+    retrieve all course
     (Under Student)
     search course
     *Enroll for course?
@@ -81,9 +82,9 @@ public class Server {
         String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
         try {
             PreparedStatement statement = dbConnection.prepareStatement(query);
-            ps.setInt(student.getStudentNumber());
-            ps.setString(student.getName());
-            ps.setString(student.getCourse());
+            statement.setInt(student.getStudentNumber();
+            statement.setString(student.getName());
+            statement.setString(student.getCourse());
 
             isAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
         } catch (SQLException e) {
@@ -114,36 +115,39 @@ public class Server {
                     //Add Student
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
-                    //DB code to add to DB
                     //addStudentToDB(stud); <---------------------------------------------------------------check pls
                     out.writeObject("Student Added successfully");
                     out.flush();
                     
                     //retreiving all student
                 }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve all students")){
-                    //DB code to call Students DB
-                    //place info of StudentDB in variables
-                    String var1 = ;
-                    String var2 = ;
-                    String var3 = ;
-                    String var4 = ;
-                    String var5 = ;
-                    WorkerStudent allStudents = new WorkerStudent(var1,var2,var3,var4,var5);
+                    //call Search Method
+                    //StudentDB 'allStudent' object containing StudentTable content                   
                     out.writeObject(allStudents);
                     out.flush();
-                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve student")){
+                    
+                   //Search student 
+                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("search")){
                     String studID = (String) receivedObject; 
-                    /*if("stud is in the db"){
+                    /*if("studID is in the db"){
                        Object with student parameters to contain info on that student
                        out.writeObject(Objectname);
                     out.flush();
                     }
                     else{
                     out.writeObject("The Student you are searching for does not exist");
-                    out.flush();
-                    
+                    out.flush();                    
                     }
                     */
+                    String name = JOptionPane.showInputDialog("Please enter your name");
+                    System.out.println(name);
+                    //add course
+                }else if (receivedObject instanceof WorkerCourse) {
+                    WorkerCourse course = (WorkerCourse) receivedObject;
+                    //addCourseToDB(course);
+                    out.writeObject("Course Added successfully");
+                    out.flush();
+                    
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
