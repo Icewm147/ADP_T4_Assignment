@@ -55,40 +55,8 @@ public class Server {
     *Enroll for course?
     //(accept enrollment requests from client(students), storing enrollment data in the Derby DB, Retrieving enrollment data from the DB, Authentication of admin and student users)
      */
-//    public Connection connectToDB() {
-//        Connection conn = null;
-//        try {
-//            String url = "jdbc:derby://localhost:1527/Enrollment_DB"; // add DB url
-//            String username = "administrator"; // add DB username
-//            String password = "admin"; // add DB password
-//
-//            conn = DriverManager.getConnection(url, username, password);           
-//            if (conn != null) {
-//                System.out.println("Connected to DB");
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            System.out.println("Failed to connect to the database.");
-//        }
-//        return conn;
-//    }
 
-//    public boolean addStudentToDB(WorkerStudent student) {
-//        boolean isAdded = false;
-//        String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
-//        try {
-//            PreparedStatement statement = dbConnection.prepareStatement(query);
-//            statement.setInt(student.getStudentNumber();
-//            statement.setString(student.getName());
-//            statement.setString(student.getCourse());
-//
-//            isAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return isAdded;
-//    }
-
+    
     //added code up above
 //    public void processClient() {
 //        while (true) {

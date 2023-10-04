@@ -75,6 +75,11 @@ public class Client extends JFrame implements ActionListener {
 
         panelS.add(btnLogin);
 
+        
+        
+        
+        
+        
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
