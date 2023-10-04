@@ -5,6 +5,11 @@
 package za.ac.cput.adp2_t4_assignment_rmn.DAO;
 //
 //import java.awt.List;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import za.ac.cput.adp2_t4_assignment_rmn.DBConnection.DBConnection;
+
 //import java.sql.Connection;
 //import java.sql.DriverManager;
 //import java.sql.PreparedStatement;
@@ -12,36 +17,36 @@ package za.ac.cput.adp2_t4_assignment_rmn.DAO;
 //import java.sql.SQLException;
 //import java.sql.Statement;
 //import java.util.ArrayList;
-
 /**
  *
  * @author Nicholas van der Nest (222749180)
  */
 public class DAO {
-    
-//    public Connection connectToDB(){
-//	Connection conn = null;
-//	try {
-//		 con = DBConnection.derbyConnection();
-//		if(conn != null){
-//			System.out.println("Connected to DB");
-//		} catch(SQLException ex) {
-//			ex.printStackTrace();
-//                        System.out.println("Failed to connect to the database.");
-//		}
-//	} return conn;
-//    }
+
+    public Connection connectToDB() {
+        Connection con = null;
+        try {
+            con = DBConnection.derbyConnection();
+            if (con != null) {
+                System.out.println("Connected to DB");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Failed to connect to the database.");
+        }
+        return con;
+    }
 //
 //    public boolean addStudentToDB(WorkerStudent student){
 //    	boolean studentIsAdded = false;
 //	String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
 //	try{
 //	PreparedStatement statement = connectToDB.prepareStatement(query);
-//		ps.setInt(1, student.getStudentNumber());
-//		ps.setString(2, student.getName());
-//		ps.setString(3, student.getCourse());
+//		statement.setString(1, student.getStudentNumber());
+//		statement.setString(2, student.getName());
+//		statement.setString(3, student.getCourse());
 //
-//		studentIsAdded = ps.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
+//		studentIsAdded = statement.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
 //	}catch(SQLException e){
 //		e.printStackTrace();
 //	}
@@ -54,7 +59,7 @@ public class DAO {
 //
 //	try {
 //	  PreparedStatement statement = connectToDB.prepareStatement(query);
-//	  statement.setInt(1, courseID);
+//	  statement.getString(1, courseID);
 //
 //	  courseDeleted = statement.executeUpdate() == 1;
 //	} catch (SQLException e) {
@@ -67,9 +72,9 @@ public class DAO {
 //	String query = "INSERT INTO Course (CourseID, CourseName, CourseDescription)";
 //	try{
 //		PreparedStatement statement = connectToDB.preparedStatement(query);
-//		statement.setInt(1, courseID);
-//		statement.setInt(2, courseName);
-//		statement.setInt(3, courseDescription);
+//		statement.getString(1, courseID);
+//		statement.getString(2, courseName);
+//		statement.getString(3, courseDescription);
 //
 //		isAdded = statement.executeUpdate() == 1;
 //	} catch (SQLException e) {
@@ -86,7 +91,7 @@ public class DAO {
 //        ResultSet result = stmt.executeQuery(query);
 //        
 //        while (result.next()) {
-//            int studentNumber = result.getInt("Student_Number");
+//            String studentNumber = result.setString("Student_Number");
 //            String name = result.getString("Name");
 //            String course = result.getString("Course");
 //            
@@ -108,7 +113,7 @@ public class DAO {
 //        ResultSet result = stmt.executeQuery(query);
 //        
 //        while (result.next()) {
-//            int courseID = rs.getInt("CourseNumber");
+//            String courseID = rs.getString("CourseNumber");
 //            String courseName = rs.getString("CourseName");
 //            String courseDescription = rs.getString("CourseDescription");
 //            

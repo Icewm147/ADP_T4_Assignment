@@ -26,7 +26,7 @@ public class Server {
             serverSocket = new ServerSocket(12345);
             System.out.println("Server is listening....");
             clientSocket = serverSocket.accept();
-
+            System.out.println("Connected to client>>>");
         } catch (IOException ex) {
             System.out.println("Server cannot listen. Error: " + ex.getMessage());
         }
