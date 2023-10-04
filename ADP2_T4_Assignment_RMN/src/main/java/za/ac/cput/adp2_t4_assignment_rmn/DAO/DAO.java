@@ -6,7 +6,7 @@ package za.ac.cput.adp2_t4_assignment_rmn.DAO;
 
 /**
  *
- * @author nicho
+ * @author Nicholas van der Nest (222749180)
  */
 public class DAO {
     
@@ -27,8 +27,6 @@ public class DAO {
 	} return conn;
     }
 
-	//Student Functions
-
     public boolean addStudentToDB(WorkerStudent student){
     	boolean studentIsAdded = false;
 	String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
@@ -43,6 +41,20 @@ public class DAO {
 		e.printStackTrace();
 	}
 	return isAdded;
+    }
+
+    public boolean deleteCourseFromDB(int courseID){
+    	boolean courseDeleted = false;
+        String query = "DELETE FROM Course WHERE CourseID = ?";
+
+	try {
+	  PreparedStatement statement = connectToDB.prepareStatement(query);
+	  statement.setInt(1, courseID);
+
+	  courseDeleted = statement.executeUpdate() == 1;
+	} catch (SQLException e) {
+	  e.printStackTrace();
+	}
     }
 
     public boolean addCourseToDB(){
@@ -65,13 +77,13 @@ public class DAO {
     List<WorkerStudent> students = new ArrayList<>();
     String query = "SELECT * FROM Students";
     try {
-        Statement stmt = connectToDB.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
+        Statement statement = connectToDB.createStatement();
+        ResultSet result = stmt.executeQuery(query);
         
-        while (rs.next()) {
-            int studentNumber = rs.getInt("Student_Number");
-            String name = rs.getString("Name");
-            String course = rs.getString("Course");
+        while (result.next()) {
+            int studentNumber = result.getInt("Student_Number");
+            String name = result.getString("Name");
+            String course = result.getString("Course");
             
             WorkerStudent student = new WorkerStudent(studentNumber, name, course);
             students.add(student);
@@ -81,6 +93,27 @@ public class DAO {
         e.printStackTrace();
     }
     return students;
+    }
+
+    public List<WorkerCourse> getAllCourses() {
+    List<WorkerStudent> courses = new ArrayList<>();
+    String query = "SELECT * FROM Course";
+    try {
+        Statement statement = connectToDB.createStatement();
+        ResultSet result = stmt.executeQuery(query);
+        
+        while (result.next()) {
+            int courseID = rs.getInt("CourseNumber");
+            String courseName = rs.getString("CourseName");
+            String courseDescription = rs.getString("CourseDescription");
+            
+            WorkerCourse course = new WorkerCourse(courseID, courseName, courseDescription);
+            coursess.add(course);
+        }
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return students;
 }
-	//Admin Functions
 }
