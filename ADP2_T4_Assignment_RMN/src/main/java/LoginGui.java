@@ -1,4 +1,4 @@
-package za.ac.cput.adp2_t4_assignment_rmn.Client;
+
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -28,8 +28,8 @@ public class LoginGui extends JFrame {
         password = new JLabel("Password: ");
         heading = new JLabel("LOGIN");
 
-        usernameTxt = new JTextField();
-        passwordTxt = new JTextField();
+        usernameTxt = new JTextField(20);
+        passwordTxt = new JTextField(20);
 
         cbo = new JComboBox(new String[]{"Admin", "Student"});
 
