@@ -52,21 +52,9 @@ public class Client extends JFrame implements ActionListener {
 
                     if (cbo.getSelectedItem() == "Student") {
 
-                        Client run = new Client();
-                        run.setTitle("Login");
-                        run.setSize(300, 250);
-                        run.setGuiStudent();
-                        run.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        setVisible(false);
-                        run.setVisible(true);
+                       
                     } else {
-                        Client run = new Client();
-                        run.setTitle("Login");
-                        run.setSize(300, 250);
-                        run.setGuiAdmin();
-                        run.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        setVisible(false);
-                        run.setVisible(true);
+                        
                     }
 
                 }
