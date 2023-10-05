@@ -5,8 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -83,7 +84,7 @@ public class Server {
 //                    out.writeObject("Student Added successfully");
 //                    out.flush();
 //                    
-//                    //retreiving all student
+//                    //retreiving all students
 //                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve all students")){
 //                    //call Search Method
 //                    //StudentDB 'allStudent' object containing StudentTable content                   
@@ -110,9 +111,13 @@ public class Server {
 //                    WorkerCourse course = (WorkerCourse) receivedObject;
 //                    //addCourseToDB(course);
 //                    out.writeObject("Course Added successfully");
-//                    out.flush();
+//                    out.flush();                   
+//                }
+//                //retrieve all courses
+//                else if(){
 //                    
 //                }
+//                
 //            } catch (IOException ex) {
 //                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
 //            } catch (ClassNotFoundException ex) {
