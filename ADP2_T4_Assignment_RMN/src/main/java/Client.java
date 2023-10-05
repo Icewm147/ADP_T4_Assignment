@@ -96,9 +96,10 @@ public class Client extends JFrame implements ActionListener {
 
     public void getStreams() {
         try {
-            in = new ObjectInputStream(server.getInputStream());
+            
             out = new ObjectOutputStream(server.getOutputStream());
             out.flush();
+            in = new ObjectInputStream(server.getInputStream());
 
         } catch (IOException ex) {
             System.out.println("Cannot get Streams " + ex.getMessage());
