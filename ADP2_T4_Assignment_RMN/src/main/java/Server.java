@@ -35,9 +35,10 @@ public class Server {
 
     public void getStreams() {
         try {
+            in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             out.flush();
-            in = new ObjectInputStream(clientSocket.getInputStream());
+            
         } catch (IOException ex) {
             System.out.println("Cannot get Streams " + ex.getMessage());
         }
