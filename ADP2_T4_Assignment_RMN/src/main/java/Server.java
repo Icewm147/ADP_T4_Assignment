@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,7 +22,7 @@ public class Server {
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
     private static Object receivedObject;
-
+    private static DAO dao;
     public Server() {
         try {
             serverSocket = new ServerSocket(12345);
@@ -31,6 +32,8 @@ public class Server {
         } catch (IOException ex) {
             System.out.println("Server cannot listen. Error: " + ex.getMessage());
         }
+        
+        dao = new DAO();
     }
 
     public void getStreams() {
@@ -81,14 +84,14 @@ public class Server {
                     //Add Student
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
-                    //addStudentToDB(stud); <---------------------------------------------------------------check pls
+                    addStudentToDB(stud);
                     out.writeObject("Student Added successfully");
                     out.flush();
                     
                     //retreiving all students
                 }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve all students")){
-                    //StudentDB 'allStudent' object containing StudentTable content                   
-                    out.writeObject(allStudents);
+                    getAllStudents();                  
+                    out.writeObject(getAllStudents());
                     out.flush();
                     
                    //Search student 
@@ -109,7 +112,7 @@ public class Server {
                     //add course
                 }else if (receivedObject instanceof WorkerCourse) {
                     WorkerCourse course = (WorkerCourse) receivedObject;
-                    //addCourseToDB(course);
+                    addCourseToDB(course);
                     out.writeObject("Course Added successfully");
                     out.flush();                   
                 }
@@ -117,16 +120,39 @@ public class Server {
                 //retrieve all courses
                 
                 else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("retrieve all courses")){
-                    //'allCourses' Object containing the courseTable content
-                    out.writeobject(allCourses);
+                    try {
+                        //'allCourses' Object containing the courseTable content
+                        Object allCourses = dao.getAllCourses();
+                        out.writeobject(allCourses);
                     out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 }
                 
                 //Search for course
                 
                 else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search")){
                     String course = (String)receivedObject;
+                  
                     //DB Search method: searchCourse(course);
+                    
+                }
+                //delete course
+                else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")){
+                    int deleteCourse = (int)receivedObject;
+                    deleteCourseFromDB(deleteCourse);
+                    out.writeObject(deleteCourse + " Has been deleted");
+                    out.flush();
+                    
+                }
+                //Delete student
+                else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete student")){
+                    int delStudent = (int)receivedObject;
+                    deleteStudent(delStudent);
+                    out.writeObject(delStudent + " Has been deleted");
+                    out.flush();
                     
                 }
                 
