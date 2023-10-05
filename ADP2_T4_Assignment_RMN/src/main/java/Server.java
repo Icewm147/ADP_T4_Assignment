@@ -51,7 +51,7 @@ public class Server {
     ----retrieve all student 
     ----search student    
     ----add course
-    retrieve all course
+    ----retrieve all course
     (Under Student)
     search course
     *Enroll for course?
@@ -116,10 +116,18 @@ public class Server {
                 
                 //retrieve all courses
                 
-                else if(receivedObject instanceof WorkerCourse && ((String)receivedObject).equalsIgnoreCase("retrieve all courses")){
-                    //allCourses Object containing the courseTable content
+                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("retrieve all courses")){
+                    //'allCourses' Object containing the courseTable content
                     out.writeobject(allCourses);
                     out.flush();
+                }
+                
+                //Search for course
+                
+                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search")){
+                    String course = (String)receivedObject;
+                    //DB Search method: searchCourse(course);
+                    
                 }
                 
             } catch (IOException ex) {
