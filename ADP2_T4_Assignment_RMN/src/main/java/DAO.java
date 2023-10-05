@@ -1,4 +1,6 @@
 
+import java.io.*;
+import java.net.*;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +29,7 @@ public class DAO {
         return con;
     }
 
-    public boolean addStudentToDB(WorkerStudent student) {
+    public boolean addStudentToDB(WorkerStudent student) throws IOException { //Add outputStream.writeObject(student);
         boolean studentIsAdded = false;
         String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
         try {
@@ -37,6 +39,14 @@ public class DAO {
             statement.setString(3, student.getStudentLastName());
 
             studentIsAdded = statement.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
+//
+//            if (studentIsAdded) {
+//                Socket socket = new Socket("127.0.0.1", 12345);
+//                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+//                outputStream.writeObject(student);
+//                outputStream.flush();
+//                socket.close();
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,10 +126,9 @@ public class DAO {
         }
         return courses;
     }
-    
+
     //Delete Student Method
     //Enroll student into course Method
     //Add student to course
     //CRUD operations that are missing
-    //example for Raeesah
 }
