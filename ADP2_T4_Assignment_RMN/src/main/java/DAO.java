@@ -15,6 +15,10 @@ import java.util.ArrayList;
  */
 public class DAO {
 
+//    public DAO(){
+//        connectToDB(); <---------------------------CHECK IF IT'S NEEDED
+//    }
+    
     public Connection connectToDB() {
         Connection con = null;
         try {
@@ -29,16 +33,14 @@ public class DAO {
         return con;
     }
 
-    public boolean addStudentToDB(WorkerStudent student) throws IOException { //Add outputStream.writeObject(student);
-        boolean studentIsAdded = false;
-        String query = "INSERT INTO Students (studentNumber, name, course)"; // enter correct details to match DB & getters and setters
-        try {
-            PreparedStatement statement = connectToDB().prepareStatement(query);
-            statement.setString(1, student.getStudentNumber());
-            statement.setString(2, student.getStudentName());
-            statement.setString(3, student.getStudentLastName());
+    public void addStudentToDB(WorkerStudent student) throws IOException, SQLException { //Add outputStream.writeObject(student);
+        String query = "INSERT INTO Students (studentNumber, name, course) VALUES (?, ?, ?)"; // enter correct details to match DB & getters and setters
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        statement.setString(1, student.getStudentNumber());
+        statement.setString(2, student.getStudentName());
+        statement.setString(3, student.getStudentLastName());
 
-            studentIsAdded = statement.executeUpdate() == 1; // Execute the query. If it returns 1, the insertion was successful
+        statement.executeUpdate();
 //
 //            if (studentIsAdded) {
 //                Socket socket = new Socket("127.0.0.1", 12345);
@@ -47,88 +49,64 @@ public class DAO {
 //                outputStream.flush();
 //                socket.close();
 //            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return studentIsAdded;
+    }
+    
+    public void deleteStudent(int studentNumber) throws SQLException{
+        String query = "DELETE FROM Students WHERE Stud_Number = ?";
+        
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        statement.setInt(1, studentNumber);
+        statement.executeUpdate();
     }
 
-    public boolean deleteCourseFromDB(int courseID) {
-        boolean courseDeleted = false;
+    public void deleteCourseFromDB(int courseID) throws SQLException {
         String query = "DELETE FROM Course WHERE CourseID = ?";
-
-        try {
+        
             PreparedStatement statement = connectToDB().prepareStatement(query);
             statement.setInt(1, courseID);
-
-            courseDeleted = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return courseDeleted;
+            statement.executeUpdate();
     }
 
-    public boolean addCourseToDB() {
-        boolean courseIsAdded = false;
+    public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
         String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION) VALUES (?, ?)";
-        try {
             PreparedStatement statement = connectToDB().prepareStatement(query);
             //statement.setString(1, courseCode);
             //statement.setString(2, courseName);                  //<<------------I think this will come from the GUI?
             //statement.setString(3, courseDescription);
-
-            courseIsAdded = statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return courseIsAdded;
+            statement.executeUpdate();
     }
 
-    public List<WorkerStudent> getAllStudents() {
+    public List<WorkerStudent> getAllStudents() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
         String query = "SELECT * FROM Students";
-        try {
-            Statement statement = connectToDB().createStatement();
-            ResultSet result = statement.executeQuery(query);
+        
+            PreparedStatement statement = connectToDB().prepareStatement(query);
+            ResultSet result = statement.executeQuery();
 
             while (result.next()) {
                 String studentNumber = result.getString("Student_Number");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
                 String name = result.getString("Name");
                 String course = result.getString("Course");
 
-                WorkerStudent student = new WorkerStudent(studentNumber, name, course);
-                students.add(student);
+                //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
+                students.add(new WorkerStudent(studentNumber, name, course));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return students;
     }
 
-    public List<WorkerCourse> getAllCourses() {
+    public List<WorkerCourse> getAllCourses() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
         String query = "SELECT * FROM Course";
-        try {
-            Statement statement = connectToDB().createStatement();
-            ResultSet result = statement.executeQuery(query);
+            PreparedStatement statement = connectToDB().prepareStatement(query);
+            ResultSet result = statement.executeQuery();
 
             while (result.next()) {
                 String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS OE SHOULD BE RIGHT))
                 String courseDescription = result.getString("COURSE_DESCRIPTION");
 
-                WorkerCourse course = new WorkerCourse(courseID, courseDescription);
-                courses.add(course);
+                //WorkerCourse course = new WorkerCourse(courseID, courseDescription); <------Delete after testing if not needed
+                courses.add(new WorkerCourse(courseID, courseDescription));
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return courses;
     }
-
-    //Delete Student Method
-    //Enroll student into course Method
-    //Add student to course
-    //CRUD operations that are missing
 }
