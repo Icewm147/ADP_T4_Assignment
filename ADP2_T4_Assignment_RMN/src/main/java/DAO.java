@@ -104,4 +104,20 @@ public class DAO {
             }
         return courses;
     }
+    
+    public List<WorkerStudent> studentsPerCourse(int courseID) throws SQLException {
+        String query = "SELECT student.* FROM student JOIN student_course ON student.id = student_course.student_id WHERE student_course.course_id = ?"; //<--------- query will need fixing with right table names
+        
+        List<WorkerStudent> studentsOfCourse = new ArrayList<>();
+        
+        return studentsOfCourse;
+    }
+    
+    public List<WorkerCourse> coursesPerStudent(int studentNumber) throws SQLException {
+        String query = "SELECT course.* FROM course JOIN student_coourse ON course.id = student_course.course_id WHERE student_course.student_id = ?"; //<---- same as query@studentsPerCourse()
+        
+        List<WorkerCourse> coursesOfStudent = new ArrayList<>();
+        
+        return coursesOfStudent;
+    }
 }
