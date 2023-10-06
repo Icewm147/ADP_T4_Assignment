@@ -1,10 +1,10 @@
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,11 +16,12 @@ import javax.swing.JOptionPane;
  */
 public class Server {
 
-    private static ObjectOutputStream out;
     private static ObjectInputStream in;
+    private static ObjectOutputStream out;
     private static ServerSocket serverSocket;
     private static Socket clientSocket;
     private static Object receivedObject;
+    private static DAO dao;
 
     public Server() {
         try {
@@ -31,6 +32,8 @@ public class Server {
         } catch (IOException ex) {
             System.out.println("Server cannot listen. Error: " + ex.getMessage());
         }
+
+        dao = new DAO();
     }
 
     public void getStreams() {
@@ -38,7 +41,7 @@ public class Server {
             in = new ObjectInputStream(clientSocket.getInputStream());
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             out.flush();
-            
+
         } catch (IOException ex) {
             System.out.println("Cannot get Streams " + ex.getMessage());
         }
@@ -57,9 +60,124 @@ public class Server {
     *Enroll for course?
     //(accept enrollment requests from client(students), storing enrollment data in the Derby DB, Retrieving enrollment data from the DB, Authentication of admin and student users)
      */
-
-    
     //added code up above
+    <<<<<<< HEAD
+    public void processClient() {
+        while (true) {
+            try {
+                receivedObject = in.readObject();
+
+                //Authentication
+                if (receivedObject instanceof WorkerLogin) {
+                    String userSearch = (String) receivedObject;
+                    for (WorkerLogin worker : /*DB */ ) {
+                        if (worker.getUsername().equalsIgnoreCase(/*DB */) && (worker.getPassword().equalsIgnoreCase(/*DB */))      {
+                            out.writeObject("Success");
+                            out.flush();
+                        } else {
+                            out.writeObject("Login Failed");
+                            out.flush();
+                        }
+                    }
+
+                    //Add Student
+                } else if (receivedObject instanceof WorkerStudent) {
+                    WorkerStudent stud = (WorkerStudent) receivedObject;
+                    try {
+                        dao.addStudentToDB(stud);
+                        out.writeObject("Student Added successfully");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    //retreiving all students
+                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all students")) {
+                    try {
+                        Object obj = dao.getAllStudents();
+                        out.writeObject(obj);
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    //Search student 
+                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
+                    String studID = (String) receivedObject;
+                    /*if("studID is in the db"){
+                       Object with student parameters to contain info on that student
+                       out.writeObject(Objectname);
+                    out.flush();
+                    }
+                    else{
+                    out.writeObject("The Student you are searching for does not exist");
+                    out.flush();                    
+                    }
+                     */
+                    String name = JOptionPane.showInputDialog("Please enter your name");
+                    System.out.println(name);
+                    //add course
+                } else if (receivedObject instanceof WorkerCourse) {
+                    WorkerCourse course = (WorkerCourse) receivedObject;
+                    try {
+                        dao.addCourseToDB(course);
+                        out.writeObject("Course Added successfully");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    out.writeObject("Course Added successfully");
+                    out.flush();
+                } //retrieve all courses
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
+                    try {
+                        //'allCourses' Object containing the courseTable content
+                        Object allCourses = dao.getAllCourses();
+                        out.writeObject(allCourses);
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } //Search for course
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Search")) {
+                    String course = (String) receivedObject;
+
+                    //DB Search method: searchCourse(course);
+                } //delete course
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")) {
+                    int deleteCourse = (int) receivedObject;
+                    try {
+                        dao.deleteCourseFromDB(deleteCourse);
+                        out.writeObject(deleteCourse + " Has been deleted");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } //Delete student
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete student")) {
+                    int delStudent = (int) receivedObject;
+                    try {
+                        dao.deleteStudent(delStudent);
+                        out.writeObject(delStudent + " Has been deleted");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
 //    public void processClient() {
 //        while (true) {
 //            try {
@@ -139,6 +257,7 @@ public class Server {
 //        }
 //
 //    }
+>>>>>>> b1934384e426e29cccef0d8d32616b01e3941467
 
     private static void closeConnection() {
         try {
@@ -159,7 +278,7 @@ public class Server {
     public static void main(String[] args) {
         Server srs = new Server();
         srs.getStreams();
-      //  srs.processClient();
+        //  srs.processClient();
 
     }
 
