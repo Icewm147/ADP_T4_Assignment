@@ -16,7 +16,7 @@ public class Client extends JFrame implements ActionListener {
     private static Socket server;
     private static Object recievedObject;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin;
@@ -24,6 +24,11 @@ public class Client extends JFrame implements ActionListener {
 
     private static JButton btnAddCourse, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
     private static JTextField searchTxt;
+
+    private static JButton btnEnroll, btnViewCourse;
+
+    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3;
+    private static JTextField courseDesTxt, courseCodeTxt;
 
     public Client() {
 
@@ -34,10 +39,12 @@ public class Client extends JFrame implements ActionListener {
         }
 
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelC = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelE = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        //    panelE = new JPanel(new GridLayout(5,6));
         panelW = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelJ = new JPanel(new GridLayout(4, 2));
 
         username = new JLabel("Username: ");
         password = new JLabel("Password: ");
@@ -56,8 +63,25 @@ public class Client extends JFrame implements ActionListener {
         btnRetrieveStud = new JButton("Retrieve Student");
         btnRetrieveCourse = new JButton("Retrieve Course");
         btnDelete = new JButton("Delete stud? Course?");
-        
+
         searchTxt = new JTextField(20);
+
+        //-----------------------------------------------------Student
+        btnEnroll = new JButton("Enroll In Course");
+        btnViewCourse = new JButton("View Courses");
+
+        //-----------------------------------------------------JOptionPane
+        courseDes = new JLabel("Course Description: ");
+        courseDes.setAlignmentX(CENTER_ALIGNMENT);
+        courseCode = new JLabel("Course Code: ");
+        paneHeading = new JLabel("Add a Course: ");
+
+        space1 = new JLabel();
+        space2 = new JLabel();
+        space3 = new JLabel();
+
+        courseDesTxt = new JTextField(20);
+        courseCodeTxt = new JTextField(20);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -66,22 +90,87 @@ public class Client extends JFrame implements ActionListener {
 
                     if (cbo.getSelectedItem() == "Student") {
                         heading.setText("Student Enrollment system");
-                        panelC.setVisible(false);
-                        panelW.setVisible(true);
+
+                        btnEnroll.setVisible(true);
+                        btnViewCourse.setVisible(true);
+
+                        cbo.setVisible(false);
+                        username.setVisible(false);
+                        usernameTxt.setVisible(false);
+                        password.setVisible(false);
+                        passwordTxt.setVisible(false);
+
+                        panelS.setVisible(false);
                     } else {
                         heading.setText("Admin Access");
-                        panelC.setVisible(false);
-                        panelE.setVisible(true);
+
+                        btnAddCourse.setVisible(true);
+                        btnSearch.setVisible(true);
+                        btnRetrieveStud.setVisible(true);
+                        btnRetrieveCourse.setVisible(true);
+                        btnDelete.setVisible(true);
+                        searchTxt.setVisible(true);
+
+                        cbo.setVisible(false);
+                        username.setVisible(false);
+                        usernameTxt.setVisible(false);
+                        password.setVisible(false);
+                        passwordTxt.setVisible(false);
+
+                        panelS.setVisible(false);
                     }
 
                 }
             }
 
         });
+
+        btnAddCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnAddCourse) {
+
+                    panelJ.setVisible(true);
+                    int result = JOptionPane.showOptionDialog(null, panelJ,
+                             "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Add", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+
+                        String code = courseCodeTxt.getText();
+                        String description = courseDesTxt.getText();
+
+                        System.out.println(code + " " + description);
+
+                        panelJ.setVisible(false);
+                    }
+
+                }
+
+            }
+
+        });
         
+        btnEnroll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnEnroll) {
+
+                   
+                }
+            }
+
+        });
+
     }
 
     public void setGui() {
+
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelS.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         panelN.add(heading);
 
@@ -91,28 +180,50 @@ public class Client extends JFrame implements ActionListener {
         panelC.add(password);
         panelC.add(passwordTxt);
 
+        panelC.add(btnAddCourse);
+        panelC.add(btnRetrieveStud);
+        panelC.add(btnRetrieveCourse);
+        panelC.add(btnDelete);
+        panelC.add(searchTxt);
+        panelC.add(btnSearch);
+
+        panelC.add(btnEnroll);
+        panelC.add(btnViewCourse);
+
         panelS.add(btnLogin);
 
-        panelE.add(btnAddCourse);
-        panelE.add(btnRetrieveStud);
-        panelE.add(btnRetrieveCourse);
-        panelE.add(btnDelete);
-        panelE.add(searchTxt);
-        panelE.add(btnSearch);
+        panelJ.add(paneHeading);
+        panelJ.add(space1);
+        panelJ.add(courseCode);
+        panelJ.add(courseCodeTxt);
+        panelJ.add(courseDes);
+        panelJ.add(courseDesTxt);
+
+        panelJ.setVisible(false);
 
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
         add(panelW, BorderLayout.WEST);
-        add(panelE, BorderLayout.EAST);
+        add(panelJ, BorderLayout.EAST);
+
         panelE.setVisible(false);
+
+        btnAddCourse.setVisible(false);
+        btnSearch.setVisible(false);
+        btnRetrieveStud.setVisible(false);
+        btnRetrieveCourse.setVisible(false);
+        btnDelete.setVisible(false);
+        searchTxt.setVisible(false);
+
+        btnEnroll.setVisible(false);
+        btnViewCourse.setVisible(false);
 
     }
 
     public void getStreams() {
         try {
             out = new ObjectOutputStream(server.getOutputStream());
-            out.flush();
             in = new ObjectInputStream(server.getInputStream());
 
         } catch (IOException ex) {
@@ -178,9 +289,10 @@ public class Client extends JFrame implements ActionListener {
         Client log = new Client();
         log.getStreams();
         log.setTitle("Enrolment System");
-        log.setSize(300, 250);
+        log.setSize(700, 450);
         log.setGui();
         log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        log.setLocationRelativeTo(null);
         log.setVisible(true);
     }
 }
