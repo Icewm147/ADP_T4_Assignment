@@ -24,13 +24,16 @@ public class Client extends JFrame {
     private static JButton btnLogin;
     private static JComboBox cbo;
 
-    private static JButton btnAddCourse, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
+    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
     private static JTextField searchTxt;
 
     private static JButton btnEnroll, btnViewCourse;
 
     private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3;
     private static JTextField courseDesTxt, courseCodeTxt;
+
+    private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
+    private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
 
     public Client() {
 
@@ -45,7 +48,7 @@ public class Client extends JFrame {
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
         //    panelE = new JPanel(new GridLayout(5,6));
-        panelW = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(4, 2));
 
         username = new JLabel("Username: ");
@@ -65,6 +68,7 @@ public class Client extends JFrame {
         btnRetrieveStud = new JButton("Retrieve Student");
         btnRetrieveCourse = new JButton("Retrieve Course");
         btnDelete = new JButton("Delete stud? Course?");
+        btnAddStud = new JButton("Add student");
 
         searchTxt = new JTextField(20);
 
@@ -84,6 +88,19 @@ public class Client extends JFrame {
 
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
+
+        //-----------------------------------------------------JOptionPane 2 add student
+        studId = new JLabel("Student ID: ");
+        studName = new JLabel("Student Name: ");
+        studLastName = new JLabel("Student Last Name: ");
+        paneHeading2 = new JLabel("Add Student");
+        space0 = new JLabel();
+        space4 = new JLabel();
+        space5 = new JLabel();
+
+        studIdTxt = new JTextField(20);
+        studNameTxt = new JTextField(20);
+        studLastNameTxt = new JTextField(20);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -187,6 +204,7 @@ public class Client extends JFrame {
         panelC.add(passwordTxt);
 
         panelC.add(btnAddCourse);
+        panelC.add(btnAddStud);
         panelC.add(btnRetrieveStud);
         panelC.add(btnRetrieveCourse);
         panelC.add(btnDelete);
@@ -207,6 +225,17 @@ public class Client extends JFrame {
 
         panelJ.setVisible(false);
 
+        panelW.add(paneHeading2);
+        panelW.add(space0);
+        panelW.add(studId);
+        panelW.add(studIdTxt);
+        panelW.add(studName);
+        panelW.add(studNameTxt);
+        panelW.add(studLastName);
+        panelW.add(studLastNameTxt);
+
+        panelW.setVisible(false);
+
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
@@ -216,6 +245,7 @@ public class Client extends JFrame {
         panelE.setVisible(false);
 
         btnAddCourse.setVisible(false);
+        btnAddStud.setVisible(false);
         btnSearch.setVisible(false);
         btnRetrieveStud.setVisible(false);
         btnRetrieveCourse.setVisible(false);
@@ -226,6 +256,27 @@ public class Client extends JFrame {
         btnViewCourse.setVisible(false);
 
         
+
+        btnAddStud.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnAddStud) {
+
+                    panelW.setVisible(true);
+                    int result = JOptionPane.showOptionDialog(null, panelW,
+                            "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Add", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+                        AddStud();
+                        panelW.setVisible(false);
+                    }
+
+                }
+
+            }
+
+        });
 
     }
 
@@ -250,6 +301,29 @@ public class Client extends JFrame {
             System.exit(0);
         } catch (IOException ex) {
             System.out.println("Server cannot close. Error " + ex.getMessage());
+        }
+
+    }
+
+    public void AddStud() {
+        String id = studIdTxt.getText();
+        String name = studNameTxt.getText();
+        String lastN = studLastNameTxt.getText();
+
+        try {
+            WorkerStudent add = new WorkerStudent(id, name, lastN);
+            out.writeObject(add);
+            out.flush();
+
+            String recievedMsg = (String) in.readObject();
+            if (recievedMsg.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Course has been added.");
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
         }
 
     }
