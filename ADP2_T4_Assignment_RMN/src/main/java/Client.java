@@ -145,6 +145,28 @@ public class Client extends JFrame {
             }
 
         });
+        btnAddCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnAddCourse) {
+
+                    panelJ.setVisible(true);
+                    int result = JOptionPane.showOptionDialog(null, panelJ,
+                            "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Add", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+
+                        AddCourse();
+
+                        panelJ.setVisible(false);
+                    }
+
+                }
+
+            }
+
+        });
 
     }
 
@@ -203,28 +225,7 @@ public class Client extends JFrame {
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
 
-        btnAddCourse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == btnAddCourse) {
-
-                    panelJ.setVisible(true);
-                    int result = JOptionPane.showOptionDialog(null, panelJ,
-                            "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{"Add", "Cancel"}, "Yes");
-                    if (result == JOptionPane.YES_OPTION) {
-
-                        AddCourse();
-
-                        panelJ.setVisible(false);
-                    }
-
-                }
-
-            }
-
-        });
+        
 
     }
 

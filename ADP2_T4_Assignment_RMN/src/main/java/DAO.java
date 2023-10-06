@@ -28,7 +28,7 @@ public class DAO {
     }
 
     public void addStudentToDB(WorkerStudent student) throws IOException, SQLException { //Add outputStream.writeObject(student);
-        String query = "INSERT INTO Students (studentNumber, name, course) VALUES (?, ?, ?)"; // enter correct details to match DB & getters and setters
+        String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)"; // enter correct details to match DB & getters and setters
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, student.getStudentNumber());
         statement.setString(2, student.getStudentName());
@@ -60,13 +60,12 @@ public class DAO {
         statement.setInt(1, courseID);
         statement.executeUpdate();
     }
-
+//Working method (addCourseToDB), do not even try to touch
     public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
         String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION) VALUES (?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        //statement.setString(1, courseCode);
-        //statement.setString(2, courseName);                  //<<------------I think this will come from the GUI?
-        //statement.setString(3, courseDescription);
+        statement.setString(1, course.getCourseCode());                 //<<------------I think this will come from the GUI?
+        statement.setString(2, course.getCourseDescription());
         statement.executeUpdate();
     }
 
@@ -137,10 +136,7 @@ public class DAO {
 
         return coursesOfStudent;
     }
-    public void studAuthentication(){
-        
-    }
-    public void adminAuthentication(){
+    public void authenticationLogin(){
         
     }
 }

@@ -68,7 +68,6 @@ public class Server {
 
                 //Authentication
                 if (receivedObject instanceof WorkerLogin) {
-
 //                    String userAuth = (String) receivedObject;                    
 //                    dao.adminAuthentication();
 //                    for (WorkerLogin worker : /*DB */ ) {
@@ -84,12 +83,11 @@ public class Server {
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
                     try {
-                        //   dao.addStudentToDB(stud);
+                           dao.addStudentToDB(stud);
                         System.out.println(stud);
                         out.writeObject("Student Added successfully");
-
                         out.flush();
-                    } catch (IOException ex) {
+                    }  catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
@@ -125,10 +123,11 @@ public class Server {
                     try {
                         dao.addCourseToDB(course);
                         out.writeObject("Success");
+                        System.out.println(course);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                   }
                     out.writeObject("Course Added successfully");
                     out.flush();
                 } //retrieve all courses
