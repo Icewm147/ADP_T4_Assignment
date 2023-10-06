@@ -16,11 +16,14 @@ public class Client extends JFrame implements ActionListener {
     private static Socket server;
     private static Object recievedObject;
 
-    private static JPanel panelN, panelC, panelS;
+    private static JPanel panelN, panelC, panelS, panelE, panelW;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin;
     private static JComboBox cbo;
+
+    private static JButton btnAddCourse, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
+    private static JTextField searchTxt;
 
     public Client() {
 
@@ -33,6 +36,8 @@ public class Client extends JFrame implements ActionListener {
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelC = new JPanel(new FlowLayout(FlowLayout.LEADING));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelE = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        panelW = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         username = new JLabel("Username: ");
         password = new JLabel("Password: ");
@@ -44,6 +49,15 @@ public class Client extends JFrame implements ActionListener {
         cbo = new JComboBox(new String[]{"Admin", "Student"});
 
         btnLogin = new JButton("LOGIN");
+        //-----------------------------------------------------Admin  
+
+        btnAddCourse = new JButton("Add Course");
+        btnSearch = new JButton("Search");
+        btnRetrieveStud = new JButton("Retrieve Student");
+        btnRetrieveCourse = new JButton("Retrieve Course");
+        btnDelete = new JButton("Delete stud? Course?");
+        
+        searchTxt = new JTextField(20);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -51,22 +65,26 @@ public class Client extends JFrame implements ActionListener {
                 if (e.getSource() == btnLogin) {
 
                     if (cbo.getSelectedItem() == "Student") {
-
-                       
+                        heading.setText("Student Enrollment system");
+                        panelC.setVisible(false);
+                        panelW.setVisible(true);
                     } else {
-                        
+                        heading.setText("Admin Access");
+                        panelC.setVisible(false);
+                        panelE.setVisible(true);
                     }
 
                 }
             }
 
         });
-        getStreams();
+        
     }
 
     public void setGui() {
 
         panelN.add(heading);
+
         panelC.add(cbo);
         panelC.add(username);
         panelC.add(usernameTxt);
@@ -75,28 +93,24 @@ public class Client extends JFrame implements ActionListener {
 
         panelS.add(btnLogin);
 
-        
-        
-        
-        
-        
+        panelE.add(btnAddCourse);
+        panelE.add(btnRetrieveStud);
+        panelE.add(btnRetrieveCourse);
+        panelE.add(btnDelete);
+        panelE.add(searchTxt);
+        panelE.add(btnSearch);
+
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
-
-    }
-
-    public void setGuiAdmin() {
-
-    }
-
-    public void setGuiStudent() {
+        add(panelW, BorderLayout.WEST);
+        add(panelE, BorderLayout.EAST);
+        panelE.setVisible(false);
 
     }
 
     public void getStreams() {
         try {
-            
             out = new ObjectOutputStream(server.getOutputStream());
             out.flush();
             in = new ObjectInputStream(server.getInputStream());
@@ -122,7 +136,7 @@ public class Client extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == ) {
+//        if (e.getSource() == btnLogin ) {
 //            
 //        }
 //        if (e.getSource() == btnRetrieve) {
@@ -162,8 +176,8 @@ public class Client extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         Client log = new Client();
-
-        log.setTitle("Login");
+        log.getStreams();
+        log.setTitle("Enrolment System");
         log.setSize(300, 250);
         log.setGui();
         log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

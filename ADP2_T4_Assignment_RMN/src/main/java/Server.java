@@ -60,85 +60,85 @@ public class Server {
 
     
     //added code up above
-    public void processClient() {
-        while (true) {
-            try {
-                receivedObject = in.readObject();
-
-                //Authentication
-                if (receivedObject instanceof WorkerLogin) {
-                    String userSearch = (String) receivedObject;
-                    for (WorkerLogin worker : /*DB */ ) {
-                        if (worker.getUsername().equalsIgnoreCase(/*DB */) && (worker.getPassword().equalsIgnoreCase(/*DB */)) {
-                            out.writeObject("Success");
-                            out.flush();
-                        } else {
-                            out.writeObject("Login Failed");
-                            out.flush();
-                        }
-                    }
-
-                    //Add Student
-                } else if (receivedObject instanceof WorkerStudent) {
-                    WorkerStudent stud = (WorkerStudent) receivedObject;
-                    //addStudentToDB(stud); <---------------------------------------------------------------check pls
-                    out.writeObject("Student Added successfully");
-                    out.flush();
-                    
-                    //retreiving all students
-                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve all students")){
-                    //StudentDB 'allStudent' object containing StudentTable content                   
-                    out.writeObject(allStudents);
-                    out.flush();
-                    
-                   //Search student 
-                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("search")){
-                    String studID = (String) receivedObject; 
-                    /*if("studID is in the db"){
-                       Object with student parameters to contain info on that student
-                       out.writeObject(Objectname);
-                    out.flush();
-                    }
-                    else{
-                    out.writeObject("The Student you are searching for does not exist");
-                    out.flush();                    
-                    }
-                    */
-                    String name = JOptionPane.showInputDialog("Please enter your name");
-                    System.out.println(name);
-                    //add course
-                }else if (receivedObject instanceof WorkerCourse) {
-                    WorkerCourse course = (WorkerCourse) receivedObject;
-                    //addCourseToDB(course);
-                    out.writeObject("Course Added successfully");
-                    out.flush();                   
-                }
-                
-                //retrieve all courses
-                
-                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("retrieve all courses")){
-                    //'allCourses' Object containing the courseTable content
-                    out.writeobject(allCourses);
-                    out.flush();
-                }
-                
-                //Search for course
-                
-                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search")){
-                    String course = (String)receivedObject;
-                    //DB Search method: searchCourse(course);
-                    
-                }
-                
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-
-    }
+//    public void processClient() {
+//        while (true) {
+//            try {
+//                receivedObject = in.readObject();
+//
+//                //Authentication
+//                if (receivedObject instanceof WorkerLogin) {
+//                    String userSearch = (String) receivedObject;
+//                    for (WorkerLogin worker : /*DB */ ) {
+//                        if (worker.getUsername().equalsIgnoreCase(/*DB */) && (worker.getPassword().equalsIgnoreCase(/*DB */)) {
+//                            out.writeObject("Success");
+//                            out.flush();
+//                        } else {
+//                            out.writeObject("Login Failed");
+//                            out.flush();
+//                        }
+//                    }
+//
+//                    //Add Student
+//                } else if (receivedObject instanceof WorkerStudent) {
+//                    WorkerStudent stud = (WorkerStudent) receivedObject;
+//                    //addStudentToDB(stud); <---------------------------------------------------------------check pls
+//                    out.writeObject("Student Added successfully");
+//                    out.flush();
+//                    
+//                    //retreiving all students
+//                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("retrieve all students")){
+//                    //StudentDB 'allStudent' object containing StudentTable content                   
+//                    out.writeObject(allStudents);
+//                    out.flush();
+//                    
+//                   //Search student 
+//                }else if(receivedObject instanceof String  && ((String)receivedObject).equalsIgnoreCase("search")){
+//                    String studID = (String) receivedObject; 
+//                    /*if("studID is in the db"){
+//                       Object with student parameters to contain info on that student
+//                       out.writeObject(Objectname);
+//                    out.flush();
+//                    }
+//                    else{
+//                    out.writeObject("The Student you are searching for does not exist");
+//                    out.flush();                    
+//                    }
+//                    */
+//                    String name = JOptionPane.showInputDialog("Please enter your name");
+//                    System.out.println(name);
+//                    //add course
+//                }else if (receivedObject instanceof WorkerCourse) {
+//                    WorkerCourse course = (WorkerCourse) receivedObject;
+//                    //addCourseToDB(course);
+//                    out.writeObject("Course Added successfully");
+//                    out.flush();                   
+//                }
+//                
+//                //retrieve all courses
+//                
+//                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("retrieve all courses")){
+//                    //'allCourses' Object containing the courseTable content
+//                    out.writeobject(allCourses);
+//                    out.flush();
+//                }
+//                
+//                //Search for course
+//                
+//                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search")){
+//                    String course = (String)receivedObject;
+//                    //DB Search method: searchCourse(course);
+//                    
+//                }
+//                
+//            } catch (IOException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (ClassNotFoundException ex) {
+//                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//
+//    }
 
     private static void closeConnection() {
         try {
