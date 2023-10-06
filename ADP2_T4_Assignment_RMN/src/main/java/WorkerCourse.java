@@ -1,9 +1,12 @@
+
+import java.io.Serializable;
+
 /**
  *
  * @author Nicholas van der Nest (222749180)
  */
 
-public class WorkerCourse {
+public class WorkerCourse implements Serializable{
     
     private String CourseCode;
     private String courseDescription;

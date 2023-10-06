@@ -1,5 +1,8 @@
 
-public class WorkerStudent {
+import java.io.Serializable;
+
+
+public class WorkerStudent implements Serializable{
 
     private String studentName;
     private String studentLastName;

@@ -1,9 +1,12 @@
 
+import java.io.Serializable;
+
+
 /**
  *
  * @author Desktop
  */
-public class WorkerLogin {
+public class WorkerLogin implements Serializable {
 
     private String username;
     private String password;

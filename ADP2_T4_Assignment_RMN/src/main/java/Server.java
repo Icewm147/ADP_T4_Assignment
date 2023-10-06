@@ -68,7 +68,7 @@ public class Server {
 
                 //Authentication
                 if (receivedObject instanceof WorkerLogin) {
-                    
+
 //                    String userAuth = (String) receivedObject;                    
 //                    dao.adminAuthentication();
 //                    for (WorkerLogin worker : /*DB */ ) {
@@ -80,15 +80,16 @@ public class Server {
 //                            out.flush();
 //                        }
 //                    }
-                   //add student
+                    //add student
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
                     try {
-                        dao.addStudentToDB(stud);
-                        out.writeObject("Student Added successfully");
+                        //   dao.addStudentToDB(stud);
                         System.out.println(stud);
+                        out.writeObject("Student Added successfully");
+
                         out.flush();
-                    } catch (SQLException ex) {
+                    } catch (IOException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
@@ -105,7 +106,7 @@ public class Server {
                     //Search student 
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
                     String studID = (String) receivedObject;
-                    
+
                     /*if("studID is in the db"){
                        Object with student parameters to contain info on that student
                        out.writeObject(Objectname);
@@ -179,7 +180,6 @@ public class Server {
         }
 
     }
-
 
     private static void closeConnection() {
         try {

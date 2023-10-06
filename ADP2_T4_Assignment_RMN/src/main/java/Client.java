@@ -127,36 +127,6 @@ public class Client extends JFrame {
 
         });
 
-        btnAddCourse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == btnAddCourse) {
-
-                    panelJ.setVisible(true);
-                    int result = JOptionPane.showOptionDialog(null, panelJ,
-                            "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{"Add", "Cancel"}, "Yes");
-                    if (result == JOptionPane.YES_OPTION) {
-
-                        String code = courseCodeTxt.getText();
-                        String description = courseDesTxt.getText();
-                        
-                        
-                        
-                        
-                        
-                        System.out.println(code + " " + description);
-
-                        panelJ.setVisible(false);
-                    }
-
-                }
-
-            }
-
-        });
-
         btnEnroll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -168,9 +138,6 @@ public class Client extends JFrame {
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
 
-                        AddCourse();
-
-                       
                         panelJ.setVisible(false);
                     }
 
@@ -236,6 +203,29 @@ public class Client extends JFrame {
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
 
+        btnAddCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnAddCourse) {
+
+                    panelJ.setVisible(true);
+                    int result = JOptionPane.showOptionDialog(null, panelJ,
+                            "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Add", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+
+                        AddCourse();
+
+                        panelJ.setVisible(false);
+                    }
+
+                }
+
+            }
+
+        });
+
     }
 
     public void getStreams() {
@@ -274,7 +264,7 @@ public class Client extends JFrame {
 
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
-                JOptionPane.showMessageDialog(null, "Login successful.");
+                JOptionPane.showMessageDialog(null, "Course has been added.");
             }
 
         } catch (IOException ex) {
@@ -311,11 +301,6 @@ public class Client extends JFrame {
         }
 
     }
-    
-    
-    
-    
-    
 
     public static void main(String[] args) {
         Client log = new Client();
