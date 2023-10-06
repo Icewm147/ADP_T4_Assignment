@@ -122,7 +122,7 @@ public class DAO {
     }
 
     public List<WorkerCourse> coursesPerStudent(int studentNumber) throws SQLException {
-        String query = "SELECT course.* FROM course JOIN student_coourse ON course.id = student_course.course_id WHERE student_course.student_id = ?"; //<---- same as query@studentsPerCourse()
+        String query = "SELECT course.* FROM course JOIN student_course ON course.id = student_course.course_id WHERE student_course.student_id = ?"; //<---- same as query@studentsPerCourse()
 
         List<WorkerCourse> coursesOfStudent = new ArrayList<>();
 
@@ -130,11 +130,17 @@ public class DAO {
         statement.setInt(1, studentNumber);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
-            String courseID = result.getString("courseID");
-            String courseName = result.getString("courseName");
-            coursesOfStudent.add(new WorkerCourse(courseID, courseName));
+            String stud_ID = result.getString("stud_ID");
+            String course_ID = result.getString("course_ID");
+            coursesOfStudent.add(new WorkerCourse(stud_ID, course_ID));
         }
 
         return coursesOfStudent;
+    }
+    public void studAuthentication(){
+        
+    }
+    public void adminAuthentication(){
+        
     }
 }
