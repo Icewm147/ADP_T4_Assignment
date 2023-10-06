@@ -5,16 +5,19 @@
 
 public class WorkerCourse {
     
-    private String courseDescription;
     private String CourseCode;
+    private String courseDescription;
 
-    public WorkerCourse(String courseName, String CourseCode) {
-        this.courseDescription = courseName;
-        this.CourseCode = CourseCode;
+    public WorkerCourse() {
     }
 
-    public String getCourseDescription() {
-        return courseDescription;
+    public WorkerCourse(String CourseCode, String courseDescription) {
+        this.CourseCode = CourseCode;
+        this.courseDescription = courseDescription;
+    }
+
+    public void setCourseCode(String CourseCode) {
+        this.CourseCode = CourseCode;
     }
 
     public void setCourseDescription(String courseDescription) {
@@ -25,15 +28,15 @@ public class WorkerCourse {
         return CourseCode;
     }
 
-    public void setCourseCode(String CourseCode) {
-        this.CourseCode = CourseCode;
+    public String getCourseDescription() {
+        return courseDescription;
     }
 
     @Override
     public String toString() {
-        return "WorkerCourse{" +
-                "courseName='" + courseDescription + '\'' +
-                ", CourseCode='" + CourseCode + '\'' +
-                '}';
+        return "WorkerCourse{" + "CourseCode=" + CourseCode + ", courseDescription=" + courseDescription + '}';
     }
+    
+
+    
 }

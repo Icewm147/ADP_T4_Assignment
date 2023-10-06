@@ -3,13 +3,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
  *
  * @author Raeesah Khan 219308101
  */
-public class Client extends JFrame implements ActionListener {
+public class Client extends JFrame {
 
     private static ObjectOutputStream out;
     private static ObjectInputStream in;
@@ -68,7 +70,7 @@ public class Client extends JFrame implements ActionListener {
 
         //-----------------------------------------------------Student
         btnEnroll = new JButton("Enroll In Course");
-        btnViewCourse = new JButton("View Courses");
+        btnViewCourse = new JButton("View Available Courses");
 
         //-----------------------------------------------------JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -132,7 +134,7 @@ public class Client extends JFrame implements ActionListener {
 
                     panelJ.setVisible(true);
                     int result = JOptionPane.showOptionDialog(null, panelJ,
-                             "Add a Course",
+                            "Add a Course",
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
@@ -150,13 +152,26 @@ public class Client extends JFrame implements ActionListener {
             }
 
         });
-        
+
         btnEnroll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnEnroll) {
 
-                   
+                    int result = JOptionPane.showOptionDialog(null, panelJ,
+                            "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Add", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+
+                        String code = courseCodeTxt.getText();
+                        String description = courseDesTxt.getText();
+
+                        System.out.println(code + " " + description);
+
+                        panelJ.setVisible(false);
+                    }
+
                 }
             }
 
@@ -246,26 +261,36 @@ public class Client extends JFrame implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == btnLogin ) {
-//            
-//        }
-//        if (e.getSource() == btnRetrieve) {
-//            
-//        }
-//        if (e.getSource() == ) {
-//            
-//        }
+    public void AddCourse() {
+        String description = courseDesTxt.getText();
+        String code = courseCodeTxt.getText();
+
+        try {
+            WorkerCourse add = new WorkerCourse(code, description);
+            out.writeObject(add);
+            out.flush();
+
+            String recievedMsg = (String) in.readObject();
+            if (recievedMsg.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Login successful.");
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
 
     }
 
     public static void authenticationLogin() {
         WorkerLogin login = new WorkerLogin();
         String user = login.getUsername();
-        String password = login.getPassword();
+        String passwords = login.getPassword();
+        String type = cbo.getSelectedItem().toString();
 
         try {
-            WorkerLogin log = new WorkerLogin(user, password);
+            WorkerLogin log = new WorkerLogin(user, passwords, type);
             out.writeObject(log);
             out.flush();
 
@@ -284,6 +309,11 @@ public class Client extends JFrame implements ActionListener {
         }
 
     }
+    
+    
+    
+    
+    
 
     public static void main(String[] args) {
         Client log = new Client();
