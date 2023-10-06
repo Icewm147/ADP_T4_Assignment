@@ -86,6 +86,7 @@ public class Server {
                     try {
                         dao.addStudentToDB(stud);
                         out.writeObject("Student Added successfully");
+                        System.out.println(stud);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,6 +105,7 @@ public class Server {
                     //Search student 
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
                     String studID = (String) receivedObject;
+                    
                     /*if("studID is in the db"){
                        Object with student parameters to contain info on that student
                        out.writeObject(Objectname);
