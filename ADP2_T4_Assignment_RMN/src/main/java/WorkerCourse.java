@@ -5,20 +5,20 @@
 
 public class WorkerCourse {
     
-    private String courseName;
+    private String courseDescription;
     private String CourseCode;
 
     public WorkerCourse(String courseName, String CourseCode) {
-        this.courseName = courseName;
+        this.courseDescription = courseName;
         this.CourseCode = CourseCode;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getCourseDescription() {
+        return courseDescription;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
 
     public String getCourseCode() {
@@ -32,7 +32,7 @@ public class WorkerCourse {
     @Override
     public String toString() {
         return "WorkerCourse{" +
-                "courseName='" + courseName + '\'' +
+                "courseName='" + courseDescription + '\'' +
                 ", CourseCode='" + CourseCode + '\'' +
                 '}';
     }
