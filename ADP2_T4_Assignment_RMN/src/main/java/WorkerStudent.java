@@ -4,46 +4,46 @@ import java.io.Serializable;
 
 public class WorkerStudent implements Serializable{
 
-    private String studentName;
+    private String studuntID;
+    private String studentFirstName;
     private String studentLastName;
-    private String studentNumber;
 
     public WorkerStudent() {
     }
 
-    public WorkerStudent(String studentName, String studentLastName, String studentNumber) {
-        this.studentName = studentName;
-        this.studentLastName = studentLastName;
-        this.studentNumber = studentNumber;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public void setStudentLastName(String studentLastName) {
+    public WorkerStudent(String studuntID, String studentFirstName, String studentLastName) {
+        this.studuntID = studuntID;
+        this.studentFirstName = studentFirstName;
         this.studentLastName = studentLastName;
     }
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
+    public String getStuduntID() {
+        return studuntID;
     }
 
-    public String getStudentName() {
-        return studentName;
+    public void setStuduntID(String studuntID) {
+        this.studuntID = studuntID;
+    }
+
+    public String getStudentFirstName() {
+        return studentFirstName;
+    }
+
+    public void setStudentFirstName(String studentFirstName) {
+        this.studentFirstName = studentFirstName;
     }
 
     public String getStudentLastName() {
         return studentLastName;
     }
 
-    public String getStudentNumber() {
-        return studentNumber;
+    public void setStudentLastName(String studentLastName) {
+        this.studentLastName = studentLastName;
     }
 
     @Override
     public String toString() {
-        return "WorkerStudent{" + "studentName=" + studentName + ", studentLastName=" + studentLastName + ", studentNumber=" + studentNumber + '}';
+        return "WorkerStudent{" + "studuntID=" + studuntID + ", studentFirstName=" + studentFirstName + ", studentLastName=" + studentLastName + '}';
     }
-
-}
+    
+  }

@@ -26,12 +26,12 @@ public class DAO {
         }
         return con;
     }
-
+//DO NOT CHANGE, WORKING PERFECTLY (addStudentToDB)
     public void addStudentToDB(WorkerStudent student) throws IOException, SQLException { //Add outputStream.writeObject(student);
         String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)"; // enter correct details to match DB & getters and setters
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, student.getStudentNumber());
-        statement.setString(2, student.getStudentName());
+        statement.setString(1, student.getStuduntID());
+        statement.setString(2, student.getStudentFirstName());
         statement.setString(3, student.getStudentLastName());
 
         statement.executeUpdate();
@@ -71,7 +71,7 @@ public class DAO {
 
     public List<WorkerStudent> getAllStudents() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
-        String query = "SELECT * FROM Students";
+        String query = "SELECT * FROM Student_Subject";
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
@@ -138,5 +138,23 @@ public class DAO {
     }
     public void authenticationLogin(){
         
+    }
+    //get Just Student info
+    public List<WorkerStudent> getStudentInfo() throws SQLException {
+        List<WorkerStudent> students = new ArrayList<>();
+        String query = "SELECT * FROM Student_Table";
+
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            String studentNumber = result.getString("Stud_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String name = result.getString("Stud_First_Name");
+            String course = result.getString("Stud_Last_Name");
+
+            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
+            students.add(new WorkerStudent(studentNumber, name, course));
+        }
+        return students;
     }
 }

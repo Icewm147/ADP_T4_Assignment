@@ -124,6 +124,7 @@ public class Client extends JFrame {
                         heading.setText("Admin Access");
 
                         btnAddCourse.setVisible(true);
+                        btnAddStud.setVisible(true);
                         btnSearch.setVisible(true);
                         btnRetrieveStud.setVisible(true);
                         btnRetrieveCourse.setVisible(true);
@@ -254,8 +255,6 @@ public class Client extends JFrame {
 
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
-
-        
 
         btnAddStud.addActionListener(new ActionListener() {
             @Override

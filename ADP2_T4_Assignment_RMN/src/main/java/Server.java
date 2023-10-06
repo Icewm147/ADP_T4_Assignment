@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.util.*;
 
 /**
  *
@@ -83,12 +84,24 @@ public class Server {
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
                     try {
-                           dao.addStudentToDB(stud);
-                        System.out.println(stud);
-                        out.writeObject("Student Added successfully");
-                        out.flush();
-                    }  catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
+                        for (WorkerStudent students : student) {
+                            if (students.getStuduntID().equals(stud)) {
+                                 System.out.println("false"); 
+                            } else {
+                                System.out.println("true");
+                                dao.addStudentToDB(stud);
+                                System.out.println(stud);
+                                out.writeObject("Student Added successfully");
+                                out.flush();
+                                
+                              
+                               
+                            }
+                        }
+
+                    } catch (SQLException ex) {
+                       JOptionPane.showMessageDialog(null, "Student Already Added");
                     }
 
                     //retreiving all students
@@ -127,7 +140,7 @@ public class Server {
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                   }
+                    }
                     out.writeObject("Course Added successfully");
                     out.flush();
                 } //retrieve all courses
