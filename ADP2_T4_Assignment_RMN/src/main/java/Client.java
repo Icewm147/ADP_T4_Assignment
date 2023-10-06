@@ -141,7 +141,11 @@ public class Client extends JFrame {
 
                         String code = courseCodeTxt.getText();
                         String description = courseDesTxt.getText();
-
+                        
+                        
+                        
+                        
+                        
                         System.out.println(code + " " + description);
 
                         panelJ.setVisible(false);
@@ -164,11 +168,9 @@ public class Client extends JFrame {
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
 
-                        String code = courseCodeTxt.getText();
-                        String description = courseDesTxt.getText();
+                        AddCourse();
 
-                        System.out.println(code + " " + description);
-
+                       
                         panelJ.setVisible(false);
                     }
 

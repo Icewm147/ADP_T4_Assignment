@@ -110,7 +110,7 @@ public class DAO {
         List<WorkerStudent> studentsOfCourse = new ArrayList<>();
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setInt(1, courseID);
+        statement.setInt(1, courseID);   // -------  Note change to course_Code
         ResultSet result = statement.executeQuery();
         while (result.next()) {
             String studName = result.getString("courseID");
