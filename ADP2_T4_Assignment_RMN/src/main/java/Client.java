@@ -18,6 +18,8 @@ public class Client extends JFrame {
     private static Socket server;
     private static Object recievedObject;
 
+    private Font font1, font2, font3;
+
     private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
@@ -43,7 +45,13 @@ public class Client extends JFrame {
             System.out.println("IOException >>" + ex.getMessage());
         }
 
+        font1 = new Font("Arial", Font.BOLD, 18);
+        font2 = new Font("Arial", Font.BOLD, 16);
+        font3 = new Font("Arial", Font.PLAIN, 16);
+
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelN.setBackground(Color.LIGHT_GRAY);
+        
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -54,6 +62,7 @@ public class Client extends JFrame {
         username = new JLabel("Username: ");
         password = new JLabel("Password: ");
         heading = new JLabel("LOGIN");
+        heading.setFont(font1);
 
         usernameTxt = new JTextField(20);
         passwordTxt = new JTextField(20);
@@ -78,7 +87,6 @@ public class Client extends JFrame {
 
         //-----------------------------------------------------JOptionPane
         courseDes = new JLabel("Course Description: ");
-        courseDes.setAlignmentX(CENTER_ALIGNMENT);
         courseCode = new JLabel("Course Code: ");
         paneHeading = new JLabel("Add a Course: ");
 
