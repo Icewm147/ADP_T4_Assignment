@@ -31,7 +31,7 @@ public class Client extends JFrame {
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3;
+    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3,space6;
     private static JTextField courseDesTxt, courseCodeTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
@@ -52,7 +52,7 @@ public class Client extends JFrame {
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelN.setBackground(Color.LIGHT_GRAY);
         
-        panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelC = new JPanel(new GridLayout(8, 2));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
         //    panelE = new JPanel(new GridLayout(5,6));
@@ -105,6 +105,7 @@ public class Client extends JFrame {
         space0 = new JLabel();
         space4 = new JLabel();
         space5 = new JLabel();
+        space6 = new JLabel();
 
         studIdTxt = new JTextField(20);
         studNameTxt = new JTextField(20);
@@ -207,6 +208,7 @@ public class Client extends JFrame {
         panelN.add(heading);
 
         panelC.add(cbo);
+        panelC.add(space6);
         panelC.add(username);
         panelC.add(usernameTxt);
         panelC.add(password);
