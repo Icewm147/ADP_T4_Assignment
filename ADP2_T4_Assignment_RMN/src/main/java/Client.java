@@ -520,7 +520,7 @@ public class Client extends JFrame {
         tableModel.addColumn("Availability");
 
         try {
-            out.writeObject("retrieve Course");
+            out.writeObject("retrieve all courses");
             out.flush();
             
               ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
