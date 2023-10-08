@@ -150,29 +150,29 @@ public class DAO {
         }
     }
     //change this one to add user access type , change the table name also
-    public void authenticateAdmin(String username, String password) throws SQLException{
-        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?"; //---table name
-        
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, username);
-        statement.setString(1, password);
-        ResultSet result = statement.executeQuery();
-        if (!result.next()){
-            JOptionPane.showMessageDialog(null, "Admin login failed!");
-        }
-    }
-    //delete this method
-    public void authenticateStudent(String username, String password) throws SQLException{
-        String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
-        
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, username);
-        statement.setString(1, password);
-        ResultSet result = statement.executeQuery();
-        if (!result.next()){
-            JOptionPane.showMessageDialog(null, "Student login failed!");
-        }
-    }
+//    public void authenticateAdmin(String username, String password) throws SQLException{
+//        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?"; //---table name
+//        
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setString(1, username);
+//        statement.setString(1, password);
+//        ResultSet result = statement.executeQuery();
+//        if (!result.next()){
+//            JOptionPane.showMessageDialog(null, "Admin login failed!");
+//        }
+//    }
+//    //delete this method
+//    public void authenticateStudent(String username, String password) throws SQLException{
+//        String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
+//        
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setString(1, username);
+//        statement.setString(1, password);
+//        ResultSet result = statement.executeQuery();
+//        if (!result.next()){
+//            JOptionPane.showMessageDialog(null, "Student login failed!");
+//        }
+//    }
 //    //dont need this cuz we got one table for all logins
 //    public void authenticateAdmin(String username, String password) throws SQLException{
 //        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
