@@ -215,4 +215,21 @@ public class DAO {
         }
         return students;
     }
+    //get Just Course info
+    public List<WorkerCourse> getCourseInfo() throws SQLException {
+        List<WorkerCourse> courses = new ArrayList<>();
+        String query = "SELECT * FROM Course";
+
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String desc = result.getString("Course_Description");
+            Boolean availability = result.getBoolean("Available");
+
+            courses.add(new WorkerCourse(courseCode, desc, availability));
+        }
+        return courses;
+    }
 }
