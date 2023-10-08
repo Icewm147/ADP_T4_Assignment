@@ -129,10 +129,10 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
-                    
+
                     if (cbo.getSelectedItem() == "Student") {
                         heading.setText("Student Enrollment system");
-                         panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         btnEnroll.setVisible(true);
                         btnViewCourse.setVisible(true);
 
@@ -213,7 +213,7 @@ public class Client extends JFrame {
 
     public void setGui() {
 
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 100, 20));
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 500, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -488,18 +488,18 @@ public class Client extends JFrame {
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
 
-//        try {
-//            out.writeObject("retrieve student");
-//            out.flush();
-//
-//            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
-//            tableModel.addRow(new Object[]{display});
-//
-//        } catch (IOException ex) {
-//               System.out.println("IOException" + ex.getMessage());
-//        } catch (ClassNotFoundException ex) {
-//              System.out.println("ClassNotFoundException" + ex.getMessage());
-//        }
+        try {
+            out.writeObject("retrieve student");
+            out.flush();
+
+            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
+            tableModel.addRow(new Object[]{display});
+
+        } catch (IOException ex) {
+               System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+              System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
     }
 
     public static void retrieveCourse() {
