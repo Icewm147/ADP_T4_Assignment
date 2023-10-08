@@ -25,8 +25,8 @@ public class Client extends JFrame {
     private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
-    private static JButton btnLogin;
-    private static JComboBox cbo;
+    private static JButton btnLogin, btnLogout;
+    private static JComboBox cbo, cbo1, cbo2;
 
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
     private static JTextField searchTxt;
@@ -74,8 +74,11 @@ public class Client extends JFrame {
         passwordTxt = new JTextField(20);
 
         cbo = new JComboBox(new String[]{"Admin", "Student"});
+        cbo1 = new JComboBox(new String[]{"raeesah", "khan"});
+        cbo2 = new JComboBox(new String[]{"inm", "adt"});
 
         btnLogin = new JButton("LOGIN");
+        btnLogout = new JButton("LOGOUT");
         //-----------------------------------------------------Admin  
 
         btnAddCourse = new JButton("Add Course");
@@ -126,10 +129,10 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
-
+                    
                     if (cbo.getSelectedItem() == "Student") {
                         heading.setText("Student Enrollment system");
-
+                         panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         btnEnroll.setVisible(true);
                         btnViewCourse.setVisible(true);
 
@@ -210,7 +213,7 @@ public class Client extends JFrame {
 
     public void setGui() {
 
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 100, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -218,12 +221,12 @@ public class Client extends JFrame {
 
         panelN.add(heading);
 
-        panelC.add(cbo);
-        panelC.add(space6);
-        panelC.add(username);
-        panelC.add(usernameTxt);
-        panelC.add(password);
-        panelC.add(passwordTxt);
+        panelN.add(cbo);
+        panelN.add(space6);
+        panelN.add(username);
+        panelN.add(usernameTxt);
+        panelN.add(password);
+        panelN.add(passwordTxt);
 
         panelC.add(btnAddCourse);
         panelC.add(btnAddStud);
@@ -237,6 +240,7 @@ public class Client extends JFrame {
         panelC.add(btnViewCourse);
 
         panelS.add(btnLogin);
+        panelS.add(btnLogout);
 
         panelJ.add(paneHeading);
         panelJ.add(space1);
@@ -259,6 +263,8 @@ public class Client extends JFrame {
         panelW.setVisible(false);
 
         panelC.add(new JScrollPane(table));
+        scrollPane.setVisible(false);
+        table.setVisible(false);
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
@@ -297,6 +303,49 @@ public class Client extends JFrame {
 
                 }
 
+            }
+
+        });
+
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnDelete) {
+                    int result = JOptionPane.showOptionDialog(null, "Choose which catagory that you would like to delete from. ",
+                            "Add a Course",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new String[]{"Student", "Course"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+                        //------------------ Delete student
+                        int result1 = JOptionPane.showOptionDialog(null, cbo1,
+                                "Delete Student",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                                new String[]{"Delete", "Cancel"}, "Yes");
+                        if (result1 == JOptionPane.YES_OPTION) {
+                            int answer1 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this student? ");
+                            if (answer1 == JOptionPane.YES_OPTION) {
+                                System.out.println("Student deleted");
+                            }
+
+                        }
+
+                    } else {
+                        //------------------ Delete Course
+                        int result1 = JOptionPane.showOptionDialog(null, cbo2,
+                                "Delete Student",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                                new String[]{"Delete", "Cancel"}, "Yes");
+                        if (result1 == JOptionPane.YES_OPTION) {
+                            int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this course? ");
+                            if (answer == JOptionPane.YES_OPTION) {
+                                System.out.println("Course deleted");
+                            }
+
+                        }
+
+                    }
+
+                }
             }
 
         });
@@ -447,9 +496,9 @@ public class Client extends JFrame {
 //            tableModel.addRow(new Object[]{display});
 //
 //        } catch (IOException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//               System.out.println("IOException" + ex.getMessage());
 //        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//              System.out.println("ClassNotFoundException" + ex.getMessage());
 //        }
     }
 
@@ -468,13 +517,21 @@ public class Client extends JFrame {
 //           tableModel.addRow(display);
 //            
 //        } catch (IOException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//          System.out.println("IOException" + ex.getMessage());
 //        }catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("ClassNotFoundException" + ex.getMessage());
 //        }
     }
 
     public static void searchStud() {
+
+    }
+
+    public static void deleteStud() {
+
+    }
+
+    public static void deleteCourse() {
 
     }
 
