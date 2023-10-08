@@ -418,11 +418,11 @@ public class Client extends JFrame {
 
     }
     
-     public void displayStudentRecords(ArrayList<WorkerStudent> list) {
-        for (WorkerStudent students : list) {
-          
-        }
-    }
+//     public void displayStudentRecords(ArrayList<WorkerStudent> list) {
+//        for (WorkerStudent students : list) {
+//          
+//        }
+//    }
 
     public static void main(String[] args) {
         Client log = new Client();
