@@ -210,6 +210,19 @@ public class Client extends JFrame {
 
         });
 
+        btnLogout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnLogout) {
+
+                    System.exit(0);
+                    closeConnection();
+
+                }
+            }
+
+        });
+
     }
 
     public void setGui() {
@@ -402,7 +415,7 @@ public class Client extends JFrame {
 
     private static void closeConnection() {
         try {
-            out.writeObject("Server has closed");
+            out.writeObject("Exit");
             out.flush();
             out.close();
             in.close();
@@ -524,8 +537,8 @@ public class Client extends JFrame {
         try {
             out.writeObject("retrieve all courses");
             out.flush();
-            
-              ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
+
+            ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerCourse workerCourse = display.get(i);
 
@@ -534,7 +547,6 @@ public class Client extends JFrame {
 
                 tableModel.addRow(arrConArray);
             }
-            
 
         } catch (IOException ex) {
             System.out.println("IOException" + ex.getMessage());
@@ -565,7 +577,6 @@ public class Client extends JFrame {
         tableModel.setColumnCount(0);
     }
 
-
     public static ArrayList<Object> converter(WorkerStudent workerStudent) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerStudent.getStuduntID());
@@ -573,7 +584,7 @@ public class Client extends JFrame {
         arrConvert.add(workerStudent.getStudentLastName());
         return arrConvert;
     }
-    
+
     public static ArrayList<Object> converter2(WorkerCourse workerCourse) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerCourse.getCourseCode());
