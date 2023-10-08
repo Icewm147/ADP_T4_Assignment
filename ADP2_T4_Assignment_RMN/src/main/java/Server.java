@@ -107,7 +107,7 @@ public class Server {
                     //retreiving all students
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all students")) {
                     try {
-                        Object obj = dao.getAllStudents();
+                        Object obj = dao.getStudentInfo();
                         out.writeObject(obj);
                         out.flush();
                     } catch (SQLException ex) {

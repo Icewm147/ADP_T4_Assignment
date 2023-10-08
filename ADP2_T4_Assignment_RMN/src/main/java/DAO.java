@@ -61,20 +61,20 @@ public class DAO {
         statement.setString(2, course.getCourseDescription());
         statement.executeUpdate();
     }
-
-    public List<WorkerStudent> getAllStudents() throws SQLException {
-        List<WorkerStudent> students = new ArrayList<>();
-        String query = "SELECT * FROM Student_Subject";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+    //getting all information on Subjects
+    public List<WorkerSubject> getAllSubjects() throws SQLException {
+        List<WorkerSubject> students = new ArrayList<>();
+        String query = "SELECT * FROM Subject_Table";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Student_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
             String name = result.getString("Subject_Name");
             String course = result.getString("Course_ID");
             //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
-            students.add(new WorkerStudent(studentNumber, name, course));
+            students.add(new WorkerSubject(studentNumber, name, course));
         }
         return students;
     }
@@ -127,7 +127,7 @@ public class DAO {
 
         return coursesOfStudent;
     }
-    
+   
     public void authenticationLogin(String username, String password, String typeOfUser) throws SQLException{
         if("admin".equals(typeOfUser)){
             authenticateAdmin(username, password);
@@ -138,7 +138,7 @@ public class DAO {
             System.out.println("Faield at authenticateLogin()");
         }
     }
-    
+    //dont need this cuz we got one table for all logins
     public void authenticateAdmin(String username, String password) throws SQLException{
         String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
         
@@ -150,7 +150,7 @@ public class DAO {
             JOptionPane.showMessageDialog(null, "Admin login failed!");
         }
     }
-    
+    //dont need this cuz we got one table for all logins
     public void authenticateStudent(String username, String password) throws SQLException{
         String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
         
