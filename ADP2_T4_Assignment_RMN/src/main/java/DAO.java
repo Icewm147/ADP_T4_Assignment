@@ -27,26 +27,18 @@ public class DAO {
         return con;
     }
 //DO NOT CHANGE, WORKING PERFECTLY (addStudentToDB)
-    public void addStudentToDB(WorkerStudent student) throws IOException, SQLException { //Add outputStream.writeObject(student);
-        String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)"; // enter correct details to match DB & getters and setters
+    public void addStudentToDB(WorkerStudent student) throws IOException, SQLException {
+        String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, student.getStuduntID());
         statement.setString(2, student.getStudentFirstName());
         statement.setString(3, student.getStudentLastName());
 
         statement.executeUpdate();
-//
-//            if (studentIsAdded) {
-//                Socket socket = new Socket("127.0.0.1", 12345);
-//                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-//                outputStream.writeObject(student);
-//                outputStream.flush();
-//                socket.close();
-//            }
     }
 
     public void deleteStudent(int studentNumber) throws SQLException {
-        String query = "DELETE FROM Students WHERE Stud_Number = ?";
+        String query = "DELETE FROM Students WHERE Stud_ID = ?"; //<<----------should work now
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, studentNumber);
@@ -54,7 +46,7 @@ public class DAO {
     }
 
     public void deleteCourseFromDB(int courseID) throws SQLException {
-        String query = "DELETE FROM Course WHERE CourseID = ?";
+        String query = "DELETE FROM Course WHERE Course_Code = ?"; //<<-------DOUBLE CHECK THAT Course_Code IS NOT ALL CAPS!!!!!!!!!!
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, courseID);
@@ -64,14 +56,14 @@ public class DAO {
     public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
         String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION) VALUES (?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, course.getCourseCode());                 //<<------------I think this will come from the GUI?
+        statement.setString(1, course.getCourseCode());
         statement.setString(2, course.getCourseDescription());
         statement.executeUpdate();
     }
 
     public List<WorkerStudent> getAllStudents() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
-        String query = "SELECT * FROM Student_Subject";
+        String query = "SELECT * FROM Student_Subject";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
@@ -89,31 +81,30 @@ public class DAO {
 
     public List<WorkerCourse> getAllCourses() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
-        String query = "SELECT * FROM Course";
+        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS OE SHOULD BE RIGHT))
+            String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS SHOULD BE RIGHT))
             String courseDescription = result.getString("COURSE_DESCRIPTION");
 
-            //WorkerCourse course = new WorkerCourse(courseID, courseDescription); <------Delete after testing if not needed
             courses.add(new WorkerCourse(courseID, courseDescription));
         }
         return courses;
     }
 
-    public List<WorkerStudent> studentsPerCourse(int courseID) throws SQLException {
-        String query = "SELECT student.* FROM student JOIN student_course ON student.id = student_course.student_id WHERE student_course.course_id = ?"; //<--------- query will need fixing with right table names
+    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
+        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
 
         List<WorkerStudent> studentsOfCourse = new ArrayList<>();
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setInt(1, courseID);   // -------  Note change to course_Code
+        statement.setInt(1, courseCode);   // -------  Note change to course_Code (Might not need to since it takes it as the passed variable in the method)
         ResultSet result = statement.executeQuery();
         while (result.next()) {
             String studName = result.getString("courseID");
-            String studLastName = result.getString("courseName");
+            String studLastName = result.getString("courseName");//FOR THE WHOLE METHOD DBL CHECK WHAT TABLE IT IS FETCHING STUDENTS FROM FOR CORRECT INFO TO BE INSERTED
             String studNum = result.getString("studNum");
             studentsOfCourse.add(new WorkerStudent(studName, studLastName, studNum));
         }
@@ -121,7 +112,7 @@ public class DAO {
     }
 
     public List<WorkerCourse> coursesPerStudent(int studentNumber) throws SQLException {
-        String query = "SELECT course.* FROM course JOIN student_course ON course.id = student_course.course_id WHERE student_course.student_id = ?"; //<---- same as query@studentsPerCourse()
+        String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
 
         List<WorkerCourse> coursesOfStudent = new ArrayList<>();
 
@@ -136,23 +127,23 @@ public class DAO {
 
         return coursesOfStudent;
     }
+    
     public void authenticationLogin(){
-        
+        //AUTHENTICATION FOR STUDENT AND ADMIN LOGIN 
     }
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
-        String query = "SELECT * FROM Student_Table";
+        String query = "SELECT * FROM STUDENT_TABLE";
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Stud_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
-            String name = result.getString("Stud_First_Name");
-            String course = result.getString("Stud_Last_Name");
+            String studentNumber = result.getString("Stud_ID");   //<<------------SHOULD BE RIGHT
+            String name = result.getString("STUD_FIRST_NAME");
+            String course = result.getString("STUD_LAST_NAME");
 
-            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
             students.add(new WorkerStudent(studentNumber, name, course));
         }
         return students;
