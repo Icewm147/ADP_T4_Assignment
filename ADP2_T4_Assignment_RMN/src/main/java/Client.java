@@ -19,6 +19,7 @@ public class Client extends JFrame {
     private static ObjectInputStream in;
     private static Socket server;
     private static Object recievedObject;
+    private static Object displays;
 
     private Font font1, font2, font3;
 
@@ -129,10 +130,10 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
-                    
+
                     if (cbo.getSelectedItem() == "Student") {
                         heading.setText("Student Enrollment system");
-                         panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         btnEnroll.setVisible(true);
                         btnViewCourse.setVisible(true);
 
@@ -354,6 +355,8 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
+                    table.setVisible(true);
+                    scrollPane.setVisible(true);
                     retrieveStud();
                 }
 
@@ -488,39 +491,44 @@ public class Client extends JFrame {
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
 
-//        try {
-//            out.writeObject("retrieve student");
-//            out.flush();
-//
-//            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
-//            tableModel.addRow(new Object[]{display});
-//
-//        } catch (IOException ex) {
-//               System.out.println("IOException" + ex.getMessage());
-//        } catch (ClassNotFoundException ex) {
-//              System.out.println("ClassNotFoundException" + ex.getMessage());
-//        }
+        try {
+            out.writeObject("retrieve student");
+            out.flush();
+
+            ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerStudent workerStudent = display.get(i);
+
+                ArrayList<Object> arrCon = converter(workerStudent);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
     }
 
     public static void retrieveCourse() {
         clearTable();
         tableModel.addColumn("Course Code");
         tableModel.addColumn("Course Description");
-        //tableModel.addColumn("Last Name");
+        tableModel.addColumn("Availability");
 
-//        try {
-//            out.writeObject("retrieve Course");
-//            out.flush();
-//            
-//        WorkerStudent recievedMsg = (WorkerStudent) in.readObject();  //---this or 
-//            ArrayList<WorkerStudent> display = (ArrayList)in.readObject(); //--- this one
-//           tableModel.addRow(display);
-//            
-//        } catch (IOException ex) {
-//          System.out.println("IOException" + ex.getMessage());
-//        }catch (ClassNotFoundException ex) {
-//            System.out.println("ClassNotFoundException" + ex.getMessage());
-//        }
+        try {
+            out.writeObject("retrieve Course");
+            out.flush();
+            
+
+            
+        } catch (IOException ex) {
+          System.out.println("IOException" + ex.getMessage());
+        }catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
     }
 
     public static void searchStud() {
@@ -545,6 +553,33 @@ public class Client extends JFrame {
         tableModel.setColumnCount(0);
     }
 
+////    public static ArrayList<Object> converter(ArrayList<WorkerStudent> list) {
+////        ArrayList<Object> arrConvert = new ArrayList<>();
+////        for (WorkerStudent obj : list) {
+////            arrConvert.add(obj.getStuduntID());
+////            arrConvert.add(obj.getStudentFirstName());
+////            arrConvert.add(obj.getStudentLastName());
+////        }
+////        return arrConvert;
+////    }
+    public static ArrayList<Object> converter(WorkerStudent workerStudent) {
+    ArrayList<Object> arrConvert = new ArrayList<>();
+    arrConvert.add(workerStudent.getStuduntID());
+    arrConvert.add(workerStudent.getStudentFirstName());
+    arrConvert.add(workerStudent.getStudentLastName());
+    return arrConvert;
+}
+
+// public static ArrayList<Object> converter(Object obj){
+//        ArrayList<Object> arrConvert= new ArrayList<>();
+//        if(obj instanceof WorkerStudent){
+//           // Object display= (WorkerStudent) obj;
+//            arrConvert.add(((WorkerStudent) obj).getStuduntID());
+//            arrConvert.add(((WorkerStudent) obj).getStudentFirstName());
+//            arrConvert.add(((WorkerStudent) obj).getStudentLastName());
+//        }
+//        return arrConvert;
+//    }
     public static void main(String[] args) {
         Client log = new Client();
         log.getStreams();

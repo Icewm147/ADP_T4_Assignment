@@ -105,8 +105,10 @@ public class Server {
                     //retreiving all students
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
                     try {
-                        Object studentList = dao.getStudentInfo();
-                        out.writeObject(studentList);
+                        List<WorkerStudent> studentList = dao.getStudentInfo();
+                         Object obj = studentList;
+                        System.out.println(studentList.toString());
+                        out.writeObject(obj);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -194,6 +196,7 @@ public class Server {
         }
 
     }
+   
 
     private static void closeConnection() {
         try {
