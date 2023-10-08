@@ -99,8 +99,11 @@ public class Server {
                         }
 
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Student Already Added");
-                    }
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    } 
+//                    catch (SQLException ex) {
+//                        JOptionPane.showMessageDialog(null, "Student Already Added");
+//                    }
 
                     //retreiving all students
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
@@ -187,6 +190,10 @@ public class Server {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
+                }
+                else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit"))
+                {
+                    closeConnection();
                 }
 
             } catch (IOException ex) {

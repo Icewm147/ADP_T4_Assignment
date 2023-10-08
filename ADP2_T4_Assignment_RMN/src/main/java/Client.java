@@ -368,6 +368,8 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
+                    table.setVisible(true);
+                    scrollPane.setVisible(true);
                     retrieveCourse();
                 }
 
