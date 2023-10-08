@@ -118,15 +118,15 @@ public class Server {
                     try {
                         Object search = dao.getStudentInfo();
                         
-                    if(studID.equalsIgnoreCase(objSearch)){
-                       Object with student parameters to contain info on that student
-                       out.writeObject(Objectname);
-                    out.flush();
-                    }
-                    else{
-                    out.writeObject("The Student you are searching for does not exist");
-                    out.flush();                    
-                    }
+//                    if(studID.equalsIgnoreCase(objSearch)){
+//                       Object with student parameters to contain info on that student
+//                       out.writeObject(Objectname);
+//                    out.flush();
+//                    }
+//                    else{
+//                    out.writeObject("The Student you are searching for does not exist");
+//                    out.flush();                    
+//                    }
                         } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }

@@ -41,6 +41,7 @@ public class Client extends JFrame {
 
     private static DefaultTableModel tableModel;
     private static JTable table;
+    private static JScrollPane scrollPane;
 
     public Client() {
 
@@ -116,8 +117,10 @@ public class Client extends JFrame {
         studNameTxt = new JTextField(20);
         studLastNameTxt = new JTextField(20);
 
+        //-------------------------------------------- table
         tableModel = new DefaultTableModel();
         table = new JTable(tableModel);
+        scrollPane = new JScrollPane(table);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -275,7 +278,7 @@ public class Client extends JFrame {
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
 
-        table.setVisible(false);
+        scrollPane.setVisible(false);
 
         btnAddStud.addActionListener(new ActionListener() {
             @Override
@@ -292,6 +295,39 @@ public class Client extends JFrame {
                         panelW.setVisible(false);
                     }
 
+                }
+
+            }
+
+        });
+
+        btnRetrieveStud.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnRetrieveStud) {
+                    retrieveStud();
+                }
+
+            }
+
+        });
+
+        btnRetrieveCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnRetrieveCourse) {
+                    retrieveCourse();
+                }
+
+            }
+
+        });
+
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnSearch) {
+                    searchStud();
                 }
 
             }
@@ -398,31 +434,59 @@ public class Client extends JFrame {
     }
 
     public static void retrieveStud() {
-
+        clearTable();
         tableModel.addColumn("Student Id");
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
-        
-        try {
-            out.writeObject("retrieve student");
-            out.flush();
-            
-            ArrayList<WorkerStudent> display = (ArrayList)in.readObject();
-           tableModel.addRow(display);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+//        try {
+//            out.writeObject("retrieve student");
+//            out.flush();
+//
+//            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
+//            tableModel.addRow(new Object[]{display});
+//
+//        } catch (IOException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+
+    public static void retrieveCourse() {
+        clearTable();
+        tableModel.addColumn("Course Code");
+        tableModel.addColumn("Course Description");
+        //tableModel.addColumn("Last Name");
+
+//        try {
+//            out.writeObject("retrieve Course");
+//            out.flush();
+//            
+//        WorkerStudent recievedMsg = (WorkerStudent) in.readObject();  //---this or 
+//            ArrayList<WorkerStudent> display = (ArrayList)in.readObject(); //--- this one
+//           tableModel.addRow(display);
+//            
+//        } catch (IOException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        }catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }
+
+    public static void searchStud() {
 
     }
-    
-//     public void displayStudentRecords(ArrayList<WorkerStudent> list) {
-//        for (WorkerStudent students : list) {
-//          
-//        }
-//    }
+
+    private static void clearTable() {
+        int rowCount = tableModel.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            tableModel.removeRow(i);
+        }
+
+        DefaultTableModel tableM = (DefaultTableModel) table.getModel();
+        tableModel.setColumnCount(0);
+    }
 
     public static void main(String[] args) {
         Client log = new Client();
