@@ -7,15 +7,26 @@ public class WorkerStudent implements Serializable{
     private String studuntID;
     private String studentFirstName;
     private String studentLastName;
+    private String courseID;
 
     public WorkerStudent() {
     }
 
-    public WorkerStudent(String studuntID, String studentFirstName, String studentLastName) {
+    public WorkerStudent(String studuntID, String studentFirstName, String courseID) {
         this.studuntID = studuntID;
         this.studentFirstName = studentFirstName;
-        this.studentLastName = studentLastName;
+        this.courseID = courseID;
     }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(String courseID) {
+        this.courseID = courseID;
+    }
+    
+    
 
     public String getStuduntID() {
         return studuntID;
@@ -41,9 +52,5 @@ public class WorkerStudent implements Serializable{
         this.studentLastName = studentLastName;
     }
 
-    @Override
-    public String toString() {
-        return "WorkerStudent{" + "studuntID=" + studuntID + ", studentFirstName=" + studentFirstName + ", studentLastName=" + studentLastName + '}';
-    }
     
   }
