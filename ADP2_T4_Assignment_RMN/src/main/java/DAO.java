@@ -138,9 +138,9 @@ public class DAO {
             System.out.println("Faield at authenticateLogin()");
         }
     }
-    //dont need this cuz we got one table for all logins
+    //change this one to add user access type , change the table name also
     public void authenticateAdmin(String username, String password) throws SQLException{
-        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
+        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?"; //---table name
         
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, username);
@@ -150,7 +150,7 @@ public class DAO {
             JOptionPane.showMessageDialog(null, "Admin login failed!");
         }
     }
-    //dont need this cuz we got one table for all logins
+    //delete this method
     public void authenticateStudent(String username, String password) throws SQLException{
         String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
         
