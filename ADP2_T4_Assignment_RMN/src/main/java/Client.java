@@ -522,9 +522,22 @@ public class Client extends JFrame {
         try {
             out.writeObject("retrieve Course");
             out.flush();
+            
+              ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerCourse workerCourse = display.get(i);
+
+                ArrayList<Object> arrCon = converter2(workerCourse);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+            }
+            
 
         } catch (IOException ex) {
             System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
         }
     }
 
@@ -550,15 +563,7 @@ public class Client extends JFrame {
         tableModel.setColumnCount(0);
     }
 
-////    public static ArrayList<Object> converter(ArrayList<WorkerStudent> list) {
-////        ArrayList<Object> arrConvert = new ArrayList<>();
-////        for (WorkerStudent obj : list) {
-////            arrConvert.add(obj.getStuduntID());
-////            arrConvert.add(obj.getStudentFirstName());
-////            arrConvert.add(obj.getStudentLastName());
-////        }
-////        return arrConvert;
-////    }
+
     public static ArrayList<Object> converter(WorkerStudent workerStudent) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerStudent.getStuduntID());
@@ -566,17 +571,15 @@ public class Client extends JFrame {
         arrConvert.add(workerStudent.getStudentLastName());
         return arrConvert;
     }
+    
+    public static ArrayList<Object> converter2(WorkerCourse workerCourse) {
+        ArrayList<Object> arrConvert = new ArrayList<>();
+        arrConvert.add(workerCourse.getCourseCode());
+        arrConvert.add(workerCourse.getCourseDescription());
+        arrConvert.add(workerCourse.isAvailable());
+        return arrConvert;
+    }
 
-// public static ArrayList<Object> converter(Object obj){
-//        ArrayList<Object> arrConvert= new ArrayList<>();
-//        if(obj instanceof WorkerStudent){
-//           // Object display= (WorkerStudent) obj;
-//            arrConvert.add(((WorkerStudent) obj).getStuduntID());
-//            arrConvert.add(((WorkerStudent) obj).getStudentFirstName());
-//            arrConvert.add(((WorkerStudent) obj).getStudentLastName());
-//        }
-//        return arrConvert;
-//    }
     public static void main(String[] args) {
         Client log = new Client();
         log.getStreams();

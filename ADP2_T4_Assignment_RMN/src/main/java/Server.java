@@ -87,26 +87,26 @@ public class Server {
                         ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
                         for (WorkerStudent students : student) {
                             if (students.getStuduntID().equals(stud)) {
-                                 System.out.println("false"); 
+                                System.out.println("false");
                             } else {
                                 System.out.println("true");
                                 dao.addStudentToDB(stud);
                                 System.out.println(stud);
                                 out.writeObject("success");
                                 out.flush();
-                           
+
                             }
                         }
 
                     } catch (SQLException ex) {
-                       JOptionPane.showMessageDialog(null, "Student Already Added");
+                        JOptionPane.showMessageDialog(null, "Student Already Added");
                     }
 
                     //retreiving all students
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
                     try {
                         List<WorkerStudent> studentList = dao.getStudentInfo();
-                         Object obj = studentList;
+                        Object obj = studentList;
                         System.out.println(studentList.toString());
                         out.writeObject(obj);
                         out.flush();
@@ -114,12 +114,24 @@ public class Server {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                    //Search student 
-                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
+                } //retrieve all courses
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
+                    try {
+                        List<WorkerStudent> courseList = dao.getCourseInfo();
+                        Object obj = courseList;
+                        System.out.println(courseList.toString());
+                        out.writeObject(obj);
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } //Search student 
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
                     String studID = (String) receivedObject;
                     try {
                         Object search = dao.getStudentInfo();
-                        
+
 //                    if(studID.equalsIgnoreCase(objSearch)){
 //                       Object with student parameters to contain info on that student
 //                       out.writeObject(Objectname);
@@ -129,10 +141,10 @@ public class Server {
 //                    out.writeObject("The Student you are searching for does not exist");
 //                    out.flush();                    
 //                    }
-                        } catch (SQLException ex) {
+                    } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                     
+
                     String name = JOptionPane.showInputDialog("Please enter your name");
                     System.out.println(name);
                     //add course DONE
@@ -148,16 +160,6 @@ public class Server {
                     }
                     out.writeObject("Course Added successfully");
                     out.flush();
-                } //retrieve all courses
-                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
-                    try {
-                        Object allCourses = dao.getAllCourses();
-                        out.writeObject(allCourses);
-                        out.flush();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
                 } //Search for course
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Search")) {
                     String course = (String) receivedObject;
@@ -196,7 +198,6 @@ public class Server {
         }
 
     }
-   
 
     private static void closeConnection() {
         try {
