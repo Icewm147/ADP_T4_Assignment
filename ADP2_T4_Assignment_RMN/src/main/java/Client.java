@@ -510,8 +510,6 @@ public class Client extends JFrame {
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" + ex.getMessage());
 
-//            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
-//            tableModel.addRow(new Object[]{display});
         }
     }
 
