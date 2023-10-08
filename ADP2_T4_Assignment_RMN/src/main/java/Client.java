@@ -213,7 +213,7 @@ public class Client extends JFrame {
 
     public void setGui() {
 
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 500, 20));
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 350, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
