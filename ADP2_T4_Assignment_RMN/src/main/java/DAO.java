@@ -70,10 +70,9 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Student_Number");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
-            String name = result.getString("Name");
-            String course = result.getString("Course");
-
+            String studentNumber = result.getString("Student_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String name = result.getString("Subject_Name");
+            String course = result.getString("Course_ID");
             //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
             students.add(new WorkerStudent(studentNumber, name, course));
         }
