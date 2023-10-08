@@ -56,7 +56,7 @@ public class Client extends JFrame {
         font2 = new Font("Arial", Font.BOLD, 16);
         font3 = new Font("Arial", Font.PLAIN, 16);
 
-        panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelN = new JPanel(new GridLayout(8, 1));
         panelN.setBackground(Color.LIGHT_GRAY);
 
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -145,8 +145,8 @@ public class Client extends JFrame {
 
                         panelS.setVisible(false);
                     } else {
+                        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         heading.setText("Admin Access");
-
                         btnAddCourse.setVisible(true);
                         btnAddStud.setVisible(true);
                         btnSearch.setVisible(true);
@@ -215,7 +215,6 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogout) {
 
-                  
                     closeConnection();
 
                 }
@@ -227,7 +226,7 @@ public class Client extends JFrame {
 
     public void setGui() {
 
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 350, 20));
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 200, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
