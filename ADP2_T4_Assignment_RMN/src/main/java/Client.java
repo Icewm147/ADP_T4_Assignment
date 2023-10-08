@@ -3,9 +3,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,11 +33,14 @@ public class Client extends JFrame {
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3,space6;
+    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3, space6;
     private static JTextField courseDesTxt, courseCodeTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
     private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
+
+    private static DefaultTableModel tableModel;
+    private static JTable table;
 
     public Client() {
 
@@ -51,8 +56,8 @@ public class Client extends JFrame {
 
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelN.setBackground(Color.LIGHT_GRAY);
-        
-        panelC = new JPanel(new GridLayout(8, 2));
+
+        panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
         //    panelE = new JPanel(new GridLayout(5,6));
@@ -110,6 +115,9 @@ public class Client extends JFrame {
         studIdTxt = new JTextField(20);
         studNameTxt = new JTextField(20);
         studLastNameTxt = new JTextField(20);
+
+        tableModel = new DefaultTableModel();
+        table = new JTable(tableModel);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -247,6 +255,7 @@ public class Client extends JFrame {
 
         panelW.setVisible(false);
 
+        panelC.add(new JScrollPane(table));
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
@@ -265,6 +274,8 @@ public class Client extends JFrame {
 
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
+
+        table.setVisible(false);
 
         btnAddStud.addActionListener(new ActionListener() {
             @Override
@@ -384,6 +395,33 @@ public class Client extends JFrame {
             System.out.println("ClassNotFoundException" + ex.getMessage());
         }
 
+    }
+
+    public static void retrieveStud() {
+
+        tableModel.addColumn("Student Id");
+        tableModel.addColumn("First Name");
+        tableModel.addColumn("Last Name");
+        
+        try {
+            out.writeObject("retrieve student");
+            out.flush();
+            
+            ArrayList<WorkerStudent> display = (ArrayList)in.readObject();
+           tableModel.addRow(display);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+     public void displayStudentRecords(ArrayList<WorkerStudent> list) {
+        for (WorkerStudent students : list) {
+          
+        }
     }
 
     public static void main(String[] args) {
