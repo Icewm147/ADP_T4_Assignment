@@ -3,6 +3,7 @@ import java.io.*;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -128,9 +129,41 @@ public class DAO {
         return coursesOfStudent;
     }
     
-    public void authenticationLogin(){
-        //AUTHENTICATION FOR STUDENT AND ADMIN LOGIN 
+    public void authenticationLogin(String username, String password, String typeOfUser) throws SQLException{
+        if("admin".equals(typeOfUser)){
+            authenticateAdmin(username, password);
+        } else if ("student".equals(typeOfUser)) {
+            authenticateStudent(username, password);
+        } else {
+            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
+            System.out.println("Faield at authenticateLogin()");
+        }
     }
+    
+    public void authenticateAdmin(String username, String password) throws SQLException{
+        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
+        
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        statement.setString(1, username);
+        statement.setString(1, password);
+        ResultSet result = statement.executeQuery();
+        if (!result.next()){
+            JOptionPane.showMessageDialog(null, "Admin login failed!");
+        }
+    }
+    
+    public void authenticateStudent(String username, String password) throws SQLException{
+        String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
+        
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        statement.setString(1, username);
+        statement.setString(1, password);
+        ResultSet result = statement.executeQuery();
+        if (!result.next()){
+            JOptionPane.showMessageDialog(null, "Student login failed!");
+        }
+    }
+    
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
