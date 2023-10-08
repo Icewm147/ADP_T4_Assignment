@@ -495,7 +495,6 @@ public class Client extends JFrame {
             out.writeObject("retrieve student");
             out.flush();
 
-<<<<<<< HEAD
             ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
@@ -510,15 +509,9 @@ public class Client extends JFrame {
             System.out.println("IOException" + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" + ex.getMessage());
-=======
-            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
-            tableModel.addRow(new Object[]{display});
 
-        } catch (IOException ex) {
-               System.out.println("IOException" + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-              System.out.println("ClassNotFoundException" + ex.getMessage());
->>>>>>> ea876d80465d43f273db850d9b36755424317101
+//            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
+//            tableModel.addRow(new Object[]{display});
         }
     }
 
@@ -531,13 +524,9 @@ public class Client extends JFrame {
         try {
             out.writeObject("retrieve Course");
             out.flush();
-            
 
-            
         } catch (IOException ex) {
-          System.out.println("IOException" + ex.getMessage());
-        }catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException" + ex.getMessage());
+            System.out.println("IOException" + ex.getMessage());
         }
     }
 
@@ -573,12 +562,12 @@ public class Client extends JFrame {
 ////        return arrConvert;
 ////    }
     public static ArrayList<Object> converter(WorkerStudent workerStudent) {
-    ArrayList<Object> arrConvert = new ArrayList<>();
-    arrConvert.add(workerStudent.getStuduntID());
-    arrConvert.add(workerStudent.getStudentFirstName());
-    arrConvert.add(workerStudent.getStudentLastName());
-    return arrConvert;
-}
+        ArrayList<Object> arrConvert = new ArrayList<>();
+        arrConvert.add(workerStudent.getStuduntID());
+        arrConvert.add(workerStudent.getStudentFirstName());
+        arrConvert.add(workerStudent.getStudentLastName());
+        return arrConvert;
+    }
 
 // public static ArrayList<Object> converter(Object obj){
 //        ArrayList<Object> arrConvert= new ArrayList<>();
