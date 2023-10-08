@@ -56,7 +56,7 @@ public class Client extends JFrame {
         font2 = new Font("Arial", Font.BOLD, 16);
         font3 = new Font("Arial", Font.PLAIN, 16);
 
-        panelN = new JPanel(new GridLayout(8, 1));
+        panelN = new JPanel(new FlowLayout(FlowLayout.LEADING));
         panelN.setBackground(Color.LIGHT_GRAY);
 
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -143,7 +143,11 @@ public class Client extends JFrame {
                         password.setVisible(false);
                         passwordTxt.setVisible(false);
 
-                        panelS.setVisible(false);
+                        scrollPane.setVisible(true);
+
+                        panelC.setVisible(true);
+                        btnLogin.setVisible(false);
+                        btnLogout.setVisible(true);
                     } else {
                         panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         heading.setText("Admin Access");
@@ -161,7 +165,11 @@ public class Client extends JFrame {
                         password.setVisible(false);
                         passwordTxt.setVisible(false);
 
-                        panelS.setVisible(false);
+                        scrollPane.setVisible(true);
+
+                        panelC.setVisible(true);
+                        btnLogin.setVisible(false);
+                        btnLogout.setVisible(true);
                     }
 
                 }
@@ -276,14 +284,14 @@ public class Client extends JFrame {
         panelW.setVisible(false);
 
         panelC.add(new JScrollPane(table));
-        scrollPane.setVisible(false);
-        table.setVisible(false);
+
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
         add(panelW, BorderLayout.WEST);
         add(panelJ, BorderLayout.EAST);
 
+        panelC.setVisible(false);
         panelE.setVisible(false);
 
         btnAddCourse.setVisible(false);
@@ -297,7 +305,7 @@ public class Client extends JFrame {
         btnEnroll.setVisible(false);
         btnViewCourse.setVisible(false);
 
-        scrollPane.setVisible(false);
+        btnLogout.setVisible(false);
 
         btnAddStud.addActionListener(new ActionListener() {
             @Override
@@ -438,7 +446,7 @@ public class Client extends JFrame {
 
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
-                JOptionPane.showMessageDialog(null, "Course has been added.");
+                JOptionPane.showMessageDialog(null, "Student has been added.");
             }
 
         } catch (IOException ex) {
