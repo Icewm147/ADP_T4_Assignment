@@ -117,7 +117,7 @@ public class Server {
                 } //retrieve all courses
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
-                        List<WorkerStudent> courseList = dao.getCourseInfo();
+                        List<WorkerCourse> courseList = dao.getCourseInfo();
                         Object obj = courseList;
                         System.out.println(courseList.toString());
                         out.writeObject(obj);
