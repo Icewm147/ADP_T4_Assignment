@@ -215,7 +215,7 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogout) {
 
-                    System.exit(0);
+                  
                     closeConnection();
 
                 }
@@ -416,7 +416,6 @@ public class Client extends JFrame {
     private static void closeConnection() {
         try {
             out.writeObject("Exit");
-            out.flush();
             out.close();
             in.close();
             server.close();

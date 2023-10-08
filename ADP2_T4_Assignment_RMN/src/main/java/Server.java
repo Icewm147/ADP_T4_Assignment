@@ -194,6 +194,7 @@ public class Server {
                 else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit"))
                 {
                     closeConnection();
+                    break;
                 }
 
             } catch (IOException ex) {
@@ -207,12 +208,11 @@ public class Server {
     }
 
     private static void closeConnection() {
-        try {
-            out.writeObject("Server has closed");
-            out.flush();
-            out.close();
-            in.close();
+        try {    
+            out.close();  
+            in.close();                     
             clientSocket.close();
+            serverSocket.close();
             System.out.println("Server has closed");
             System.exit(0);
 
