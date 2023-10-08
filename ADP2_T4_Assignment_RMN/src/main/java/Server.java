@@ -51,10 +51,10 @@ public class Server {
     /*in process client,
     ----Authenticate user login
     (Under admin)
-    ----add student
+    ----add student       Working
     ----retrieve all student 
     ----search student    
-    ----add course
+    ----add course        Working
     ----retrieve all course
     (Under Student)
     search course
@@ -80,7 +80,7 @@ public class Server {
 //                            out.flush();
 //                        }
 //                    }
-                    //add student
+                    //add student DONE
                 } else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
                     try {
@@ -92,11 +92,9 @@ public class Server {
                                 System.out.println("true");
                                 dao.addStudentToDB(stud);
                                 System.out.println(stud);
-                                out.writeObject("Student Added successfully");
+                                out.writeObject("success");
                                 out.flush();
-                                
-                              
-                               
+                           
                             }
                         }
 
@@ -105,10 +103,10 @@ public class Server {
                     }
 
                     //retreiving all students
-                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all students")) {
+                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
                     try {
-                        Object obj = dao.getStudentInfo();
-                        out.writeObject(obj);
+                        Object studentList = dao.getStudentInfo();
+                        out.writeObject(studentList);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,8 +115,10 @@ public class Server {
                     //Search student 
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("search")) {
                     String studID = (String) receivedObject;
-
-                    /*if("studID is in the db"){
+                    try {
+                        Object search = dao.getStudentInfo();
+                        
+                    if(studID.equalsIgnoreCase(objSearch)){
                        Object with student parameters to contain info on that student
                        out.writeObject(Objectname);
                     out.flush();
@@ -127,7 +127,10 @@ public class Server {
                     out.writeObject("The Student you are searching for does not exist");
                     out.flush();                    
                     }
-                     */
+                        } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                     
                     String name = JOptionPane.showInputDialog("Please enter your name");
                     System.out.println(name);
                     //add course DONE
@@ -146,14 +149,13 @@ public class Server {
                 } //retrieve all courses
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
-                        //'allCourses' Object containing the courseTable content
                         Object allCourses = dao.getAllCourses();
                         out.writeObject(allCourses);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
+                    
                 } //Search for course
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Search")) {
                     String course = (String) receivedObject;
