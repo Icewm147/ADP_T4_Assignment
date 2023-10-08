@@ -214,7 +214,7 @@ public class Client extends JFrame {
 
     public void setGui() {
 
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 100, 20));
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 500, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -495,6 +495,7 @@ public class Client extends JFrame {
             out.writeObject("retrieve student");
             out.flush();
 
+<<<<<<< HEAD
             ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
@@ -509,6 +510,15 @@ public class Client extends JFrame {
             System.out.println("IOException" + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" + ex.getMessage());
+=======
+            ArrayList<WorkerStudent> display = (ArrayList) in.readObject();
+            tableModel.addRow(new Object[]{display});
+
+        } catch (IOException ex) {
+               System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+              System.out.println("ClassNotFoundException" + ex.getMessage());
+>>>>>>> ea876d80465d43f273db850d9b36755424317101
         }
     }
 
