@@ -21,13 +21,14 @@ public class Client extends JFrame {
     private static Object recievedObject;
     private static Object displays;
 
-    private Font font1, font2, font3;
+    private Font font1, font2, font3, font4;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelT;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin, btnLogout;
-    private static JComboBox cbo, cbo1, cbo2;
+    private static JComboBox cbo;
+    private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
 
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
     private static JTextField searchTxt;
@@ -44,6 +45,8 @@ public class Client extends JFrame {
     private static JTable table;
     private static JScrollPane scrollPane;
 
+    private static JTextArea textArea1, textArea;
+
     public Client() {
 
         try {
@@ -52,44 +55,77 @@ public class Client extends JFrame {
             System.out.println("IOException >>" + ex.getMessage());
         }
 
-        font1 = new Font("Arial", Font.BOLD, 18);
+        font1 = new Font("Arial", Font.BOLD, 20);
         font2 = new Font("Arial", Font.BOLD, 16);
         font3 = new Font("Arial", Font.PLAIN, 16);
+        font4 = new Font("Arial", Font.PLAIN, 14);
 
         panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelN.setBackground(Color.LIGHT_GRAY);
 
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        panelE = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        //    panelE = new JPanel(new GridLayout(5,6));
+        panelE = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(4, 2));
 
-        panelT = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelDelStud = new JPanel(new GridLayout(2, 1));
+        panelDelC = new JPanel(new GridLayout(2, 2));
 
-        username = new JLabel("Username: ");
-        password = new JLabel("Password: ");
+        panelP = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        panelL = new JPanel(new GridLayout(6, 1));
+        panelA = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+        panelStud = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        //----------------------------------------------------- TextField   
         heading = new JLabel("LOGIN");
         heading.setFont(font1);
+        username = new JLabel("Username: ");
+        username.setFont(font2);
+        password = new JLabel("Password: ");
+        password.setFont(font2);
 
+        //----------------------------------------------------- TextField 
         usernameTxt = new JTextField(20);
+        usernameTxt.setFont(font3);
         passwordTxt = new JTextField(20);
+        passwordTxt.setFont(font3);
+        //----------------------------------------------------- ComboBox  
 
         cbo = new JComboBox(new String[]{"Admin", "Student"});
+        cbo.setFont(font2);
+        cbo.setPreferredSize(new Dimension(200, 35));
+
         cbo1 = new JComboBox(new String[]{"raeesah", "khan"});
         cbo2 = new JComboBox(new String[]{"inm", "adt"});
 
+        //-----------------------------------------------------Buttons
         btnLogin = new JButton("LOGIN");
-        btnLogout = new JButton("LOGOUT");
-        //-----------------------------------------------------Admin  
+        btnLogin.setFont(font2);
+        btnLogin.setPreferredSize(new Dimension(200, 40));
 
+        btnLogout = new JButton("LOGOUT");
+        btnLogout.setFont(font2);
+        btnLogout.setPreferredSize(new Dimension(200, 40));
+
+        //-----------------------------------------------------Admin  
         btnAddCourse = new JButton("Add Course");
+        btnAddCourse.setFont(font4);
+
         btnSearch = new JButton("Search");
+        btnSearch.setFont(font4);
+
         btnRetrieveStud = new JButton("Retrieve Student");
+        btnRetrieveStud.setFont(font4);
+
         btnRetrieveCourse = new JButton("Retrieve Course");
-        btnDelete = new JButton("Delete stud? Course?");
+        btnRetrieveCourse.setFont(font4);
+
+        btnDelete = new JButton("Delete Student/Course");
+        btnDelete.setFont(font4);
+
         btnAddStud = new JButton("Add student");
+        btnAddStud.setFont(font4);
 
         searchTxt = new JTextField(20);
 
@@ -97,7 +133,7 @@ public class Client extends JFrame {
         btnEnroll = new JButton("Enroll In Course");
         btnViewCourse = new JButton("View Available Courses");
 
-        //-----------------------------------------------------JOptionPane
+        //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
         courseCode = new JLabel("Course Code: ");
         paneHeading = new JLabel("Add a Course: ");
@@ -109,7 +145,7 @@ public class Client extends JFrame {
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
 
-        //-----------------------------------------------------JOptionPane 2 add student
+        //----------------------------------------------------- JOptionPane add student
         studId = new JLabel("Student ID: ");
         studName = new JLabel("Student Name: ");
         studLastName = new JLabel("Student Last Name: ");
@@ -128,43 +164,52 @@ public class Client extends JFrame {
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);
 
+        textArea = new JTextArea(5, 10);
+        textArea1 = new JTextArea(5, 10);
+
     }
 
     public void setGui() {
 
         panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panelS.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        table.setPreferredScrollableViewportSize(new Dimension(600, 380));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 120));
         panelN.add(heading);
 
-        panelT.add(scrollPane);
+        panelP.add(scrollPane);
 
-        panelC.add(cbo);
-        panelC.add(space6);
-        panelC.add(username);
-        panelC.add(usernameTxt);
-        panelC.add(password);
-        panelC.add(passwordTxt);
+        panelL.add(cbo);
+        panelL.add(space6);
+        panelL.add(username);
+        panelL.add(usernameTxt);
+        panelL.add(password);
+        panelL.add(passwordTxt);
 
-        panelC.add(btnAddCourse);
-        panelC.add(btnAddStud);
-        panelC.add(btnRetrieveStud);
-        panelC.add(btnRetrieveCourse);
-        panelC.add(btnDelete);
-        panelC.add(searchTxt);
-        panelC.add(btnSearch);
-        panelC.add(panelT);
-        
-        panelC.add(btnEnroll);
-        panelC.add(btnViewCourse);
+        panelA.add(btnAddCourse);
+        panelA.add(btnAddStud);
+        panelA.add(btnRetrieveStud);
+        panelA.add(btnRetrieveCourse);
+        panelA.add(btnDelete);
+
+        panelE.add(searchTxt);
+        panelE.add(btnSearch);
+
+        panelStud.add(btnEnroll);
+        panelStud.add(btnViewCourse);
+
+        panelC.add(panelL);
+        panelC.add(panelA);
+        panelC.add(panelE);
+        panelC.add(panelStud);
+        panelC.add(panelP);
 
         // panelS.add(new JScrollPane(table));
         panelS.add(btnLogin);
         panelS.add(btnLogout);
 
+        //----------------------------- Add a course JOptionPane
         panelJ.add(paneHeading);
         panelJ.add(space1);
         panelJ.add(courseCode);
@@ -173,7 +218,7 @@ public class Client extends JFrame {
         panelJ.add(courseDesTxt);
 
         panelJ.setVisible(false);
-
+        //----------------------------- Add a Student JOptionPane
         panelW.add(paneHeading2);
         panelW.add(space0);
         panelW.add(studId);
@@ -185,28 +230,27 @@ public class Client extends JFrame {
 
         panelW.setVisible(false);
 
+        panelDelStud.add(cbo1);
+        panelDelStud.add(textArea);
+
+        panelDelC.add(cbo2);
+        panelDelC.add(textArea1);
+
         add(panelN, BorderLayout.NORTH);
         add(panelC, BorderLayout.CENTER);
         add(panelS, BorderLayout.SOUTH);
         add(panelW, BorderLayout.WEST);
         add(panelJ, BorderLayout.EAST);
 
-        panelT.setVisible(false);
-        panelC.setVisible(true);
         panelE.setVisible(false);
-
-        btnAddCourse.setVisible(false);
-        btnAddStud.setVisible(false);
-        btnSearch.setVisible(false);
-        btnRetrieveStud.setVisible(false);
-        btnRetrieveCourse.setVisible(false);
-        btnDelete.setVisible(false);
-        searchTxt.setVisible(false);
-
-        btnEnroll.setVisible(false);
-        btnViewCourse.setVisible(false);
+        panelP.setVisible(false);
+        panelA.setVisible(false);
+        panelStud.setVisible(false);
 
         btnLogout.setVisible(false);
+
+        String combo = cbo1.getSelectedItem().toString();
+        textArea.setText(combo);
 
         //-------------------------------------------ActionListeners
         btnLogin.addActionListener(new ActionListener() {
@@ -216,41 +260,19 @@ public class Client extends JFrame {
 
                     if (cbo.getSelectedItem() == "Student") {
                         heading.setText("Student Enrollment system");
-                        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-                        btnEnroll.setVisible(true);
-                        btnViewCourse.setVisible(true);
 
-                        cbo.setVisible(false);
-                        username.setVisible(false);
-                        usernameTxt.setVisible(false);
-                        password.setVisible(false);
-                        passwordTxt.setVisible(false);
-
-                        // scrollPane.setVisible(true);
-                        panelT.setVisible(true);
-                        panelC.setVisible(true);
+                        panelStud.setVisible(true);
+                        panelL.setVisible(false);
+                        panelP.setVisible(true);
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
                     } else {
-                        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
                         heading.setText("Admin Access");
-                        btnAddCourse.setVisible(true);
-                        btnAddStud.setVisible(true);
-                        btnSearch.setVisible(true);
-                        btnRetrieveStud.setVisible(true);
-                        btnRetrieveCourse.setVisible(true);
-                        btnDelete.setVisible(true);
-                        searchTxt.setVisible(true);
 
-                        cbo.setVisible(false);
-                        username.setVisible(false);
-                        usernameTxt.setVisible(false);
-                        password.setVisible(false);
-                        passwordTxt.setVisible(false);
+                        panelA.setVisible(true);
+                        panelL.setVisible(false);
 
-                        // scrollPane.setVisible(true);
-                        panelT.setVisible(true);
-                        panelC.setVisible(true);
+                        panelE.setVisible(true);
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
                     }
@@ -286,7 +308,7 @@ public class Client extends JFrame {
                     panelJ.setVisible(true);
                     int result = JOptionPane.showOptionDialog(null, panelJ,
                             "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
 
@@ -305,8 +327,8 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogout) {
-                    closeConnection();
 
+                    closeConnection();
                 }
             }
 
@@ -319,8 +341,8 @@ public class Client extends JFrame {
 
                     panelW.setVisible(true);
                     int result = JOptionPane.showOptionDialog(null, panelW,
-                            "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            "Add a Student",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
                         AddStud();
@@ -339,17 +361,20 @@ public class Client extends JFrame {
                 if (e.getSource() == btnDelete) {
                     int result = JOptionPane.showOptionDialog(null, "Choose which catagory that you would like to delete from. ",
                             "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Student", "Course"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
                         //------------------ Delete student
-                        int result1 = JOptionPane.showOptionDialog(null, cbo1,
+                        int result1 = JOptionPane.showOptionDialog(null, panelDelStud,
                                 "Delete Student",
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                                 new String[]{"Delete", "Cancel"}, "Yes");
+
                         if (result1 == JOptionPane.YES_OPTION) {
                             int answer1 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this student? ");
                             if (answer1 == JOptionPane.YES_OPTION) {
+
+                                deleteStud();
                                 System.out.println("Student deleted");
                             }
 
@@ -357,13 +382,19 @@ public class Client extends JFrame {
 
                     } else {
                         //------------------ Delete Course
-                        int result1 = JOptionPane.showOptionDialog(null, cbo2,
-                                "Delete Student",
+                        int result1 = JOptionPane.showOptionDialog(null, panelDelC,
+                                "Delete Course",
                                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                                 new String[]{"Delete", "Cancel"}, "Yes");
+
+                        String combo = cbo2.getSelectedItem().toString();
+                        textArea1.append(combo);
+
                         if (result1 == JOptionPane.YES_OPTION) {
                             int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this course? ");
                             if (answer == JOptionPane.YES_OPTION) {
+
+                                deleteCourse();
                                 System.out.println("Course deleted");
                             }
 
@@ -380,8 +411,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
-                    table.setVisible(true);
-                    scrollPane.setVisible(true);
+                    panelP.setVisible(true);
                     retrieveStud();
                 }
 
@@ -393,8 +423,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
-                    table.setVisible(true);
-                    scrollPane.setVisible(true);
+                    panelP.setVisible(true);
                     retrieveCourse();
                 }
 
@@ -406,36 +435,12 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearch) {
-                    searchStud();
+                    search();
                 }
 
             }
 
         });
-
-    }
-
-    public void getStreams() {
-        try {
-            out = new ObjectOutputStream(server.getOutputStream());
-            in = new ObjectInputStream(server.getInputStream());
-
-        } catch (IOException ex) {
-            System.out.println("Cannot get Streams " + ex.getMessage());
-        }
-    }
-
-    private static void closeConnection() {
-        try {
-            out.writeObject("Exit");
-            out.close();
-            in.close();
-            server.close();
-            System.out.println("Server has closed");
-            System.exit(0);
-        } catch (IOException ex) {
-            System.out.println("Server cannot close. Error " + ex.getMessage());
-        }
 
     }
 
@@ -513,7 +518,7 @@ public class Client extends JFrame {
 
     public static void retrieveStud() {
         clearTable();
-        tableModel.addColumn("Student Id");
+        tableModel.addColumn("Student ID");
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
 
@@ -566,16 +571,18 @@ public class Client extends JFrame {
         }
     }
 
-    public static void searchStud() {
+    public static void search() {
 
     }
 
     public static void deleteStud() {
-
+//        String combo = cbo1.getSelectedItem().toString();
+//        textArea.append(combo);
     }
 
     public static void deleteCourse() {
-
+        String combo = cbo2.getSelectedItem().toString();
+        textArea1.append(combo);
     }
 
     private static void clearTable() {
@@ -604,11 +611,35 @@ public class Client extends JFrame {
         return arrConvert;
     }
 
+    public void getStreams() {
+        try {
+            out = new ObjectOutputStream(server.getOutputStream());
+            in = new ObjectInputStream(server.getInputStream());
+
+        } catch (IOException ex) {
+            System.out.println("Cannot get Streams " + ex.getMessage());
+        }
+    }
+
+    private static void closeConnection() {
+        try {
+            out.writeObject("Exit");
+            out.close();
+            in.close();
+            server.close();
+            System.out.println("Server has closed");
+            System.exit(0);
+        } catch (IOException ex) {
+            System.out.println("Server cannot close. Error " + ex.getMessage());
+        }
+
+    }
+
     public static void main(String[] args) {
         Client log = new Client();
         log.getStreams();
         log.setTitle("Enrolment System");
-        log.setSize(700, 450);
+        log.setSize(730, 480);
         log.setGui();
         log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         log.setLocationRelativeTo(null);
