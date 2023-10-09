@@ -55,10 +55,11 @@ public class DAO {
     }
 //Working method (addCourseToDB), do not even try to touch
     public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
-        String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION) VALUES (?, ?)";
+        String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION, AVAILABLE) VALUES (?, ?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, course.getCourseCode());
         statement.setString(2, course.getCourseDescription());
+        statement.setBoolean(3, course.isAvailable());
         statement.executeUpdate();
     }
     //getting all information on Subjects
@@ -72,7 +73,7 @@ public class DAO {
         while (result.next()) {
             String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
             String name = result.getString("Subject_Name");
-            String course = result.getString("Course_ID");
+            String course = result.getString("Course_Code");
             //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
             students.add(new WorkerSubject(studentNumber, name, course));
         }
@@ -219,6 +220,22 @@ public class DAO {
     public List<WorkerCourse> getCourseInfo() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
         String query = "SELECT * FROM Course";
+
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String desc = result.getString("Course_Description");
+            Boolean availability = result.getBoolean("Available");
+
+            courses.add(new WorkerCourse(courseCode, desc, availability));
+        }
+        return courses;
+    }
+    public List<WorkerCourse> getAvailableCourses() throws SQLException {
+        List<WorkerCourse> courses = new ArrayList<>();
+        String query = "SELECT * FROM Course WHERE Available = 'true'";
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
