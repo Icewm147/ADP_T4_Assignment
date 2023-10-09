@@ -483,7 +483,7 @@ public class Client extends JFrame {
         boolean available = checkBox.isSelected();
 
         try {
-            WorkerCourse add = new WorkerCourse(code, description, available);
+            WorkerCourse add = new WorkerCourse(code, description,available);
             out.writeObject(add);
             out.flush();
 
