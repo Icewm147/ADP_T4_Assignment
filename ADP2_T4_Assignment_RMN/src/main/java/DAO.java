@@ -140,15 +140,15 @@ public class DAO {
         
         ResultSet result = statement.executeQuery();
         
-        if(userAccessType.equals("Admin")){
-            System.out.println("Admin Login succesfull");
-        } else if (userAccessType.equals("Student")){
-            System.out.println("Student lLogin Successful");
-        } else {
-            System.out.println("Login Failure");
-            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
-            System.out.println("Faield at authenticateLogin()");
-        }
+//        if(userAccessType.equals("Admin")){
+//            System.out.println("Admin Login succesfull");
+//        } else if (userAccessType.equals("Student")){
+//            System.out.println("Student lLogin Successful");
+//        } else {
+//            System.out.println("Login Failure");
+//            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
+//            System.out.println("Faield at authenticateLogin()");
+//        }
     }
     //change this one to add user access type , change the table name also
 //    public void authenticateAdmin(String username, String password) throws SQLException{
