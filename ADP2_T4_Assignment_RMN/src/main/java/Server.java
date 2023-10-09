@@ -26,7 +26,7 @@ public class Server {
 
     public Server() {
         try {
-            serverSocket = new ServerSocket(12345);
+            serverSocket = new ServerSocket(12345,2);
             System.out.println("Server is listening....");
             clientSocket = serverSocket.accept();
             System.out.println("Connected to client>>>");
