@@ -444,6 +444,13 @@ public class Client extends JFrame {
             }
 
         });
+        btnViewCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                retrieveAvailableCourse();
+            }
+
+        });
 
     }
 
@@ -557,7 +564,7 @@ public class Client extends JFrame {
         try {
             out.writeObject("retrieve all courses");
             out.flush();
-
+            
             ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerCourse workerCourse = display.get(i);
@@ -566,6 +573,7 @@ public class Client extends JFrame {
                 Object[] arrConArray = arrCon.toArray();
 
                 tableModel.addRow(arrConArray);
+
             }
 
         } catch (IOException ex) {
@@ -579,6 +587,33 @@ public class Client extends JFrame {
 
     }
 
+    public static void retrieveAvailableCourse() {
+        clearTable();
+        tableModel.addColumn("Course Code");
+        tableModel.addColumn("Course Description");
+        tableModel.addColumn("Availability");
+
+        try {
+            out.writeObject("Available");
+            out.flush();
+            
+            ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerCourse workerCourse = display.get(i);
+
+                ArrayList<Object> arrCon = converter2(workerCourse);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
+    }
     public static void deleteStud() {
 //        String combo = cbo1.getSelectedItem().toString();
 //        textArea.append(combo);
