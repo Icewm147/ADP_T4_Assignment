@@ -23,7 +23,7 @@ public class Client extends JFrame {
 
     private Font font1, font2, font3;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelT;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin, btnLogout;
@@ -56,7 +56,7 @@ public class Client extends JFrame {
         font2 = new Font("Arial", Font.BOLD, 16);
         font3 = new Font("Arial", Font.PLAIN, 16);
 
-        panelN = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        panelN = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelN.setBackground(Color.LIGHT_GRAY);
 
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -65,6 +65,8 @@ public class Client extends JFrame {
         //    panelE = new JPanel(new GridLayout(5,6));
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(4, 2));
+
+        panelT = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
         username = new JLabel("Username: ");
         password = new JLabel("Password: ");
@@ -126,6 +128,87 @@ public class Client extends JFrame {
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);
 
+    }
+
+    public void setGui() {
+
+        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panelS.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        table.setPreferredScrollableViewportSize(new Dimension(600, 380));
+        panelN.add(heading);
+
+        panelT.add(scrollPane);
+
+        panelC.add(cbo);
+        panelC.add(space6);
+        panelC.add(username);
+        panelC.add(usernameTxt);
+        panelC.add(password);
+        panelC.add(passwordTxt);
+
+        panelC.add(btnAddCourse);
+        panelC.add(btnAddStud);
+        panelC.add(btnRetrieveStud);
+        panelC.add(btnRetrieveCourse);
+        panelC.add(btnDelete);
+        panelC.add(searchTxt);
+        panelC.add(btnSearch);
+        panelC.add(panelT);
+        
+        panelC.add(btnEnroll);
+        panelC.add(btnViewCourse);
+
+        // panelS.add(new JScrollPane(table));
+        panelS.add(btnLogin);
+        panelS.add(btnLogout);
+
+        panelJ.add(paneHeading);
+        panelJ.add(space1);
+        panelJ.add(courseCode);
+        panelJ.add(courseCodeTxt);
+        panelJ.add(courseDes);
+        panelJ.add(courseDesTxt);
+
+        panelJ.setVisible(false);
+
+        panelW.add(paneHeading2);
+        panelW.add(space0);
+        panelW.add(studId);
+        panelW.add(studIdTxt);
+        panelW.add(studName);
+        panelW.add(studNameTxt);
+        panelW.add(studLastName);
+        panelW.add(studLastNameTxt);
+
+        panelW.setVisible(false);
+
+        add(panelN, BorderLayout.NORTH);
+        add(panelC, BorderLayout.CENTER);
+        add(panelS, BorderLayout.SOUTH);
+        add(panelW, BorderLayout.WEST);
+        add(panelJ, BorderLayout.EAST);
+
+        panelT.setVisible(false);
+        panelC.setVisible(true);
+        panelE.setVisible(false);
+
+        btnAddCourse.setVisible(false);
+        btnAddStud.setVisible(false);
+        btnSearch.setVisible(false);
+        btnRetrieveStud.setVisible(false);
+        btnRetrieveCourse.setVisible(false);
+        btnDelete.setVisible(false);
+        searchTxt.setVisible(false);
+
+        btnEnroll.setVisible(false);
+        btnViewCourse.setVisible(false);
+
+        btnLogout.setVisible(false);
+
+        //-------------------------------------------ActionListeners
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,8 +226,8 @@ public class Client extends JFrame {
                         password.setVisible(false);
                         passwordTxt.setVisible(false);
 
-                        scrollPane.setVisible(true);
-
+                        // scrollPane.setVisible(true);
+                        panelT.setVisible(true);
                         panelC.setVisible(true);
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
@@ -165,8 +248,8 @@ public class Client extends JFrame {
                         password.setVisible(false);
                         passwordTxt.setVisible(false);
 
-                        scrollPane.setVisible(true);
-
+                        // scrollPane.setVisible(true);
+                        panelT.setVisible(true);
                         panelC.setVisible(true);
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
@@ -222,90 +305,12 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogout) {
-
                     closeConnection();
 
                 }
             }
 
         });
-
-    }
-
-    public void setGui() {
-
-        panelN.setBorder(BorderFactory.createEmptyBorder(20, 20, 200, 20));
-        panelC.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelE.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelW.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelS.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        panelN.add(heading);
-
-        panelN.add(cbo);
-        panelN.add(space6);
-        panelN.add(username);
-        panelN.add(usernameTxt);
-        panelN.add(password);
-        panelN.add(passwordTxt);
-
-        panelC.add(btnAddCourse);
-        panelC.add(btnAddStud);
-        panelC.add(btnRetrieveStud);
-        panelC.add(btnRetrieveCourse);
-        panelC.add(btnDelete);
-        panelC.add(searchTxt);
-        panelC.add(btnSearch);
-
-        panelC.add(btnEnroll);
-        panelC.add(btnViewCourse);
-
-        panelS.add(btnLogin);
-        panelS.add(btnLogout);
-
-        panelJ.add(paneHeading);
-        panelJ.add(space1);
-        panelJ.add(courseCode);
-        panelJ.add(courseCodeTxt);
-        panelJ.add(courseDes);
-        panelJ.add(courseDesTxt);
-
-        panelJ.setVisible(false);
-
-        panelW.add(paneHeading2);
-        panelW.add(space0);
-        panelW.add(studId);
-        panelW.add(studIdTxt);
-        panelW.add(studName);
-        panelW.add(studNameTxt);
-        panelW.add(studLastName);
-        panelW.add(studLastNameTxt);
-
-        panelW.setVisible(false);
-
-        panelC.add(new JScrollPane(table));
-
-        add(panelN, BorderLayout.NORTH);
-        add(panelC, BorderLayout.CENTER);
-        add(panelS, BorderLayout.SOUTH);
-        add(panelW, BorderLayout.WEST);
-        add(panelJ, BorderLayout.EAST);
-
-        panelC.setVisible(false);
-        panelE.setVisible(false);
-
-        btnAddCourse.setVisible(false);
-        btnAddStud.setVisible(false);
-        btnSearch.setVisible(false);
-        btnRetrieveStud.setVisible(false);
-        btnRetrieveCourse.setVisible(false);
-        btnDelete.setVisible(false);
-        searchTxt.setVisible(false);
-
-        btnEnroll.setVisible(false);
-        btnViewCourse.setVisible(false);
-
-        btnLogout.setVisible(false);
 
         btnAddStud.addActionListener(new ActionListener() {
             @Override
