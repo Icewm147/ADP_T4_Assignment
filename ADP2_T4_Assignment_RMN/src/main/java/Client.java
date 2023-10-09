@@ -46,6 +46,7 @@ public class Client extends JFrame {
     private static JScrollPane scrollPane;
 
     private static JTextArea textArea1, textArea;
+    private static JCheckBox checkBox = new JCheckBox();
 
     public Client() {
 
@@ -67,7 +68,7 @@ public class Client extends JFrame {
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelW = new JPanel(new GridLayout(4, 2));
-        panelJ = new JPanel(new GridLayout(4, 2));
+        panelJ = new JPanel(new GridLayout(6, 2));
 
         panelDelStud = new JPanel(new GridLayout(2, 1));
         panelDelC = new JPanel(new GridLayout(2, 2));
@@ -153,7 +154,7 @@ public class Client extends JFrame {
         space0 = new JLabel();
         space4 = new JLabel();
         space5 = new JLabel();
-        space6 = new JLabel();
+        space6 = new JLabel("Course Availablity: ");
 
         studIdTxt = new JTextField(20);
         studNameTxt = new JTextField(20);
@@ -216,6 +217,8 @@ public class Client extends JFrame {
         panelJ.add(courseCodeTxt);
         panelJ.add(courseDes);
         panelJ.add(courseDesTxt);
+        panelJ.add(space6);
+        panelJ.add(checkBox);
 
         panelJ.setVisible(false);
         //----------------------------- Add a Student JOptionPane
@@ -470,9 +473,10 @@ public class Client extends JFrame {
     public void AddCourse() {
         String description = courseDesTxt.getText();
         String code = courseCodeTxt.getText();
+        boolean available = checkBox.isSelected();
 
         try {
-            WorkerCourse add = new WorkerCourse(code, description);
+            WorkerCourse add = new WorkerCourse(code, description, available);
             out.writeObject(add);
             out.flush();
 

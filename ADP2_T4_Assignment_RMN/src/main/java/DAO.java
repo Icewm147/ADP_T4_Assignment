@@ -28,6 +28,7 @@ public class DAO {
         return con;
     }
 //DO NOT CHANGE, WORKING PERFECTLY (addStudentToDB)
+
     public void addStudentToDB(WorkerStudent student) throws IOException, SQLException {
         String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
@@ -54,6 +55,7 @@ public class DAO {
         statement.executeUpdate();
     }
 //Working method (addCourseToDB), do not even try to touch
+
     public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
         String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION) VALUES (?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
@@ -61,6 +63,7 @@ public class DAO {
         statement.setString(2, course.getCourseDescription());
         statement.executeUpdate();
     }
+
     //getting all information on Subjects
     public List<WorkerSubject> getAllSubjects() throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
@@ -88,8 +91,9 @@ public class DAO {
         while (result.next()) {
             String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS SHOULD BE RIGHT))
             String courseDescription = result.getString("COURSE_DESCRIPTION");
+            boolean availability = result.getBoolean("Available");
 
-            courses.add(new WorkerCourse(courseID, courseDescription));
+            courses.add(new WorkerCourse(courseID, courseDescription,availability));
         }
         return courses;
     }
@@ -127,21 +131,21 @@ public class DAO {
 
         return coursesOfStudent;
     }
-   
-    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException{
+
+    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
         String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE";
-        
+
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        
+
         statement.setString(1, username);
         statement.setString(2, password);
         statement.setString(3, userAccessType);
-        
+
         ResultSet result = statement.executeQuery();
-        
-        if(userAccessType.equals("Admin")){
+
+        if (userAccessType.equals("Admin")) {
             System.out.println("Admin Login succesfull");
-        } else if (userAccessType.equals("Student")){
+        } else if (userAccessType.equals("Student")) {
             System.out.println("Student lLogin Successful");
         } else {
             System.out.println("Login Failure");
@@ -197,7 +201,7 @@ public class DAO {
 //            JOptionPane.showMessageDialog(null, "Student login failed!");
 //        }
 //    }
-    
+
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
@@ -215,6 +219,7 @@ public class DAO {
         }
         return students;
     }
+
     //get Just Course info
     public List<WorkerCourse> getCourseInfo() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
