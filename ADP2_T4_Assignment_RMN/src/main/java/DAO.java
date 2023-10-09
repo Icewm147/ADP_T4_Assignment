@@ -91,7 +91,7 @@ public class DAO {
         while (result.next()) {
             String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS SHOULD BE RIGHT))
             String courseDescription = result.getString("COURSE_DESCRIPTION");
-            boolean availability = result.getBoolean("Available");
+            boolean availability = result.getBoolean("AVAILABLE");
 
             courses.add(new WorkerCourse(courseID, courseDescription,availability));
         }
