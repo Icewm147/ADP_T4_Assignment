@@ -206,11 +206,10 @@ public class Server {
                 else if (receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search student")) {
                     List<WorkerStudent> searched = new ArrayList<>();
                     try {
-                      List<WorkerStudent>  searchStudent = dao.getStudentInfo();
-                    
+                      List<WorkerStudent>  searchStudent = dao.getStudentInfo();                    
                     String search = (String) receivedObject;
                     for (WorkerStudent student : searchStudent) {
-                        if (student.getStuduntID().equalsIgnoreCase(search)) {
+                        if (student.getStuduntID().equalsIgnoreCase(search) || student.getStudentFirstName().equalsIgnoreCase(search) || student.getStudentLastName().equalsIgnoreCase(search) ) {
                             searched.add(student);
                             out.writeObject(searched);
                             out.flush();
