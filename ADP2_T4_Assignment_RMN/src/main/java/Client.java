@@ -441,6 +441,7 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearch) {
                     searchStud();
+                    searchTxt.setText("");
                 }
 
             }
@@ -586,11 +587,14 @@ public class Client extends JFrame {
     }
 
     public static void searchStud() {
-
+        clearTable();
+        tableModel.addColumn("Student ID");
+        tableModel.addColumn("First Name");
+        tableModel.addColumn("Last Name");
         String search = searchTxt.getText();
-        String studSearch = "search student";
+      //  String studSearch = "search student";
         try {
-            out.writeObject(studSearch);
+          //  out.writeObject(studSearch);
             out.flush();
             out.writeObject(search);
             out.flush();
@@ -599,7 +603,7 @@ public class Client extends JFrame {
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
 
-                ArrayList<Object> arrCon = converter(workerStudent);
+                ArrayList<Object> arrCon = converter3(workerStudent);
                 Object[] arrConArray = arrCon.toArray();
 
                 tableModel.addRow(arrConArray);
@@ -676,6 +680,13 @@ public class Client extends JFrame {
     }
 
     public static ArrayList<Object> converter(WorkerStudent workerStudent) {
+        ArrayList<Object> arrConvert = new ArrayList<>();
+        arrConvert.add(workerStudent.getStuduntID());
+        arrConvert.add(workerStudent.getStudentFirstName());
+        arrConvert.add(workerStudent.getStudentLastName());
+        return arrConvert;
+    }
+    public static ArrayList<Object> converter3(WorkerStudent workerStudent) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerStudent.getStuduntID());
         arrConvert.add(workerStudent.getStudentFirstName());

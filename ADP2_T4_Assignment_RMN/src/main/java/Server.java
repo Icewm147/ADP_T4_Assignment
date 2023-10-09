@@ -203,7 +203,7 @@ public class Server {
                     }
 
                 } //search student
-                else if (receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search student")) {
+                else if (receivedObject instanceof String ) {
                     List<WorkerStudent> searched = new ArrayList<>();
                     try {
                       List<WorkerStudent>  searchStudent = dao.getStudentInfo();                    
