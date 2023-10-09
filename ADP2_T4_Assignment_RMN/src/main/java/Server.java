@@ -26,7 +26,7 @@ public class Server {
 
     public Server() {
         try {
-            serverSocket = new ServerSocket(12345,2);
+            serverSocket = new ServerSocket(12345, 2);
             System.out.println("Server is listening....");
             clientSocket = serverSocket.accept();
             System.out.println("Connected to client>>>");
@@ -100,7 +100,7 @@ public class Server {
 
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    } 
+                    }
 //                    catch (SQLException ex) {
 //                        JOptionPane.showMessageDialog(null, "Student Already Added");
 //                    }
@@ -201,10 +201,27 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                }
-                else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit"))
-                {
+
+                } //search student
+                else if (receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("Search student")) {
+                    List<WorkerStudent> searched = new ArrayList<>();
+                    try {
+                      List<WorkerStudent>  searchStudent = dao.getStudentInfo();                    
+                    String search = (String) receivedObject;
+                    for (WorkerStudent student : searchStudent) {
+                        if (student.getStuduntID().equalsIgnoreCase(search) || student.getStudentFirstName().equalsIgnoreCase(search) || student.getStudentLastName().equalsIgnoreCase(search) ) {
+                            searched.add(student);
+                            out.writeObject(searched);
+                            out.flush();
+                            System.out.println("Student search: " + searched);
+                        }
+                    }
+                    }
+                    catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                 }
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
                     closeConnection();
                     break;
                 }
@@ -220,9 +237,9 @@ public class Server {
     }
 
     private static void closeConnection() {
-        try {    
-            out.close();  
-            in.close();                     
+        try {
+            out.close();
+            in.close();
             clientSocket.close();
             serverSocket.close();
             System.out.println("Server has closed");
