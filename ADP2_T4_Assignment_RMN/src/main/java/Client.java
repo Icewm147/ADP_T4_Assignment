@@ -275,7 +275,7 @@ public class Client extends JFrame {
                         panelA.setVisible(true);
                         panelL.setVisible(false);
 
-                        panelE.setVisible(true);
+                        panelE.setVisible(false);
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
                     }
@@ -414,6 +414,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
+                    panelE.setVisible(true);
                     panelP.setVisible(true);
                     retrieveStud();
                 }
@@ -426,6 +427,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
+                    panelE.setVisible(true);
                     panelP.setVisible(true);
                     retrieveCourse();
                 }
@@ -438,7 +440,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearch) {
-                    search();
+                    searchStud();
                 }
 
             }
@@ -483,7 +485,7 @@ public class Client extends JFrame {
         boolean available = checkBox.isSelected();
 
         try {
-            WorkerCourse add = new WorkerCourse(code, description,available);
+            WorkerCourse add = new WorkerCourse(code, description, available);
             out.writeObject(add);
             out.flush();
 
@@ -564,7 +566,7 @@ public class Client extends JFrame {
         try {
             out.writeObject("retrieve all courses");
             out.flush();
-            
+
             ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerCourse workerCourse = display.get(i);
@@ -583,7 +585,45 @@ public class Client extends JFrame {
         }
     }
 
-    public static void search() {
+    public static void searchStud() {
+
+        String search = searchTxt.getText();
+        String studSearch = "search student";
+        try {
+            out.writeObject(studSearch);
+            out.flush();
+            out.writeObject(search);
+            out.flush();
+
+            ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerStudent workerStudent = display.get(i);
+
+                ArrayList<Object> arrCon = converter(workerStudent);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public static void searchCourse() {
+
+        String search = searchTxt.getText();
+
+        try {
+            out.writeObject(search);
+            out.flush();
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -596,7 +636,7 @@ public class Client extends JFrame {
         try {
             out.writeObject("Available");
             out.flush();
-            
+
             ArrayList<WorkerCourse> display = (ArrayList<WorkerCourse>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerCourse workerCourse = display.get(i);
@@ -614,6 +654,7 @@ public class Client extends JFrame {
             System.out.println("ClassNotFoundException" + ex.getMessage());
         }
     }
+
     public static void deleteStud() {
 //        String combo = cbo1.getSelectedItem().toString();
 //        textArea.append(combo);
