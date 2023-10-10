@@ -183,14 +183,35 @@ public class Server {
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
                     closeConnection();
                     break;
+                } //search course
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("course")) {
+
+                    List<WorkerCourse> searchC = new ArrayList<>();
+                    try {
+                        
+                        List<WorkerCourse> searchCourse = dao.getCourseInfo();
+                        String search = (String) receivedObject;
+                        System.out.println("methods ran");
+                        for (WorkerCourse course : searchCourse) {
+                            if (course.getCourseCode().equalsIgnoreCase(search)) {
+                                searchC.add(course);
+                                out.writeObject(searchC);
+                                out.flush();
+                                System.out.println("Course search" + searchC);
+                            }
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } //search student
                 else if (receivedObject instanceof String) {
 
                     List<WorkerStudent> searched = new ArrayList<>();
-                    List<WorkerCourse> searchC = new ArrayList<>();
+                    //List<WorkerCourse> searchC = new ArrayList<>();
                     try {
                         List<WorkerStudent> searchStudent = dao.getStudentInfo();
-                        List<WorkerCourse> searchCourse = dao.getAllCourses();
+                        //   List<WorkerCourse> searchCourse = dao.getAllCourses();
                         String search = (String) receivedObject;
                         for (WorkerStudent student : searchStudent) {
                             if (student.getStuduntID().equalsIgnoreCase(search)) {
@@ -202,14 +223,14 @@ public class Server {
 
                             }
                         }
-                        for (WorkerCourse course : searchCourse) {
-                            if (course.getCourseCode().equalsIgnoreCase(search)) {
-                                searchC.add(course);
-                                out.writeObject(searchC);
-                                out.flush();
-                                System.out.println("Course search" + searchC);
-                            }
-                        }
+//                        for (WorkerCourse course : searchCourse) {
+//                            if (course.getCourseCode().equalsIgnoreCase(search)) {
+//                                searchC.add(course);
+//                                out.writeObject(searchC);
+//                                out.flush();
+//                                System.out.println("Course search" + searchC);
+//                            }
+//                        }
 
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);

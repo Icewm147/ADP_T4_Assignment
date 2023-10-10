@@ -479,8 +479,8 @@ public class Client extends JFrame {
         btnSearchCourse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == btnSearchStud) {
-                    searchCourse();
+                if (e.getSource() == btnSearchCourse) {
+                   searchCourse();
                     searchTxtCourse.setText("");
                 }
 
@@ -633,9 +633,9 @@ public class Client extends JFrame {
         tableModel.addColumn("Student ID");
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
-        
+
         String search = searchTxtStud.getText();
-       
+
         try {
 //            out.writeObject("search student");
 //            out.flush();
@@ -669,12 +669,13 @@ public class Client extends JFrame {
         tableModel.addColumn("Availability");
 
         String search = searchTxtCourse.getText();
-     
+        
         try {
-//            out.writeObject("search course");
-//            out.flush();
+            out.writeObject("course");
+            out.flush();
             out.writeObject(search);
             out.flush();
+            System.out.println("called the method");
             ArrayList<WorkerCourse> displayCourse = (ArrayList<WorkerCourse>) in.readObject();
 
             for (int j = 0; j < displayCourse.size(); j++) {
