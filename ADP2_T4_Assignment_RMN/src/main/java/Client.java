@@ -128,7 +128,7 @@ public class Client extends JFrame {
         btnAddStud = new JButton("Add student");
         btnAddStud.setFont(font4);
 
-        searchTxt = new JTextField(20);
+        searchTxt = new JTextField();
 
         //-----------------------------------------------------Student
         btnEnroll = new JButton("Enroll In Course");
@@ -256,6 +256,20 @@ public class Client extends JFrame {
         textArea.setText(combo);
 
         //-------------------------------------------ActionListeners
+//        searchTxt.addFocusListener(new FocusListener(){
+//            @Override
+//            public void focusGained(FocusEvent e) {
+//                searchTxt.setText("");
+//                
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//              searchTxt.setText("Search by Student ID");
+//              
+//            }
+//
+//        });
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -414,6 +428,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
+                    searchTxt.setText("Search by Student ID");
                     panelE.setVisible(true);
                     panelP.setVisible(true);
                     retrieveStud();
@@ -427,6 +442,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
+                    searchTxt.setText("Search by Course Code");
                     panelE.setVisible(true);
                     panelP.setVisible(true);
                     retrieveCourse();
@@ -592,33 +608,44 @@ public class Client extends JFrame {
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
         String search = searchTxt.getText();
-      //  String studSearch = "search student";
         try {
-          //  out.writeObject(studSearch);
-            out.flush();
+
             out.writeObject(search);
             out.flush();
-
+            ArrayList<WorkerCourse> displayCourse = (ArrayList<WorkerCourse>) in.readObject();
             ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
+      
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
 
-                ArrayList<Object> arrCon = converter3(workerStudent);
+                ArrayList<Object> arrCon = converter(workerStudent);
                 Object[] arrConArray = arrCon.toArray();
 
                 tableModel.addRow(arrConArray);
             }
+            
+            
+                for(int j = 0 ; j < displayCourse.size(); j++){
+                    WorkerCourse workerCourse = displayCourse.get(j);
+                    ArrayList<Object> arrCon2 = converter2(workerCourse);
+                    Object[] arrCon2Obj = arrCon2.toArray();
+                    
+                    tableModel.addRow(arrCon2Obj);
+                }
+              
+            }
+            
 
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         catch (IOException ex) {
+            System.out.println("Error in IO");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error in ClassNotFound");
         }
 
     }
 
     public static void searchCourse() {
-
+        clearTable();
         String search = searchTxt.getText();
 
         try {
@@ -686,6 +713,7 @@ public class Client extends JFrame {
         arrConvert.add(workerStudent.getStudentLastName());
         return arrConvert;
     }
+
     public static ArrayList<Object> converter3(WorkerStudent workerStudent) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerStudent.getStuduntID());
