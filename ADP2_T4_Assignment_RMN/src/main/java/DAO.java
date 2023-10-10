@@ -18,9 +18,6 @@ public class DAO {
         Connection con = null;
         try {
             con = DBConnection.derbyConnection();
-            if (con != null) {
-                System.out.println("Connected to DB");
-            }
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println("Failed to connect to the database.");
@@ -80,20 +77,20 @@ public class DAO {
         return students;
     }
 
-    public List<WorkerCourse> getAllCourses() throws SQLException {
-        List<WorkerCourse> courses = new ArrayList<>();
-        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        ResultSet result = statement.executeQuery();
-
-        while (result.next()) {
-            String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS SHOULD BE RIGHT))
-            String courseDescription = result.getString("COURSE_DESCRIPTION");
-
-            courses.add(new WorkerCourse(courseID, courseDescription));
-        }
-        return courses;
-    }
+//    public List<WorkerCourse> getAllCourses() throws SQLException {
+//        List<WorkerCourse> courses = new ArrayList<>();
+//        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        ResultSet result = statement.executeQuery();
+//
+//        while (result.next()) {
+//            String courseID = result.getString("COURSE_CODE");     //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR COURSE((THIS SHOULD BE RIGHT))
+//            String courseDescription = result.getString("COURSE_DESCRIPTION");
+//
+//            courses.add(new WorkerCourse(courseID, courseDescription));
+//        }
+//        return courses;
+//    }
 
     public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
         String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test

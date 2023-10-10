@@ -25,6 +25,10 @@ public class WorkerCourse implements Serializable{
         this.CourseCode = CourseCode;
         this.courseDescription = courseDescription;
     }
+
+    public WorkerCourse(String CourseCode) {
+        this.CourseCode = CourseCode;
+    }
     
 
     public String getCourseCode() {
