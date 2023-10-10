@@ -23,15 +23,15 @@ public class Client extends JFrame {
 
     private Font font1, font2, font3, font4;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin, btnLogout;
     private static JComboBox cbo;
     private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
 
-    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearch, btnRetrieveStud, btnRetrieveCourse;
-    private static JTextField searchTxt;
+    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse;
+    private static JTextField searchTxtStud, searchTxtCourse;
 
     private static JButton btnEnroll, btnViewCourse;
 
@@ -67,6 +67,7 @@ public class Client extends JFrame {
         panelC = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelS = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelE = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelSC = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(6, 2));
 
@@ -113,8 +114,11 @@ public class Client extends JFrame {
         btnAddCourse = new JButton("Add Course");
         btnAddCourse.setFont(font4);
 
-        btnSearch = new JButton("Search");
-        btnSearch.setFont(font4);
+        btnSearchStud = new JButton("Search");
+        btnSearchStud.setFont(font4);
+
+        btnSearchCourse = new JButton("Search");
+        btnSearchCourse.setFont(font4);
 
         btnRetrieveStud = new JButton("Retrieve Student");
         btnRetrieveStud.setFont(font4);
@@ -128,8 +132,8 @@ public class Client extends JFrame {
         btnAddStud = new JButton("Add student");
         btnAddStud.setFont(font4);
 
-        searchTxt = new JTextField();
-
+        searchTxtStud = new JTextField(20);
+        searchTxtCourse = new JTextField(20);
         //-----------------------------------------------------Student
         btnEnroll = new JButton("Enroll In Course");
         btnViewCourse = new JButton("View Available Courses");
@@ -194,8 +198,11 @@ public class Client extends JFrame {
         panelA.add(btnRetrieveCourse);
         panelA.add(btnDelete);
 
-        panelE.add(searchTxt);
-        panelE.add(btnSearch);
+        panelE.add(searchTxtStud);
+        panelE.add(btnSearchStud);
+
+        panelSC.add(searchTxtCourse);
+        panelSC.add(btnSearchCourse);
 
         panelStud.add(btnEnroll);
         panelStud.add(btnViewCourse);
@@ -203,6 +210,7 @@ public class Client extends JFrame {
         panelC.add(panelL);
         panelC.add(panelA);
         panelC.add(panelE);
+        panelC.add(panelSC);
         panelC.add(panelStud);
         panelC.add(panelP);
 
@@ -246,6 +254,7 @@ public class Client extends JFrame {
         add(panelJ, BorderLayout.EAST);
 
         panelE.setVisible(false);
+        panelSC.setVisible(false);
         panelP.setVisible(false);
         panelA.setVisible(false);
         panelStud.setVisible(false);
@@ -428,8 +437,10 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
-                    searchTxt.setText("Search by Student ID");
+
+                    searchTxtStud.setText("student");
                     panelE.setVisible(true);
+                    panelSC.setVisible(false);
                     panelP.setVisible(true);
                     retrieveStud();
                 }
@@ -442,8 +453,10 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
-                    searchTxt.setText("Search by Course Code");
-                    panelE.setVisible(true);
+
+                    searchTxtCourse.setText("course");
+                    panelSC.setVisible(true);
+                    panelE.setVisible(false);
                     panelP.setVisible(true);
                     retrieveCourse();
                 }
@@ -452,17 +465,29 @@ public class Client extends JFrame {
 
         });
 
-        btnSearch.addActionListener(new ActionListener() {
+        btnSearchStud.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == btnSearch) {
+                if (e.getSource() == btnSearchStud) {
                     searchStud();
-                    searchTxt.setText("");
+                    searchTxtStud.setText("");
                 }
 
             }
 
         });
+        btnSearchCourse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnSearchStud) {
+                    searchCourse();
+                    searchTxtCourse.setText("");
+                }
+
+            }
+
+        });
+
         btnViewCourse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -564,6 +589,7 @@ public class Client extends JFrame {
                 Object[] arrConArray = arrCon.toArray();
 
                 tableModel.addRow(arrConArray);
+
             }
 
         } catch (IOException ex) {
@@ -607,14 +633,17 @@ public class Client extends JFrame {
         tableModel.addColumn("Student ID");
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
-        String search = searchTxt.getText();
+        
+        String search = searchTxtStud.getText();
+       
         try {
-
+//            out.writeObject("search student");
+//            out.flush();
             out.writeObject(search);
             out.flush();
-            ArrayList<WorkerCourse> displayCourse = (ArrayList<WorkerCourse>) in.readObject();
+
             ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
-      
+
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
 
@@ -622,21 +651,10 @@ public class Client extends JFrame {
                 Object[] arrConArray = arrCon.toArray();
 
                 tableModel.addRow(arrConArray);
+                System.out.println(arrConArray.toString());
             }
-            
-            
-                for(int j = 0 ; j < displayCourse.size(); j++){
-                    WorkerCourse workerCourse = displayCourse.get(j);
-                    ArrayList<Object> arrCon2 = converter2(workerCourse);
-                    Object[] arrCon2Obj = arrCon2.toArray();
-                    
-                    tableModel.addRow(arrCon2Obj);
-                }
-              
-            }
-            
 
-         catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error in IO");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error in ClassNotFound");
@@ -646,13 +664,30 @@ public class Client extends JFrame {
 
     public static void searchCourse() {
         clearTable();
-        String search = searchTxt.getText();
+        tableModel.addColumn("Course Code");
+        tableModel.addColumn("Course Description");
+        tableModel.addColumn("Availability");
 
+        String search = searchTxtCourse.getText();
+     
         try {
+//            out.writeObject("search course");
+//            out.flush();
             out.writeObject(search);
             out.flush();
+            ArrayList<WorkerCourse> displayCourse = (ArrayList<WorkerCourse>) in.readObject();
 
+            for (int j = 0; j < displayCourse.size(); j++) {
+                WorkerCourse workerCourse = displayCourse.get(j);
+                ArrayList<Object> arrCon2 = converter2(workerCourse);
+                Object[] arrCon2Obj = arrCon2.toArray();
+
+                tableModel.addRow(arrCon2Obj);
+                System.out.println(arrCon2Obj.toString());
+            }
         } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
 
