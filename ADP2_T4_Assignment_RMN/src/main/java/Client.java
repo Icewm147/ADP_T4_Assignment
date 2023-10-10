@@ -671,8 +671,8 @@ public class Client extends JFrame {
         String search = searchTxtCourse.getText();
         
         try {
-            out.writeObject("course");
-            out.flush();
+//            out.writeObject("course");
+//            out.flush();
             out.writeObject(search);
             out.flush();
             System.out.println("called the method");
