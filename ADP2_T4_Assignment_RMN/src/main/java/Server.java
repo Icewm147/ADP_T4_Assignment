@@ -66,7 +66,7 @@ public class Server {
         while (true) {
             try {
                 receivedObject = in.readObject();
-
+                
                 //Authentication
                 if (receivedObject instanceof WorkerLogin) {
 //                    String userAuth = (String) receivedObject;                    
@@ -86,7 +86,7 @@ public class Server {
                     try {
                         ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
                         for (WorkerStudent students : student) {
-                            if (students.getStuduntID().equals(stud)) {
+                            if (students.getStuduntID()==stud.getStuduntID()) {
                                 System.out.println("false");
                             } else {
                                 System.out.println("true");
@@ -105,7 +105,7 @@ public class Server {
 //                        JOptionPane.showMessageDialog(null, "Student Already Added");
 //                    }
 
-                    //retreiving all students DONE
+//                    //retreiving all students DONE
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
                     try {
                         List<WorkerStudent> studentList = dao.getStudentInfo();
@@ -185,8 +185,7 @@ public class Server {
                     break;
                 } //search course
                 else if (receivedObject instanceof String) {
-                    String search = (String) receivedObject;
-                    if (search.equalsIgnoreCase("course")) {
+                    String search = (String) receivedObject;                   
                         List<WorkerCourse> searchC = new ArrayList<>();
                         try {
                             List<WorkerCourse> searchCourse = dao.getCourseInfo();
@@ -205,19 +204,18 @@ public class Server {
                         } catch (SQLException ex) {
                             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }
+                    
                 }  //search student
-                else if (receivedObject instanceof String) {
+                else if (receivedObject instanceof Integer) {
 
                     List<WorkerStudent> searched = new ArrayList<>();
                     //List<WorkerCourse> searchC = new ArrayList<>();
                     try {
                         List<WorkerStudent> searchStudent = dao.getStudentInfo();
                         //   List<WorkerCourse> searchCourse = dao.getAllCourses();
-                        String search = (String) receivedObject;
+                        int search = (Integer) receivedObject;
                         for (WorkerStudent student : searchStudent) {
-                            if (student.getStuduntID().equalsIgnoreCase(search)) {
-
+                            if (student.getStuduntID()==search) {
                                 searched.add(student);
                                 out.writeObject(searched);
                                 out.flush();

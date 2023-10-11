@@ -28,7 +28,7 @@ public class DAO {
     public void addStudentToDB(WorkerStudent student) throws IOException, SQLException {
         String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, student.getStuduntID());
+        statement.setInt(1, student.getStuduntID());
         statement.setString(2, student.getStudentFirstName());
         statement.setString(3, student.getStudentLastName());
 
@@ -92,37 +92,38 @@ public class DAO {
 //        return courses;
 //    }
 
-    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
-        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
+    
+        //uncomment when implemented
+//    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
+//        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
+//
+//        List<WorkerStudent> studentsOfCourse = new ArrayList<>();
+//
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setInt(1, courseCode);   // -------  Note change to course_Code (Might not need to since it takes it as the passed variable in the method)
+//        ResultSet result = statement.executeQuery();
+//        while (result.next()) {
+//            String studName = result.getString("courseID");
+//            String studLastName = result.getString("courseName");//FOR THE WHOLE METHOD DBL CHECK WHAT TABLE IT IS FETCHING STUDENTS FROM FOR CORRECT INFO TO BE INSERTED
+//            String studNum = result.getString("studNum");
+//            studentsOfCourse.add(new WorkerStudent(studName, studLastName, studNum));
+//        }
+//        return studentsOfCourse;
+//    }
 
-        List<WorkerStudent> studentsOfCourse = new ArrayList<>();
-
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setInt(1, courseCode);   // -------  Note change to course_Code (Might not need to since it takes it as the passed variable in the method)
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            String studName = result.getString("courseID");
-            String studLastName = result.getString("courseName");//FOR THE WHOLE METHOD DBL CHECK WHAT TABLE IT IS FETCHING STUDENTS FROM FOR CORRECT INFO TO BE INSERTED
-            String studNum = result.getString("studNum");
-            studentsOfCourse.add(new WorkerStudent(studName, studLastName, studNum));
-        }
-        return studentsOfCourse;
-    }
-
-    public List<WorkerCourse> coursesPerStudent(int studentNumber) throws SQLException {
+    public List<String> coursesPerStudent(int studentNumber) throws SQLException {
         String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
 
-        List<WorkerCourse> coursesOfStudent = new ArrayList<>();
+        List<String> coursesOfStudent = new ArrayList<>();
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, studentNumber);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
-            String stud_ID = result.getString("stud_ID");
+            int stud_ID = result.getInt("stud_ID");
             String course_ID = result.getString("course_ID");
-            coursesOfStudent.add(new WorkerCourse(stud_ID, course_ID));
+            coursesOfStudent.add(stud_ID, course_ID);           
         }
-
         return coursesOfStudent;
     }
    
@@ -205,7 +206,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Stud_ID");   //<<------------SHOULD BE RIGHT
+            int studentNumber = result.getInt("Stud_ID");   //<<------------SHOULD BE RIGHT
             String name = result.getString("STUD_FIRST_NAME");
             String course = result.getString("STUD_LAST_NAME");
 

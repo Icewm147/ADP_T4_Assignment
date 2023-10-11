@@ -27,7 +27,7 @@ public class Client extends JFrame {
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin, btnLogout;
-    private static JComboBox cbo;
+    private static JComboBox cbo, cbo3;
     private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
 
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse;
@@ -101,6 +101,9 @@ public class Client extends JFrame {
         cbo1 = new JComboBox(new String[]{"raeesah", "khan"});
         cbo2 = new JComboBox(new String[]{"inm", "adt"});
 
+        cbo3= new JComboBox(new String[]{"Filter", "Student"});
+        cbo3.setFont(font2);
+        cbo3.setPreferredSize(new Dimension(200, 35));
         //-----------------------------------------------------Buttons
         btnLogin = new JButton("LOGIN");
         btnLogin.setFont(font2);
@@ -504,7 +507,7 @@ public class Client extends JFrame {
         String lastN = studLastNameTxt.getText();
 
         try {
-            WorkerStudent add = new WorkerStudent(id, name, lastN);
+            WorkerStudent add = new WorkerStudent(Integer.parseInt(id), name, lastN);
             out.writeObject(add);
             out.flush();
 
@@ -634,7 +637,7 @@ public class Client extends JFrame {
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
 
-        String search = searchTxtStud.getText();
+        int search = Integer.parseInt(searchTxtStud.getText());
 
         try {
 //            out.writeObject("search student");

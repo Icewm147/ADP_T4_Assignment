@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class WorkerStudent implements Serializable{
 
-    private String studuntID;
+    private int studuntID;
     private String studentFirstName;
     private String studentLastName;
 
     public WorkerStudent() {
     }
 
-    public WorkerStudent(String studuntID, String studentFirstName, String studentLastName) {
+    public WorkerStudent(int studuntID, String studentFirstName, String studentLastName) {
         this.studuntID = studuntID;
         this.studentFirstName = studentFirstName;
         this.studentLastName = studentLastName;
@@ -20,11 +20,11 @@ public class WorkerStudent implements Serializable{
     
     
 
-    public String getStuduntID() {
+    public int getStuduntID() {
         return studuntID;
     }
 
-    public void setStuduntID(String studuntID) {
+    public void setStuduntID(int studuntID) {
         this.studuntID = studuntID;
     }
 
