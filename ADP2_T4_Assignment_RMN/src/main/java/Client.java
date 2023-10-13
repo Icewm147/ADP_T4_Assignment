@@ -23,20 +23,20 @@ public class Client extends JFrame {
 
     private Font font1, font2, font3, font4;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC, panelK;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt, passwordTxt;
     private static JButton btnLogin, btnLogout;
     private static JComboBox cbo, cbo3;
     private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
 
-    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse;
+    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, space1, space2, space3, space6;
-    private static JTextField courseDesTxt, courseCodeTxt;
+    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, lblSubjectID, lblSubject;
+    private static JTextField courseDesTxt, courseCodeTxt, subjectIDTxt, subjectTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
     private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
@@ -70,6 +70,7 @@ public class Client extends JFrame {
         panelSC = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(6, 2));
+        panelK = new JPanel(new GridLayout(6, 2));
 
         panelDelStud = new JPanel(new GridLayout(2, 1));
         panelDelC = new JPanel(new GridLayout(2, 2));
@@ -101,7 +102,7 @@ public class Client extends JFrame {
         cbo1 = new JComboBox(new String[]{"raeesah", "khan"});
         cbo2 = new JComboBox(new String[]{"inm", "adt"});
 
-        cbo3= new JComboBox(new String[]{"Filter", "Student"});
+        cbo3 = new JComboBox(new String[]{"Filter", "Student"});
         cbo3.setFont(font2);
         cbo3.setPreferredSize(new Dimension(200, 35));
         //-----------------------------------------------------Buttons
@@ -144,14 +145,20 @@ public class Client extends JFrame {
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
         courseCode = new JLabel("Course Code: ");
-        paneHeading = new JLabel("Add a Course: ");
 
+        lblSubjectID = new JLabel("Subject ID");
+        lblSubject = new JLabel("Subject One");
+        paneHeading = new JLabel("Add a Course: ");
+        panelHeading2 = new JLabel("Add a Subject");
         space1 = new JLabel();
         space2 = new JLabel();
         space3 = new JLabel();
 
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
+
+        subjectIDTxt = new JTextField(20);
+        subjectTxt = new JTextField(20);
 
         //----------------------------------------------------- JOptionPane add student
         studId = new JLabel("Student ID: ");
@@ -230,8 +237,18 @@ public class Client extends JFrame {
         panelJ.add(courseDesTxt);
         panelJ.add(space6);
         panelJ.add(checkBox);
-
+        panelJ.add(panelK);
+        
+        panelK.add(panelHeading2);
+        panelK.add(space1);
+        panelK.add(lblSubjectID);
+        panelK.add(subjectIDTxt);
+        panelK.add(lblSubject);
+        panelK.add(subjectTxt);
+        panelK.add(space6);
+        
         panelJ.setVisible(false);
+        panelK.setVisible(false);
         //----------------------------- Add a Student JOptionPane
         panelW.add(paneHeading2);
         panelW.add(space0);
@@ -255,6 +272,7 @@ public class Client extends JFrame {
         add(panelS, BorderLayout.SOUTH);
         add(panelW, BorderLayout.WEST);
         add(panelJ, BorderLayout.EAST);
+        
 
         panelE.setVisible(false);
         panelSC.setVisible(false);
@@ -335,17 +353,30 @@ public class Client extends JFrame {
                 if (e.getSource() == btnAddCourse) {
 
                     panelJ.setVisible(true);
+
                     int result = JOptionPane.showOptionDialog(null, panelJ,
                             "Add a Course",
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
-
                         AddCourse();
+                        panelK.setVisible(true);
+                        int result2 = JOptionPane.showOptionDialog(null, panelK,
+                                "Add a Subject",
+                                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                                new String[]{"Add Another", "Save"}, "Yes");
+                        while (true) {
+                            if (result2 == JOptionPane.YES_OPTION) {
+                                AddSubject();
 
-                        panelJ.setVisible(false);
+                            } else {
+                                AddSubject();
+
+                                panelJ.setVisible(false);
+                            }
+                        }
+
                     }
-
                 }
 
             }
@@ -483,7 +514,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearchCourse) {
-                   searchCourse();
+                    searchCourse();
                     searchTxtCourse.setText("");
                 }
 
@@ -524,6 +555,29 @@ public class Client extends JFrame {
 
     }
 
+    public void AddSubject() {
+
+        String subID = subjectIDTxt.getText();
+        String subName = subjectTxt.getText();
+        String subCourse = courseCodeTxt.getText();
+
+        try {
+            WorkerSubject add = new WorkerSubject(subID, subName, subCourse);
+            out.writeObject(add);
+            out.flush();
+
+            String recievedMsg = (String) in.readObject();
+            if (recievedMsg.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Subject has been added.");
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        }
+    }
+
     public void AddCourse() {
         String description = courseDesTxt.getText();
         String code = courseCodeTxt.getText();
@@ -537,6 +591,7 @@ public class Client extends JFrame {
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Course has been added.");
+
             }
 
         } catch (IOException ex) {
@@ -672,7 +727,7 @@ public class Client extends JFrame {
         tableModel.addColumn("Availability");
 
         String search = searchTxtCourse.getText();
-        
+
         try {
 //            out.writeObject("course");
 //            out.flush();
