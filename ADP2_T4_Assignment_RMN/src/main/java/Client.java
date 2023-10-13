@@ -365,13 +365,12 @@ public class Client extends JFrame {
                                 "Add a Subject",
                                 JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                                 new String[]{"save", "Add another"}, "Yes");
-                       
-                            if (result2 == JOptionPane.YES_OPTION) {
-                                AddSubject();
-                                
-                            } else {
-                             
-     
+
+                        if (result2 == JOptionPane.YES_OPTION) {
+                            AddSubject();
+
+                        } else {
+                            
                         }
 
                     }
