@@ -35,7 +35,7 @@ public class Client extends JFrame {
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, lblSubjectID, lblSubject;
+    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6,space7, lblSubjectID, lblSubject;
     private static JTextField courseDesTxt, courseCodeTxt, subjectIDTxt, subjectTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
@@ -153,6 +153,7 @@ public class Client extends JFrame {
         space1 = new JLabel();
         space2 = new JLabel();
         space3 = new JLabel();
+        space7 = new JLabel();
 
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
@@ -223,6 +224,7 @@ public class Client extends JFrame {
         panelC.add(panelSC);
         panelC.add(panelStud);
         panelC.add(panelP);
+        panelC.add(panelK);
 
         // panelS.add(new JScrollPane(table));
         panelS.add(btnLogin);
@@ -237,15 +239,15 @@ public class Client extends JFrame {
         panelJ.add(courseDesTxt);
         panelJ.add(space6);
         panelJ.add(checkBox);
-        panelJ.add(panelK);
+       // panelJ.add(panelK);
         
         panelK.add(panelHeading2);
-        panelK.add(space1);
+        panelK.add(space7);
         panelK.add(lblSubjectID);
         panelK.add(subjectIDTxt);
         panelK.add(lblSubject);
         panelK.add(subjectTxt);
-        panelK.add(space6);
+
         
         panelJ.setVisible(false);
         panelK.setVisible(false);
