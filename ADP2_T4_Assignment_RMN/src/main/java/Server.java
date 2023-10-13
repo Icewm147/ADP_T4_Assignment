@@ -140,8 +140,18 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                } else if (receivedObject instanceof WorkerCourse) {
+                    //add subject to subject_table
+                }else if(receivedObject instanceof WorkerSubject){
+                    WorkerSubject subject = (WorkerSubject)receivedObject;
+                    try{
+                        dao.addSubject(subject);
+                        out.writeObject("Success");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                
+                }else if (receivedObject instanceof WorkerCourse) {
                     WorkerCourse course = (WorkerCourse) receivedObject;
                     try {
                         dao.addCourseToDB(course);

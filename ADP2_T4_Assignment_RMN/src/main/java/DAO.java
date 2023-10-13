@@ -25,6 +25,7 @@ public class DAO {
         return con;
     }
 //DO NOT CHANGE, WORKING PERFECTLY (addStudentToDB)
+
     public void addStudentToDB(WorkerStudent student) throws IOException, SQLException {
         String query = "INSERT INTO Student_Table (Stud_ID, Stud_First_Name, Stud_Last_Name) VALUES (?, ?, ?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
@@ -51,6 +52,7 @@ public class DAO {
         statement.executeUpdate();
     }
 //Working method (addCourseToDB), do not even try to touch
+
     public void addCourseToDB(WorkerCourse course) throws IOException, SQLException {
         String query = "INSERT INTO COURSE (COURSE_CODE, COURSE_DESCRIPTION, AVAILABLE) VALUES (?, ?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
@@ -59,7 +61,19 @@ public class DAO {
         statement.setBoolean(3, course.isAvailable());
         statement.executeUpdate();
     }
+
+    //add Subject to Subject_Table
+    public void addSubject(WorkerSubject subject) throws SQLException {
+        List<WorkerSubject> students = new ArrayList<>();
+        String query = "INSERT INTO Subject_Table(Subject_ID,Subject_Name,Course_Code) VALUES (?,?,?)";
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        statement.setString(1, subject.getSubjectID());
+        statement.setString(2, subject.getSubjectName());
+        statement.setString(3, subject.getCourseID());
+        statement.executeUpdate();
+    }
     //getting all information on Subjects
+
     public List<WorkerSubject> getAllSubjects() throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
         String query = "SELECT * FROM Subject_Table";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
@@ -91,9 +105,7 @@ public class DAO {
 //        }
 //        return courses;
 //    }
-
-    
-        //uncomment when implemented
+    //uncomment when implemented
 //    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
 //        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
 //
@@ -110,7 +122,6 @@ public class DAO {
 //        }
 //        return studentsOfCourse;
 //    }
-
     public List<String> coursesPerStudent(int studentNumber) throws SQLException {
         String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
 
@@ -122,22 +133,22 @@ public class DAO {
         while (result.next()) {
             int stud_ID = result.getInt("stud_ID");
             String course_ID = result.getString("course_ID");
-            coursesOfStudent.add(stud_ID, course_ID);           
+            coursesOfStudent.add(stud_ID, course_ID);
         }
         return coursesOfStudent;
     }
-   
-    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException{
+
+    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
         String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE";
-        
+
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        
+
         statement.setString(1, username);
         statement.setString(2, password);
         statement.setString(3, userAccessType);
-        
+
         ResultSet result = statement.executeQuery();
-        
+
 //        if(userAccessType.equals("Admin")){
 //            System.out.println("Admin Login succesfull");
 //        } else if (userAccessType.equals("Student")){
@@ -196,7 +207,7 @@ public class DAO {
 //            JOptionPane.showMessageDialog(null, "Student login failed!");
 //        }
 //    }
-    
+
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
@@ -214,6 +225,7 @@ public class DAO {
         }
         return students;
     }
+
     //get Just Course info
     public List<WorkerCourse> getCourseInfo() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
@@ -231,6 +243,7 @@ public class DAO {
         }
         return courses;
     }
+
     public List<WorkerCourse> getAvailableCourses() throws SQLException {
         List<WorkerCourse> courses = new ArrayList<>();
         String query = "SELECT * FROM Course WHERE Available = 'true'";
