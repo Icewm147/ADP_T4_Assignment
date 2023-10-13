@@ -35,7 +35,7 @@ public class Client extends JFrame {
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6,space7, lblSubjectID, lblSubject;
+    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7, lblSubjectID, lblSubject;
     private static JTextField courseDesTxt, courseCodeTxt, subjectIDTxt, subjectTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
@@ -239,8 +239,8 @@ public class Client extends JFrame {
         panelJ.add(courseDesTxt);
         panelJ.add(space6);
         panelJ.add(checkBox);
-       // panelJ.add(panelK);
-        
+        // panelJ.add(panelK);
+
         panelK.add(panelHeading2);
         panelK.add(space7);
         panelK.add(lblSubjectID);
@@ -248,7 +248,6 @@ public class Client extends JFrame {
         panelK.add(lblSubject);
         panelK.add(subjectTxt);
 
-        
         panelJ.setVisible(false);
         panelK.setVisible(false);
         //----------------------------- Add a Student JOptionPane
@@ -274,7 +273,6 @@ public class Client extends JFrame {
         add(panelS, BorderLayout.SOUTH);
         add(panelW, BorderLayout.WEST);
         add(panelJ, BorderLayout.EAST);
-        
 
         panelE.setVisible(false);
         panelSC.setVisible(false);
@@ -366,16 +364,14 @@ public class Client extends JFrame {
                         int result2 = JOptionPane.showOptionDialog(null, panelK,
                                 "Add a Subject",
                                 JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                                new String[]{"Add Another", "Save"}, "Yes");
-                        while (true) {
+                                new String[]{"save", "Add another"}, "Yes");
+                       
                             if (result2 == JOptionPane.YES_OPTION) {
                                 AddSubject();
-
+                                
                             } else {
-                                AddSubject();
-
-                                panelJ.setVisible(false);
-                            }
+                             
+     
                         }
 
                     }
