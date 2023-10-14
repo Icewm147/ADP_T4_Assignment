@@ -141,11 +141,18 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //add subject to subject_table
+                    //add subject to subject_table done
                 } else if (receivedObject instanceof WorkerSubject) {
                     WorkerSubject subject = (WorkerSubject) receivedObject;
                     try {
-                        dao.addSubject(subject);
+                        WorkerSubject sub1 = new WorkerSubject(subject.getSubjectID1(), subject.getSubjectName1(), subject.getCourseID());
+                        dao.addSubject(sub1);
+                        WorkerSubject sub2 = new WorkerSubject(subject.getSubjectID2(), subject.getSubjectName2(), subject.getCourseID());
+                        dao.addSubject(sub2);
+                        WorkerSubject sub3 = new WorkerSubject(subject.getSubjectID3(), subject.getSubjectName3(), subject.getCourseID());
+                        dao.addSubject(sub3);
+                        WorkerSubject sub4 = new WorkerSubject(subject.getSubjectID4(), subject.getSubjectName4(), subject.getCourseID());
+                        dao.addSubject(sub4);
                         out.writeObject("Success");
                         out.flush();
                     } catch (SQLException ex) {
