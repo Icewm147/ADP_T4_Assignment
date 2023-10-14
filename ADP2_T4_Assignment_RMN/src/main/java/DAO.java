@@ -96,7 +96,6 @@ public class DAO {
 //        }
 //        return students;
 //    }
-
 //    public List<WorkerCourse> getAllCourses() throws SQLException {
 //        List<WorkerCourse> courses = new ArrayList<>();
 //        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
@@ -145,20 +144,22 @@ public class DAO {
     }
 
     //test
-     public boolean authenticateUser(String username, String password, String userAccessType) {
-        try (Connection connection = connectToDB()) {
-            String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? AND PASSWORD=? AND USER_ACCESS_TYPE=?";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setString(1, username);
-                statement.setString(2, password);
-                statement.setString(3, userAccessType);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+    public boolean authenticateUser(String username, String password, String userAccessType) {
+
+        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? AND PASSWORD=? AND USER_ACCESS_TYPE=?";
+        try {
+            PreparedStatement statement = connectToDB().prepareStatement(query);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.setString(3, userAccessType);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                } else {
+                    return false;
                 }
+
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -166,11 +167,6 @@ public class DAO {
         }
     }
 
-
-    
-    
-    
-    
 //    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
 //        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE=?";
 //
@@ -240,7 +236,6 @@ public class DAO {
 //            JOptionPane.showMessageDialog(null, "Student login failed!");
 //        }
 //    }
-       
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();

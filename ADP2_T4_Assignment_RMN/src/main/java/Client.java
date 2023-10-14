@@ -673,7 +673,7 @@ public class Client extends JFrame {
 //        WorkerLogin login = new WorkerLogin();
 //        String user = login.getUsername();
 //        String passwords = login.getPassword();
-//        String type = cbo.getSelectedItem().toString();
+//        String type = login.cbo.getSelectedItem().toString();
 //
 //        try {
 //            WorkerLogin log = new WorkerLogin(user, passwords, type);
