@@ -661,14 +661,37 @@ public class Client extends JFrame {
 
     public void chosenCourse() {
         String chosenC = String.valueOf(cbo4.getSelectedItem());
-        
+        String send = "chosen course";
         try {
+            
+            out.writeObject(send);
+            out.flush();
+            
+            String recievedMsg = (String)in.readObject();
+            System.out.println(recievedMsg);
+            
             out.writeObject(chosenC);
             out.flush();
+            
+            ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerSubject workerSubject = display.get(i);
+
+                ArrayList<Object> arrCon = converter4(workerSubject);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+
+            }
+            
+            
+            
             
             
             
         } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

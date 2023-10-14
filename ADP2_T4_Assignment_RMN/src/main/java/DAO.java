@@ -162,7 +162,7 @@ public class DAO {
             statement.setString(2, password);
             statement.setString(3, userAccessType);
 
-            try ( ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return true;
                 } else {
@@ -298,12 +298,18 @@ public class DAO {
         return courses;
     }
 
+<<<<<<< Updated upstream
 
 
     public List<String> getCourseCode() throws SQLException {
         List<String> coursesCode = new ArrayList<>();
         String query = "SELECT COURSE_CODE FROM COURSE WHERE Available = 'true'";
 
+=======
+    public List<String> getCourseCode() throws SQLException {
+        List<String> coursesCode = new ArrayList<>();
+        String query = "SELECT COURSE_CODE FROM COURSE WHERE Available = 'true'";
+>>>>>>> Stashed changes
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {

@@ -162,7 +162,10 @@ public class Server {
                         List<String> courseCodeList = dao.getCourseCode();
                         System.out.println(courseCodeList);
                         out.writeObject(courseCodeList);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
