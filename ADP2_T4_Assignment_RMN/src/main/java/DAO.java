@@ -66,11 +66,11 @@ public class DAO {
     
        public void addSubject(WorkerSubject subject) throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
-        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Course_Code) VALUES (?,?,?)";
+        String query = "INSERT INTO Subject_Table(Subject_ID,Subject_Name,Course_Code) VALUES (?,?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, subject.getSubjectID1());
         statement.setString(2, subject.getSubjectName1());
-        statement.setString(9, subject.getCourseID());
+        statement.setString(3, subject.getCourseID());
         statement.executeUpdate();
     }
     
