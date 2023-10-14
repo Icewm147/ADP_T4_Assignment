@@ -74,7 +74,6 @@ public class Server {
                     String password = login.getPassword();
                     String accessType = login.getUserAccessType();
 
-                    // Call the DAO class for authentication
                     if (dao.authenticateUser(username, password, accessType)) {
                         out.writeObject("success");
                     } else {
@@ -82,7 +81,6 @@ public class Server {
                     }
                     out.flush();
 
-                    // ...
                 } //add student DONE
                 else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
