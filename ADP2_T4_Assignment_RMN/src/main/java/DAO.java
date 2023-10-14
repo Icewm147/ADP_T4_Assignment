@@ -138,27 +138,54 @@ public class DAO {
         return coursesOfStudent;
     }
 
-    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
-        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE";
-
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-
-        statement.setString(1, username);
-        statement.setString(2, password);
-        statement.setString(3, userAccessType);
-
-        ResultSet result = statement.executeQuery();
-
-//        if(userAccessType.equals("Admin")){
-//            System.out.println("Admin Login succesfull");
-//        } else if (userAccessType.equals("Student")){
-//            System.out.println("Student lLogin Successful");
-//        } else {
-//            System.out.println("Login Failure");
-//            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
-//            System.out.println("Faield at authenticateLogin()");
-//        }
+    //test
+     public boolean authenticateUser(String username, String password, String userAccessType) {
+        try (Connection connection = connectToDB()) {
+            String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? AND PASSWORD=? AND USER_ACCESS_TYPE=?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, username);
+                statement.setString(2, password);
+                statement.setString(3, userAccessType);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQL Exception: " + ex.getMessage());
+            return false;
+        }
     }
+
+
+    
+    
+    
+    
+//    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
+//        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE=?";
+//
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//
+//        statement.setString(1, username);
+//        statement.setString(2, password);
+//        statement.setString(3, userAccessType);
+//
+//        ResultSet result = statement.executeQuery();
+//
+////        if(userAccessType.equals("Admin")){
+////            System.out.println("Admin Login succesfull");
+////        } else if (userAccessType.equals("Student")){
+////            System.out.println("Student lLogin Successful");
+////        } else {
+////            System.out.println("Login Failure");
+////            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
+////            System.out.println("Faield at authenticateLogin()");
+////        }
+//    }
     //change this one to add user access type , change the table name also
 //    public void authenticateAdmin(String username, String password) throws SQLException{
 //        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?"; //---table name
@@ -207,7 +234,7 @@ public class DAO {
 //            JOptionPane.showMessageDialog(null, "Student login failed!");
 //        }
 //    }
-
+       
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();

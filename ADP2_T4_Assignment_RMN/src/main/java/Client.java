@@ -304,8 +304,14 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
+                    String user = usernameTxt.getText(); // Get the username from your UI input field
+                    String password = passwordTxt.getText(); // Get the password from your UI input field
+                    String userAccessType = cbo.getSelectedItem().toString(); // Get the user access type from your UI combo box
 
+                    // Call the authenticationLogin method from the Client class
+                    Client.authenticationLogin(user, password, userAccessType);
                     if (cbo.getSelectedItem() == "Student") {
+                        authenticationLogin(user,password,userAccessType);
                         heading.setText("Student Enrollment system");
 
                         panelStud.setVisible(true);
@@ -314,6 +320,7 @@ public class Client extends JFrame {
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
                     } else {
+                        authenticationLogin(user,password,userAccessType);
                         heading.setText("Admin Access");
 
                         panelA.setVisible(true);
@@ -326,8 +333,17 @@ public class Client extends JFrame {
 
                 }
             }
+          });
+            
 
-        });
+
+        
+
+
+
+
+
+        
 
         btnEnroll.addActionListener(new ActionListener() {
             @Override
@@ -370,7 +386,7 @@ public class Client extends JFrame {
                             AddSubject();
 
                         } else {
-                            
+
                         }
 
                     }
@@ -599,33 +615,55 @@ public class Client extends JFrame {
 
     }
 
-    public static void authenticationLogin() {
-        WorkerLogin login = new WorkerLogin();
-        String user = login.getUsername();
-        String passwords = login.getPassword();
-        String type = cbo.getSelectedItem().toString();
-
+    //test worked out
+    public static void authenticationLogin(String username, String password, String userAccessType) {
         try {
-            WorkerLogin log = new WorkerLogin(user, passwords, type);
-            out.writeObject(log);
+
+
+            WorkerLogin login = new WorkerLogin(username, password, userAccessType);
+            out.writeObject(login);
             out.flush();
 
-            String recievedMsg = (String) in.readObject();
-            if (recievedMsg.equalsIgnoreCase("success")) {
+            String receivedMsg = (String) in.readObject();
+            if (receivedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Login successful.");
             } else {
-                JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or Password.");
-
+                JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or password.");
             }
 
         } catch (IOException ex) {
-            System.out.println("IOException" + ex.getMessage());
+            System.out.println("IOException: " + ex.getMessage());
         } catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException" + ex.getMessage());
+            System.out.println("ClassNotFoundException: " + ex.getMessage());
         }
-
     }
 
+//    public static void authenticationLogin() {
+//        WorkerLogin login = new WorkerLogin();
+//        String user = login.getUsername();
+//        String passwords = login.getPassword();
+//        String type = cbo.getSelectedItem().toString();
+//
+//        try {
+//            WorkerLogin log = new WorkerLogin(user, passwords, type);
+//            out.writeObject(log);
+//            out.flush();
+//
+//            String recievedMsg = (String) in.readObject();
+//            if (recievedMsg.equalsIgnoreCase("success")) {
+//                JOptionPane.showMessageDialog(null, "Login successful.");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or Password.");
+//
+//            }
+//
+//        } catch (IOException ex) {
+//            System.out.println("IOException" + ex.getMessage());
+//        } catch (ClassNotFoundException ex) {
+//            System.out.println("ClassNotFoundException" + ex.getMessage());
+//        }
+//
+//    }
     public static void retrieveStud() {
         clearTable();
         tableModel.addColumn("Student ID");
