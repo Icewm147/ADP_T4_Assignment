@@ -406,8 +406,8 @@ public class Client extends JFrame {
                         panelK.setVisible(true);
                         int result2 = JOptionPane.showOptionDialog(null, panelK,
                                 "Add a Subject",
-                                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                                new String[]{"save", "Add another"}, "Yes");
+                                JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                                new String[]{"save"}, "Yes");
 
                         if (result2 == JOptionPane.YES_OPTION) {
                             AddSubject();

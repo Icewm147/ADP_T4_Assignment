@@ -32,6 +32,14 @@ public class WorkerSubject implements Serializable {
         this.courseID = courseID;
     }
 
+    public WorkerSubject(String subjectID1, String subjectName1, String courseID) {
+        this.subjectID1 = subjectID1;
+        this.subjectName1 = subjectName1;
+        this.courseID = courseID;
+    }
+    
+    
+
     public String getSubjectID1() {
         return subjectID1;
     }

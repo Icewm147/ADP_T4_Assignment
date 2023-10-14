@@ -63,21 +63,40 @@ public class DAO {
     }
 
     //add Subject to Subject_Table
-    public void addSubject(WorkerSubject subject) throws SQLException {
+    
+       public void addSubject(WorkerSubject subject) throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
-        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Subject_ID2,Subject_Name2, Subject_ID3,Subject_Name3,Subject_ID4,Subject_Name4,Course_Code) VALUES (?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Course_Code) VALUES (?,?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, subject.getSubjectID1());
         statement.setString(2, subject.getSubjectName1());
-        statement.setString(3, subject.getSubjectID2());
-        statement.setString(4, subject.getSubjectName2());
-        statement.setString(5, subject.getSubjectID3());
-        statement.setString(6, subject.getSubjectName3());
-        statement.setString(7, subject.getSubjectID4());
-        statement.setString(8, subject.getSubjectName4());
         statement.setString(9, subject.getCourseID());
         statement.executeUpdate();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    public void addSubject(WorkerSubject subject) throws SQLException {
+//        List<WorkerSubject> students = new ArrayList<>();
+//        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Subject_ID2,Subject_Name2, Subject_ID3,Subject_Name3,Subject_ID4,Subject_Name4,Course_Code) VALUES (?,?,?,?,?,?,?,?,?)";
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setString(1, subject.getSubjectID1());
+//        statement.setString(2, subject.getSubjectName1());
+//        statement.setString(3, subject.getSubjectID2());
+//        statement.setString(4, subject.getSubjectName2());
+//        statement.setString(5, subject.getSubjectID3());
+//        statement.setString(6, subject.getSubjectName3());
+//        statement.setString(7, subject.getSubjectID4());
+//        statement.setString(8, subject.getSubjectName4());
+//        statement.setString(9, subject.getCourseID());
+//        statement.executeUpdate();
+//    }
     //getting all information on Subjects
 
 //    public List<WorkerSubject> getAllSubjects() throws SQLException {
@@ -96,6 +115,7 @@ public class DAO {
 //        }
 //        return students;
 //    }
+
 //    public List<WorkerCourse> getAllCourses() throws SQLException {
 //        List<WorkerCourse> courses = new ArrayList<>();
 //        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
@@ -144,22 +164,23 @@ public class DAO {
     }
 
     //test
-    public boolean authenticateUser(String username, String password, String userAccessType) {
-
-        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? AND PASSWORD=? AND USER_ACCESS_TYPE=?";
-        try {
-            PreparedStatement statement = connectToDB().prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, password);
-            statement.setString(3, userAccessType);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
-
+     public boolean authenticateUser(String username, String password, String userAccessType) {
+      
+            String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? AND PASSWORD=? AND USER_ACCESS_TYPE=?";
+            try {
+                PreparedStatement statement = connectToDB().prepareStatement(query);
+                statement.setString(1, username);
+                statement.setString(2, password);
+                statement.setString(3, userAccessType);
+                
+                
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                
             }
         } catch (SQLException ex) {
             System.out.println("SQL Exception: " + ex.getMessage());
@@ -167,6 +188,11 @@ public class DAO {
         }
     }
 
+
+    
+    
+    
+    
 //    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
 //        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE=?";
 //
@@ -236,6 +262,7 @@ public class DAO {
 //            JOptionPane.showMessageDialog(null, "Student login failed!");
 //        }
 //    }
+       
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();
