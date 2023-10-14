@@ -51,6 +51,8 @@ public class Client extends JFrame {
     private static JLabel lblSubjectID1, lblSubject1, lblSubjectID2, lblSubject2, lblSubjectID3, lblSubject3, lblSubjectID4, lblSubject4;
     private static JTextField subjectIDTxt1, subjectTxt1, subjectIDTxt2, subjectTxt2, subjectIDTxt3, subjectTxt3, subjectIDTxt4, subjectTxt4;
 
+    private static boolean log;
+
     public Client() {
 
         try {
@@ -346,35 +348,44 @@ public class Client extends JFrame {
                     String userAccessType = cbo.getSelectedItem().toString(); // Get the user access type from your UI combo box
 
                     // Call the authenticationLogin method from the Client class
-                  //  Client.authenticationLogin(user, password, userAccessType);
+                    //  Client.authenticationLogin(user, password, userAccessType);
                     if (cbo.getSelectedItem() == "Student") {
-                        authenticationLogin(user, password, userAccessType);
-                        heading.setText("Student Enrollment system");
 
-                        panelStud.setVisible(true);
-                        panelL.setVisible(false);
-                        panelP.setVisible(true);
-                        btnLogin.setVisible(false);
-                        btnLogout.setVisible(true);
+                        authenticationLogin(user, password, userAccessType);
+                        if (log == true) {
+                            heading.setText("Student Enrollment system");
+
+                            panelStud.setVisible(true);
+                            panelL.setVisible(false);
+                            panelP.setVisible(true);
+                            btnLogin.setVisible(false);
+                            btnLogout.setVisible(true);
+                        }
                     } else {
+
                         authenticationLogin(user, password, userAccessType);
-                        heading.setText("Admin Access");
+                        if (log == true) {
+                            heading.setText("Admin Access");
 
-                        panelA.setVisible(true);
-                        panelL.setVisible(false);
+                            panelA.setVisible(true);
+                            panelL.setVisible(false);
 
-                        panelE.setVisible(false);
-                        btnLogin.setVisible(false);
-                        btnLogout.setVisible(true);
+                            panelE.setVisible(false);
+                            btnLogin.setVisible(false);
+                            btnLogout.setVisible(true);
+                        }
                     }
 
                 }
             }
-        });
+        }
+        );
 
-        btnEnroll.addActionListener(new ActionListener() {
+        btnEnroll.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnEnroll) {
 
                     int result = JOptionPane.showOptionDialog(null, panelJ,
@@ -389,10 +400,13 @@ public class Client extends JFrame {
                 }
             }
 
-        });
-        btnAddCourse.addActionListener(new ActionListener() {
+        }
+        );
+        btnAddCourse.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnAddCourse) {
 
                     panelJ.setVisible(true);
@@ -401,7 +415,16 @@ public class Client extends JFrame {
                             "Add a Course",
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
+
                     if (result == JOptionPane.YES_OPTION) {
+
+                        if (courseCodeTxt.getText().isEmpty() || courseDesTxt.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Please enter a valid Course.");
+                            courseCodeTxt.setText("");
+                            courseDesTxt.setText("");
+                            courseCodeTxt.requestFocus();
+                            return;
+                        }
                         AddCourse();
                         panelK.setVisible(true);
                         int result2 = JOptionPane.showOptionDialog(null, panelK,
@@ -412,29 +435,35 @@ public class Client extends JFrame {
                         if (result2 == JOptionPane.YES_OPTION) {
                             AddSubject();
 
-                        } 
+                        }
 
                     }
                 }
 
             }
 
-        });
+        }
+        );
 
-        btnLogout.addActionListener(new ActionListener() {
+        btnLogout.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnLogout) {
 
                     closeConnection();
                 }
             }
 
-        });
+        }
+        );
 
-        btnAddStud.addActionListener(new ActionListener() {
+        btnAddStud.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnAddStud) {
 
                     panelW.setVisible(true);
@@ -443,6 +472,14 @@ public class Client extends JFrame {
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
+                        if (studIdTxt.getText().isEmpty() || studNameTxt.getText().isEmpty()|| studLastNameTxt.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Please enter a valid Student.");
+                            studIdTxt.setText("");
+                            studNameTxt.setText("");
+                            studLastNameTxt.setText("");
+                            studIdTxt.requestFocus();
+                            return;
+                        }
                         AddStud();
                         panelW.setVisible(false);
                     }
@@ -451,11 +488,14 @@ public class Client extends JFrame {
 
             }
 
-        });
+        }
+        );
 
-        btnDelete.addActionListener(new ActionListener() {
+        btnDelete.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnDelete) {
                     int result = JOptionPane.showOptionDialog(null, "Choose which catagory that you would like to delete from. ",
                             "Add a Course",
@@ -503,11 +543,14 @@ public class Client extends JFrame {
                 }
             }
 
-        });
+        }
+        );
 
-        btnRetrieveStud.addActionListener(new ActionListener() {
+        btnRetrieveStud.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnRetrieveStud) {
 
                     searchTxtStud.setText("student");
@@ -519,11 +562,14 @@ public class Client extends JFrame {
 
             }
 
-        });
+        }
+        );
 
-        btnRetrieveCourse.addActionListener(new ActionListener() {
+        btnRetrieveCourse.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnRetrieveCourse) {
 
                     searchTxtCourse.setText("course");
@@ -535,11 +581,14 @@ public class Client extends JFrame {
 
             }
 
-        });
+        }
+        );
 
-        btnSearchStud.addActionListener(new ActionListener() {
+        btnSearchStud.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnSearchStud) {
                     searchStud();
                     searchTxtStud.setText("");
@@ -547,10 +596,13 @@ public class Client extends JFrame {
 
             }
 
-        });
-        btnSearchCourse.addActionListener(new ActionListener() {
+        }
+        );
+        btnSearchCourse.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 if (e.getSource() == btnSearchCourse) {
                     searchCourse();
                     searchTxtCourse.setText("");
@@ -558,15 +610,19 @@ public class Client extends JFrame {
 
             }
 
-        });
+        }
+        );
 
-        btnViewCourse.addActionListener(new ActionListener() {
+        btnViewCourse.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e
+            ) {
                 retrieveAvailableCourse();
             }
 
-        });
+        }
+        );
 
     }
 
@@ -583,6 +639,8 @@ public class Client extends JFrame {
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Student has been added.");
+            }if (recievedMsg.equalsIgnoreCase("failed")) {
+                JOptionPane.showMessageDialog(null, "Student has already been added.");
             }
 
         } catch (IOException ex) {
@@ -614,6 +672,16 @@ public class Client extends JFrame {
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Subject has been added.");
+                subjectIDTxt1.setText("");
+                subjectTxt1.setText("");
+                subjectIDTxt2.setText("");
+                subjectTxt2.setText("");
+                subjectIDTxt3.setText("");
+                subjectTxt3.setText("");
+                subjectIDTxt4.setText("");
+                subjectTxt4.setText("");
+                subjectIDTxt1.requestFocus();
+
             }
 
         } catch (IOException ex) {
@@ -636,8 +704,14 @@ public class Client extends JFrame {
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Course has been added.");
-
+                courseDesTxt.setText("");
+                courseCodeTxt.setText("");
+                checkBox.setSelected(false);
             }
+//            if (recievedMsg.equalsIgnoreCase("failed")) {
+//
+//                JOptionPane.showMessageDialog(null, "This course has already been added.");
+//            }
 
         } catch (IOException ex) {
             System.out.println("IOException" + ex.getMessage());
@@ -656,10 +730,19 @@ public class Client extends JFrame {
             out.flush();
 
             String receivedMsg = (String) in.readObject();
+
             if (receivedMsg.equalsIgnoreCase("success")) {
+                log = true;
                 JOptionPane.showMessageDialog(null, "Login successful.");
-            } else {
+            }
+
+            if (receivedMsg.equalsIgnoreCase("failure")) {
+                log = false;
                 JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or password.");
+                usernameTxt.setText("");
+                passwordTxt.setText("");
+                usernameTxt.requestFocus();
+
             }
 
         } catch (IOException ex) {

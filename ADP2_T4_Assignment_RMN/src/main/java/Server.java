@@ -100,7 +100,8 @@ public class Server {
                         }
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+//                        out.writeObject("failed");
+//                        out.flush();
                     }
 //                    catch (SQLException ex) {
 //                        JOptionPane.showMessageDialog(null, "Student Already Added");
@@ -167,7 +168,8 @@ public class Server {
                         System.out.println(course);
                         out.flush();
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        out.writeObject("failed");
+                        out.flush();
                     }
 //                    out.writeObject("Course Added successfully");
 //                    out.flush();
