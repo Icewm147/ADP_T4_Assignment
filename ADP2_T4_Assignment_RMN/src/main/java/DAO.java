@@ -89,22 +89,22 @@ public class DAO {
 //        statement.executeUpdate();
 //    }
     //getting all information on Subjects
-//    public List<WorkerSubject> getAllSubjects() throws SQLException {
-//        List<WorkerSubject> students = new ArrayList<>();
-//        String query = "SELECT * FROM Subject_Table";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
-//
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        ResultSet result = statement.executeQuery();
-//
-//        while (result.next()) {
-//            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
-//            String name = result.getString("Subject_Name");
-//            String course = result.getString("Course_Code");
-//            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
-//            students.add(new WorkerSubject(studentNumber, name, course));
-//        }
-//        return students;
-//    }
+    public List<WorkerSubject> getAllSubjects() throws SQLException {
+        List<WorkerSubject> students = new ArrayList<>();
+        String query = "SELECT * FROM Subject_Table ";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+
+        while (result.next()) {
+            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String name = result.getString("Subject_Name");
+            String course = result.getString("Course_Code");
+            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
+            students.add(new WorkerSubject(studentNumber, name, course));
+        }
+        return students;
+    }
 //    public List<WorkerCourse> getAllCourses() throws SQLException {
 //        List<WorkerCourse> courses = new ArrayList<>();
 //        String query = "SELECT * FROM COURSE";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
@@ -298,15 +298,12 @@ public class DAO {
         return courses;
     }
 
-<<<<<<< HEAD
+
+
     public List<String> getCourseCode() throws SQLException {
         List<String> coursesCode = new ArrayList<>();
-        String query = "SELECT COURSE_CODE FROM COURSE";
-=======
-    public List<WorkerCourse> getCourseCode() throws SQLException {
-        List<WorkerCourse> coursesCode = new ArrayList<>();
         String query = "SELECT COURSE_CODE FROM COURSE WHERE Available = 'true'";
->>>>>>> 5a3f9ffea7015d8990607f105cb372c41934130c
+
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
@@ -315,4 +312,5 @@ public class DAO {
         }
         return coursesCode;
     }
+    
 }
