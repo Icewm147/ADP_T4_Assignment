@@ -298,9 +298,15 @@ public class DAO {
         return courses;
     }
 
+<<<<<<< HEAD
     public List<String> getCourseCode() throws SQLException {
         List<String> coursesCode = new ArrayList<>();
         String query = "SELECT COURSE_CODE FROM COURSE";
+=======
+    public List<WorkerCourse> getCourseCode() throws SQLException {
+        List<WorkerCourse> coursesCode = new ArrayList<>();
+        String query = "SELECT COURSE_CODE FROM COURSE WHERE Available = 'true'";
+>>>>>>> 5a3f9ffea7015d8990607f105cb372c41934130c
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
