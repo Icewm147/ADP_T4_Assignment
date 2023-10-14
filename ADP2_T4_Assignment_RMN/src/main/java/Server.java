@@ -154,8 +154,19 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
-                } else if (receivedObject instanceof WorkerCourse) {
+                    //populate combobox for enrol
+                }
+                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("populate")){
+                    try {
+                        List<WorkerCourse> courseList = dao.getCourseCode();
+                        out.writeObject(courseList);
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                   
+                    
+                }else if (receivedObject instanceof WorkerCourse) {
                     WorkerCourse course = (WorkerCourse) receivedObject;
                     try {
                         dao.addCourseToDB(course);
