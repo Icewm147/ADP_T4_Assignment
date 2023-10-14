@@ -158,8 +158,9 @@ public class Server {
                 }
                 else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("populate")){
                     try {
-                        List<WorkerCourse> courseList = dao.getCourseCode();
-                        out.writeObject(courseList);
+                        List<String> courseCodeList = dao.getCourseCode();
+                        System.out.println(courseCodeList);
+                        out.writeObject(courseCodeList);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);

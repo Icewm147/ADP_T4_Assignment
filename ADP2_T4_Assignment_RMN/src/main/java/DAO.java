@@ -298,14 +298,14 @@ public class DAO {
         return courses;
     }
 
-    public List<WorkerCourse> getCourseCode() throws SQLException {
-        List<WorkerCourse> coursesCode = new ArrayList<>();
+    public List<String> getCourseCode() throws SQLException {
+        List<String> coursesCode = new ArrayList<>();
         String query = "SELECT COURSE_CODE FROM COURSE";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
             String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
-            coursesCode.add(new WorkerCourse(courseCode));
+            coursesCode.add(courseCode);
         }
         return coursesCode;
     }

@@ -23,13 +23,13 @@ public class Client extends JFrame {
 
     private Font font1, font2, font3, font4;
 
-    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC, panelK;
+    private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC, panelK, panelO;
     private static JLabel username, password, heading;
     private static JTextField usernameTxt;
-            private static JPasswordField passwordTxt;
+    private static JPasswordField passwordTxt;
     private static JButton btnLogin, btnLogout;
     private static JComboBox cbo, cbo3;
-    private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
+    private static JComboBox<String> cbo1, cbo2, cbo4 = new JComboBox<>();
 
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
@@ -39,7 +39,7 @@ public class Client extends JFrame {
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
 
-    private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
+    private static JLabel studId, studName, studLastName, paneHeading2, paneHeading3, space0, space4, space5, space8;
     private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
 
     private static DefaultTableModel tableModel;
@@ -53,6 +53,8 @@ public class Client extends JFrame {
     private static JTextField subjectIDTxt1, subjectTxt1, subjectIDTxt2, subjectTxt2, subjectIDTxt3, subjectTxt3, subjectIDTxt4, subjectTxt4;
 
     private static boolean log;
+
+    private static JLabel chooseCourse;
 
     public Client() {
 
@@ -77,6 +79,7 @@ public class Client extends JFrame {
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(6, 2));
         panelK = new JPanel(new GridLayout(18, 2));
+        panelO = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         panelDelStud = new JPanel(new GridLayout(2, 1));
         panelDelC = new JPanel(new GridLayout(2, 2));
@@ -146,7 +149,9 @@ public class Client extends JFrame {
         searchTxtCourse = new JTextField(20);
         //-----------------------------------------------------Student
         btnEnrol = new JButton("Enroll In Course");
+        btnEnrol.setFont(font4);
         btnViewCourse = new JButton("View Available Courses");
+        btnViewCourse.setFont(font4);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -156,6 +161,7 @@ public class Client extends JFrame {
         space2 = new JLabel();
         space3 = new JLabel();
         space7 = new JLabel();
+        space8 = new JLabel();
 
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
@@ -208,6 +214,13 @@ public class Client extends JFrame {
         textArea = new JTextArea(5, 10);
         textArea1 = new JTextArea(5, 10);
 
+        //-------------------------------------------- enrol cbobox
+        chooseCourse = new JLabel("Choose a course: ");
+        chooseCourse.setFont(font2);
+        cbo4 = new JComboBox<>();
+        cbo4.setFont(font2);
+        cbo4.setPreferredSize(new Dimension(200, 35));
+
     }
 
     public void setGui() {
@@ -248,6 +261,7 @@ public class Client extends JFrame {
         panelC.add(panelE);
         panelC.add(panelSC);
         panelC.add(panelStud);
+        panelC.add(panelO);
         panelC.add(panelP);
         panelC.add(panelK);
 
@@ -264,7 +278,6 @@ public class Client extends JFrame {
         panelJ.add(courseDesTxt);
         panelJ.add(space6);
         panelJ.add(checkBox);
-        // panelJ.add(panelK);
 
         panelK.add(panelHeading2);
         panelK.add(space7);
@@ -301,6 +314,12 @@ public class Client extends JFrame {
         panelW.add(studLastNameTxt);
 
         panelW.setVisible(false);
+        //----------------------------- choose a course JOptionPane
+        panelO.add(chooseCourse);
+        //panelO.add(space8);
+        panelO.add(cbo4);
+
+        panelO.setVisible(false);
 
         panelDelStud.add(cbo1);
         panelDelStud.add(textArea);
@@ -354,6 +373,7 @@ public class Client extends JFrame {
 
                         authenticationLogin(user, password, userAccessType);
                         if (log == true) {
+                            retrieveCourse();
                             heading.setText("Student Enrollment system");
 
                             panelStud.setVisible(true);
@@ -387,16 +407,18 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e
             ) {
                 if (e.getSource() == btnEnrol) {
+                    panelO.setVisible(true);
+                    clearTable();
+                    populateCbo4();
 
-                    int result = JOptionPane.showOptionDialog(null, panelJ,
-                            "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new String[]{"Add", "Cancel"}, "Yes");
-                    if (result == JOptionPane.YES_OPTION) {
-
-                        panelJ.setVisible(false);
-                    }
-
+//                    int result = JOptionPane.showOptionDialog(null, panelO,
+//                            "Add a Course",
+//                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+//                            new String[]{"View", "Cancel"}, "Yes");
+//                    if (result == JOptionPane.YES_OPTION) {
+//
+//                        panelO.setVisible(false);
+//                    }
                 }
             }
 
@@ -617,12 +639,14 @@ public class Client extends JFrame {
         }
         );
 
-        btnViewCourse.addActionListener(
-                new ActionListener() {
+        btnViewCourse.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
-                retrieveAvailableCourse();
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnViewCourse) {
+                    btnViewCourse.setBackground(Color.GREEN);
+                    panelO.setVisible(false);
+                    retrieveAvailableCourse();
+                }
             }
 
         }
@@ -634,7 +658,39 @@ public class Client extends JFrame {
         
     }
     
-    
+
+    public void chosenCourse() {
+        String chosenC = String.valueOf(cbo4.getSelectedItem());
+        
+        try {
+            out.writeObject(chosenC);
+            out.flush();
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void populateCbo4() {
+
+        try {
+            out.writeObject("populate");
+            out.flush();
+
+            ArrayList<String> populate = (ArrayList) in.readObject();
+            System.out.println(populate);
+            for (String pop : populate) {
+                cbo4.addItem(pop);
+            }
+        } catch (IOException ex) {
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     public void AddStud() {
         String id = studIdTxt.getText();
@@ -763,32 +819,6 @@ public class Client extends JFrame {
         }
     }
 
-//    public static void authenticationLogin() {
-//        WorkerLogin login = new WorkerLogin();
-//        String user = login.getUsername();
-//        String passwords = login.getPassword();
-//        String type = login.cbo.getSelectedItem().toString();
-//
-//        try {
-//            WorkerLogin log = new WorkerLogin(user, passwords, type);
-//            out.writeObject(log);
-//            out.flush();
-//
-//            String recievedMsg = (String) in.readObject();
-//            if (recievedMsg.equalsIgnoreCase("success")) {
-//                JOptionPane.showMessageDialog(null, "Login successful.");
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Login Failed. Incorrect username or Password.");
-//
-//            }
-//
-//        } catch (IOException ex) {
-//            System.out.println("IOException" + ex.getMessage());
-//        } catch (ClassNotFoundException ex) {
-//            System.out.println("ClassNotFoundException" + ex.getMessage());
-//        }
-//
-//    }
     public static void retrieveStud() {
         clearTable();
         tableModel.addColumn("Student ID");
@@ -855,8 +885,6 @@ public class Client extends JFrame {
         int search = Integer.parseInt(searchTxtStud.getText());
 
         try {
-//            out.writeObject("search student");
-//            out.flush();
             out.writeObject(search);
             out.flush();
 
@@ -889,8 +917,7 @@ public class Client extends JFrame {
         String search = searchTxtCourse.getText();
 
         try {
-//            out.writeObject("course");
-//            out.flush();
+
             out.writeObject(search);
             out.flush();
             System.out.println("called the method");
@@ -981,6 +1008,14 @@ public class Client extends JFrame {
         arrConvert.add(workerCourse.getCourseCode());
         arrConvert.add(workerCourse.getCourseDescription());
         arrConvert.add(workerCourse.isAvailable());
+        return arrConvert;
+    }
+    
+       public static ArrayList<Object> converter4(WorkerSubject workerSubject) {
+        ArrayList<Object> arrConvert = new ArrayList<>();
+        arrConvert.add(workerSubject.getSubjectID1());
+        arrConvert.add(workerSubject.getSubjectName1());
+        arrConvert.add(workerSubject.getCourseID());
         return arrConvert;
     }
 
