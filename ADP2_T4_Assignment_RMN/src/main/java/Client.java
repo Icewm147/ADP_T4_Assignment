@@ -35,8 +35,8 @@ public class Client extends JFrame {
 
     private static JButton btnEnroll, btnViewCourse;
 
-    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7, lblSubjectID, lblSubject;
-    private static JTextField courseDesTxt, courseCodeTxt, subjectIDTxt, subjectTxt;
+    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
+    private static JTextField courseDesTxt, courseCodeTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, space0, space4, space5;
     private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
@@ -47,6 +47,9 @@ public class Client extends JFrame {
 
     private static JTextArea textArea1, textArea;
     private static JCheckBox checkBox = new JCheckBox();
+
+    private static JLabel lblSubjectID1, lblSubject1, lblSubjectID2, lblSubject2, lblSubjectID3, lblSubject3, lblSubjectID4, lblSubject4;
+    private static JTextField subjectIDTxt1, subjectTxt1, subjectIDTxt2, subjectTxt2, subjectIDTxt3, subjectTxt3, subjectIDTxt4, subjectTxt4;
 
     public Client() {
 
@@ -70,7 +73,7 @@ public class Client extends JFrame {
         panelSC = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelW = new JPanel(new GridLayout(4, 2));
         panelJ = new JPanel(new GridLayout(6, 2));
-        panelK = new JPanel(new GridLayout(6, 2));
+        panelK = new JPanel(new GridLayout(18, 2));
 
         panelDelStud = new JPanel(new GridLayout(2, 1));
         panelDelC = new JPanel(new GridLayout(2, 2));
@@ -145,11 +148,7 @@ public class Client extends JFrame {
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
         courseCode = new JLabel("Course Code: ");
-
-        lblSubjectID = new JLabel("Subject ID");
-        lblSubject = new JLabel("Subject One");
         paneHeading = new JLabel("Add a Course: ");
-        panelHeading2 = new JLabel("Add a Subject");
         space1 = new JLabel();
         space2 = new JLabel();
         space3 = new JLabel();
@@ -158,8 +157,31 @@ public class Client extends JFrame {
         courseDesTxt = new JTextField(20);
         courseCodeTxt = new JTextField(20);
 
-        subjectIDTxt = new JTextField(20);
-        subjectTxt = new JTextField(20);
+        //----------------------------------------------------- JOptionPane add subject panelK
+        panelHeading2 = new JLabel("Add Subjects:");
+        lblSubjectID1 = new JLabel("1) Subject ID: ");
+        lblSubject1 = new JLabel("Subject 1: ");
+
+        lblSubjectID2 = new JLabel("2) Subject ID: ");
+        lblSubject2 = new JLabel("Subject 2: ");
+
+        lblSubjectID3 = new JLabel("3) Subject ID: ");
+        lblSubject3 = new JLabel("Subject 3: ");
+
+        lblSubjectID4 = new JLabel("4) Subject ID: ");
+        lblSubject4 = new JLabel("Subject 4: ");
+
+        subjectIDTxt1 = new JTextField(20);
+        subjectTxt1 = new JTextField(20);
+
+        subjectIDTxt2 = new JTextField(20);
+        subjectTxt2 = new JTextField(20);
+
+        subjectIDTxt3 = new JTextField(20);
+        subjectTxt3 = new JTextField(20);
+
+        subjectIDTxt4 = new JTextField(20);
+        subjectTxt4 = new JTextField(20);
 
         //----------------------------------------------------- JOptionPane add student
         studId = new JLabel("Student ID: ");
@@ -243,10 +265,25 @@ public class Client extends JFrame {
 
         panelK.add(panelHeading2);
         panelK.add(space7);
-        panelK.add(lblSubjectID);
-        panelK.add(subjectIDTxt);
-        panelK.add(lblSubject);
-        panelK.add(subjectTxt);
+        panelK.add(lblSubjectID1);
+        panelK.add(subjectIDTxt1);
+        panelK.add(lblSubject1);
+        panelK.add(subjectTxt1);
+
+        panelK.add(lblSubjectID2);
+        panelK.add(subjectIDTxt2);
+        panelK.add(lblSubject2);
+        panelK.add(subjectTxt2);
+
+        panelK.add(lblSubjectID3);
+        panelK.add(subjectIDTxt3);
+        panelK.add(lblSubject3);
+        panelK.add(subjectTxt3);
+
+        panelK.add(lblSubjectID4);
+        panelK.add(subjectIDTxt4);
+        panelK.add(lblSubject4);
+        panelK.add(subjectTxt4);
 
         panelJ.setVisible(false);
         panelK.setVisible(false);
@@ -311,7 +348,7 @@ public class Client extends JFrame {
                     // Call the authenticationLogin method from the Client class
                     Client.authenticationLogin(user, password, userAccessType);
                     if (cbo.getSelectedItem() == "Student") {
-                        authenticationLogin(user,password,userAccessType);
+                        authenticationLogin(user, password, userAccessType);
                         heading.setText("Student Enrollment system");
 
                         panelStud.setVisible(true);
@@ -320,7 +357,7 @@ public class Client extends JFrame {
                         btnLogin.setVisible(false);
                         btnLogout.setVisible(true);
                     } else {
-                        authenticationLogin(user,password,userAccessType);
+                        authenticationLogin(user, password, userAccessType);
                         heading.setText("Admin Access");
 
                         panelA.setVisible(true);
@@ -333,17 +370,7 @@ public class Client extends JFrame {
 
                 }
             }
-          });
-            
-
-
-        
-
-
-
-
-
-        
+        });
 
         btnEnroll.addActionListener(new ActionListener() {
             @Override
@@ -384,10 +411,8 @@ public class Client extends JFrame {
 
                         if (result2 == JOptionPane.YES_OPTION) {
                             AddSubject();
-
-                        } else {
-
-                        }
+                            JOptionPane.showMessageDialog(null, "Subject Successfully saved");
+                        } 
 
                     }
                 }
@@ -570,12 +595,19 @@ public class Client extends JFrame {
 
     public void AddSubject() {
 
-        String subID = subjectIDTxt.getText();
-        String subName = subjectTxt.getText();
+        String subID1 = subjectIDTxt1.getText();
+        String subName1 = subjectTxt1.getText();
+        String subID2 = subjectIDTxt2.getText();
+        String subName2 = subjectTxt2.getText();
+        String subID3 = subjectIDTxt3.getText();
+        String subName3 = subjectTxt3.getText();
+        String subID4 = subjectIDTxt4.getText();
+        String subName4 = subjectTxt4.getText();
         String subCourse = courseCodeTxt.getText();
 
         try {
-            WorkerSubject add = new WorkerSubject(subID, subName, subCourse);
+            WorkerSubject add = new WorkerSubject(subID1, subName1, subID2, subName2, subID3, subName3, subID4, subName4, subCourse);
+            System.out.println(add);
             out.writeObject(add);
             out.flush();
 
@@ -618,7 +650,6 @@ public class Client extends JFrame {
     //test worked out
     public static void authenticationLogin(String username, String password, String userAccessType) {
         try {
-
 
             WorkerLogin login = new WorkerLogin(username, password, userAccessType);
             out.writeObject(login);

@@ -65,31 +65,37 @@ public class DAO {
     //add Subject to Subject_Table
     public void addSubject(WorkerSubject subject) throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
-        String query = "INSERT INTO Subject_Table(Subject_ID,Subject_Name,Course_Code) VALUES (?,?,?)";
+        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Subject_ID2,Subject_Name2, Subject_ID3,Subject_Name3,Subject_ID4,Subject_Name4,Course_Code) VALUES (?,?,?,?,?,?,?,?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setString(1, subject.getSubjectID());
-        statement.setString(2, subject.getSubjectName());
-        statement.setString(3, subject.getCourseID());
+        statement.setString(1, subject.getSubjectID1());
+        statement.setString(2, subject.getSubjectName1());
+        statement.setString(3, subject.getSubjectID2());
+        statement.setString(4, subject.getSubjectName2());
+        statement.setString(5, subject.getSubjectID3());
+        statement.setString(6, subject.getSubjectName3());
+        statement.setString(7, subject.getSubjectID4());
+        statement.setString(8, subject.getSubjectName4());
+        statement.setString(9, subject.getCourseID());
         statement.executeUpdate();
     }
     //getting all information on Subjects
 
-    public List<WorkerSubject> getAllSubjects() throws SQLException {
-        List<WorkerSubject> students = new ArrayList<>();
-        String query = "SELECT * FROM Subject_Table";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
-
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        ResultSet result = statement.executeQuery();
-
-        while (result.next()) {
-            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
-            String name = result.getString("Subject_Name");
-            String course = result.getString("Course_Code");
-            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
-            students.add(new WorkerSubject(studentNumber, name, course));
-        }
-        return students;
-    }
+//    public List<WorkerSubject> getAllSubjects() throws SQLException {
+//        List<WorkerSubject> students = new ArrayList<>();
+//        String query = "SELECT * FROM Subject_Table";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+//
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        ResultSet result = statement.executeQuery();
+//
+//        while (result.next()) {
+//            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+//            String name = result.getString("Subject_Name");
+//            String course = result.getString("Course_Code");
+//            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
+//            students.add(new WorkerSubject(studentNumber, name, course));
+//        }
+//        return students;
+//    }
 
 //    public List<WorkerCourse> getAllCourses() throws SQLException {
 //        List<WorkerCourse> courses = new ArrayList<>();
