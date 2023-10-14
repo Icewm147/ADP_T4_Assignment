@@ -346,7 +346,7 @@ public class Client extends JFrame {
                     String userAccessType = cbo.getSelectedItem().toString(); // Get the user access type from your UI combo box
 
                     // Call the authenticationLogin method from the Client class
-                    Client.authenticationLogin(user, password, userAccessType);
+                  //  Client.authenticationLogin(user, password, userAccessType);
                     if (cbo.getSelectedItem() == "Student") {
                         authenticationLogin(user, password, userAccessType);
                         heading.setText("Student Enrollment system");
