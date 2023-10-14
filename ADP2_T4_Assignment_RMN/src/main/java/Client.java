@@ -652,43 +652,67 @@ public class Client extends JFrame {
         }
         );
 
+        cbo4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == cbo4) {
+                    chosenCourse();
+                }
+            }
+
+        }
+        );
+
     }
-    
-    public void enrolStud(){
-        
+
+    public void enrolStud() {
+
     }
-    
 
     public void chosenCourse() {
-        String chosenC = String.valueOf(cbo4.getSelectedItem());
-        String send = "chosen course";
+//
+//        String send = "chosen course";
+//         String chosenC = cbo4.getSelectedItem().toString();
         try {
-            
-            out.writeObject(send);
+
+             String chosenC = cbo4.getSelectedItem().toString();
+            out.writeObject("chosen course");
             out.flush();
-            
-            String recievedMsg = (String)in.readObject();
-            System.out.println(recievedMsg);
-            
             out.writeObject(chosenC);
             out.flush();
-            
-            ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
-            for (int i = 0; i < display.size(); i++) {
-                WorkerSubject workerSubject = display.get(i);
 
-                ArrayList<Object> arrCon = converter4(workerSubject);
-                Object[] arrConArray = arrCon.toArray();
-
-                tableModel.addRow(arrConArray);
-
+// Read the response
+            String receivedMsg = (String) in.readObject();
+            if (receivedMsg.equals("received")) {
+                ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
+                // Process the received data
+                for (int i = 0; i < display.size(); i++) {
+                    WorkerSubject workerSubject = display.get(i);
+                    ArrayList<Object> arrCon = converter4(workerSubject);
+                    Object[] arrConArray = arrCon.toArray();
+                    tableModel.addRow(arrConArray);
+                    System.out.println(arrConArray.toString());
+                }
             }
-            
-            
-            
-            
-            
-            
+
+//
+//            out.writeObject(send);
+//            out.flush();
+//            out.writeObject(chosenC);
+//            out.flush();
+//
+////            
+//            ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
+//            for (int i = 0; i < display.size(); i++) {
+//                WorkerSubject workerSubject = display.get(i);
+//
+//                ArrayList<Object> arrCon = converter4(workerSubject);
+//                Object[] arrConArray = arrCon.toArray();
+//
+//                tableModel.addRow(arrConArray);
+//                System.out.println(arrConArray.toString());
+//
+//            }
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -705,7 +729,7 @@ public class Client extends JFrame {
             ArrayList<String> populate = (ArrayList) in.readObject();
             System.out.println(populate);
             for (String pop : populate) {
-                cbo4.addItem(pop);
+                cbo4.setSelectedItem(pop);
             }
         } catch (IOException ex) {
 
@@ -1033,8 +1057,8 @@ public class Client extends JFrame {
         arrConvert.add(workerCourse.isAvailable());
         return arrConvert;
     }
-    
-       public static ArrayList<Object> converter4(WorkerSubject workerSubject) {
+
+    public static ArrayList<Object> converter4(WorkerSubject workerSubject) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerSubject.getSubjectID1());
         arrConvert.add(workerSubject.getSubjectName1());

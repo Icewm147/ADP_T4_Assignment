@@ -110,11 +110,9 @@ public class Server {
                     }
 
                 } //enrol student
-                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("enrol")){
-                    
-                    
-                }
-                //retrieve all courses DONE
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("enrol")) {
+
+                } //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
                         List<WorkerCourse> courseList = dao.getCourseInfo();
@@ -154,48 +152,20 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                 }//populate combobox for enrol DONE
-                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("populate")){
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("populate")) {
                     try {
 
                         List<String> courseCodeList = dao.getCourseCode();
                         System.out.println(courseCodeList);
                         out.writeObject(courseCodeList);
-<<<<<<< Updated upstream
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-=======
->>>>>>> Stashed changes
-                        out.flush();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                   
-                    
-                }
-                else if(receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")){
-                    try {
-                        out.writeObject("received");
-                        out.flush();
-                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
-                        String courseChosen = (String)in.readObject();
-                        for(WorkerSubject subject : subjectCourse){
-                            if(subject.getCourseID() == courseChosen){
-                                subjectCourse.add(subject);
-                                out.writeObject(subjectCourse);
-                                out.flush();
-                            }
-                        }
-                    out.flush();
-                    
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    
-                    
-                }
-                else if (receivedObject instanceof WorkerCourse) {
+                } else if (receivedObject instanceof WorkerCourse) {
                     WorkerCourse course = (WorkerCourse) receivedObject;
                     try {
                         dao.addCourseToDB(course);
@@ -238,7 +208,44 @@ public class Server {
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
                     closeConnection();
                     break;
-                } //search course
+                }
+                if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                    try {
+                        out.writeObject("received");
+                        out.flush();
+                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
+                        String courseChosen = (String) in.readObject();
+                        ArrayList<WorkerSubject> courseList = new ArrayList<>();
+                        for (WorkerSubject subject : subjectCourse) {
+                            if (subject.getCourseID().equals(courseChosen)) {
+                                courseList.add(subject);
+                            }
+                        }
+                        // Send the courseList
+                        out.writeObject(courseList);
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } //else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                //                    try {
+                //                        out.writeObject("received");
+                //                        out.flush();
+                //                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
+                //                        String courseChosen = (String) in.readObject();
+                //                        for (WorkerSubject subject : subjectCourse) {
+                //                            if (subject.getCourseID().equals(courseChosen)) {
+                //                                subjectCourse.add(subject);
+                //                                out.writeObject(subjectCourse);
+                //                                out.flush();
+                //                            }
+                //                        }
+                //
+                //                    } catch (SQLException ex) {
+                //                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                //                    }
+                //
+                //                } //search course
                 else if (receivedObject instanceof String) {
                     String search = (String) receivedObject;
                     List<WorkerCourse> searchC = new ArrayList<>();
