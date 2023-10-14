@@ -33,7 +33,7 @@ public class Client extends JFrame {
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
 
-    private static JButton btnEnroll, btnViewCourse;
+    private static JButton btnEnrol, btnViewCourse;
 
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
@@ -144,7 +144,7 @@ public class Client extends JFrame {
         searchTxtStud = new JTextField(20);
         searchTxtCourse = new JTextField(20);
         //-----------------------------------------------------Student
-        btnEnroll = new JButton("Enroll In Course");
+        btnEnrol = new JButton("Enroll In Course");
         btnViewCourse = new JButton("View Available Courses");
 
         //----------------------------------------------------- JOptionPane
@@ -239,7 +239,7 @@ public class Client extends JFrame {
         panelSC.add(searchTxtCourse);
         panelSC.add(btnSearchCourse);
 
-        panelStud.add(btnEnroll);
+        panelStud.add(btnEnrol);
         panelStud.add(btnViewCourse);
 
         panelC.add(panelL);
@@ -381,12 +381,11 @@ public class Client extends JFrame {
         }
         );
 
-        btnEnroll.addActionListener(
-                new ActionListener() {
+        btnEnrol.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (e.getSource() == btnEnroll) {
+                if (e.getSource() == btnEnrol) {
 
                     int result = JOptionPane.showOptionDialog(null, panelJ,
                             "Add a Course",
@@ -629,6 +628,12 @@ public class Client extends JFrame {
         );
 
     }
+    
+    public void enrolStud(){
+        
+    }
+    
+    
 
     public void AddStud() {
         String id = studIdTxt.getText();
