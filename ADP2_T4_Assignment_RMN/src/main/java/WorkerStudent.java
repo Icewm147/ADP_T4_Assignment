@@ -7,6 +7,7 @@ public class WorkerStudent implements Serializable{
     private int studuntID;
     private String studentFirstName;
     private String studentLastName;
+    private String courseCode;
 
     public WorkerStudent() {
     }
@@ -15,6 +16,11 @@ public class WorkerStudent implements Serializable{
         this.studuntID = studuntID;
         this.studentFirstName = studentFirstName;
         this.studentLastName = studentLastName;
+    }
+
+    public WorkerStudent(int studuntID, String courseCode) {
+        this.studuntID = studuntID;
+        this.courseCode = courseCode;
     }
 
     
