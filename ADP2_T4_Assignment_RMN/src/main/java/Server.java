@@ -87,16 +87,15 @@ public class Server {
                     try {
                         ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
                         for (WorkerStudent students : student) {
-                                dao.addStudentToDB(stud);
-                                System.out.println(stud);
-                                out.writeObject("success");
-                                out.flush();                          
+                            dao.addStudentToDB(stud);
+                            System.out.println(stud);
+                            out.writeObject("success");
+                            out.flush();
                         }
                     } catch (SQLException ex) {
                         out.writeObject("failed");
                         out.flush();
                     }
-
 
 //                    //retreiving all students DONE
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
@@ -110,7 +109,12 @@ public class Server {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
-                } //retrieve all courses DONE
+                } //enrol student
+                else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("enrol")){
+                    
+                    
+                }
+                //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
                         List<WorkerCourse> courseList = dao.getCourseInfo();

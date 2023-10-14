@@ -25,7 +25,8 @@ public class Client extends JFrame {
 
     private static JPanel panelN, panelC, panelS, panelE, panelW, panelJ, panelP, panelL, panelA, panelStud, panelDelStud, panelDelC, panelSC, panelK;
     private static JLabel username, password, heading;
-    private static JTextField usernameTxt, passwordTxt;
+    private static JTextField usernameTxt;
+            private static JPasswordField passwordTxt;
     private static JButton btnLogin, btnLogout;
     private static JComboBox cbo, cbo3;
     private static JComboBox<String> cbo1, cbo2 = new JComboBox<>();
@@ -96,7 +97,7 @@ public class Client extends JFrame {
         //----------------------------------------------------- TextField 
         usernameTxt = new JTextField(20);
         usernameTxt.setFont(font3);
-        passwordTxt = new JTextField(20);
+        passwordTxt = new JPasswordField(20);
         passwordTxt.setFont(font3);
         //----------------------------------------------------- ComboBox  
 
@@ -344,7 +345,7 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogin) {
                     String user = usernameTxt.getText(); // Get the username from your UI input field
-                    String password = passwordTxt.getText(); // Get the password from your UI input field
+                    String password = String.valueOf(passwordTxt.getPassword()); // Get the password from your UI input field
                     String userAccessType = cbo.getSelectedItem().toString(); // Get the user access type from your UI combo box
 
                     // Call the authenticationLogin method from the Client class
