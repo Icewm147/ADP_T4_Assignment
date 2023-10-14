@@ -154,12 +154,13 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //populate combobox for enrol
-                }
+                    
+                }//populate combobox for enrol
                 else if(receivedObject instanceof String && ((String)receivedObject).equalsIgnoreCase("populate")){
                     try {
-                        List<WorkerCourse> courseList = dao.getCourseCode();
-                        out.writeObject(courseList);
+                        List<WorkerCourse> courseCodeList = dao.getCourseCode();
+                        Object obj = courseCodeList;
+                        out.writeObject(obj);
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
