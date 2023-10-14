@@ -472,7 +472,7 @@ public class Client extends JFrame {
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
-                        if (studIdTxt.getText().isEmpty() || studNameTxt.getText().isEmpty()|| studLastNameTxt.getText().isEmpty()) {
+                        if (studIdTxt.getText().isEmpty() || studNameTxt.getText().isEmpty() || studLastNameTxt.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Please enter a valid Student.");
                             studIdTxt.setText("");
                             studNameTxt.setText("");
@@ -481,6 +481,10 @@ public class Client extends JFrame {
                             return;
                         }
                         AddStud();
+                        studIdTxt.setText("");
+                        studNameTxt.setText("");
+                        studLastNameTxt.setText("");
+                        studIdTxt.requestFocus();
                         panelW.setVisible(false);
                     }
 
@@ -639,7 +643,8 @@ public class Client extends JFrame {
             String recievedMsg = (String) in.readObject();
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Student has been added.");
-            }if (recievedMsg.equalsIgnoreCase("failed")) {
+            }
+            if (recievedMsg.equalsIgnoreCase("failed")) {
                 JOptionPane.showMessageDialog(null, "Student has already been added.");
             }
 

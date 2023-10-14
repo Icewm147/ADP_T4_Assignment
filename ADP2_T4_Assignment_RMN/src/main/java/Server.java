@@ -87,25 +87,16 @@ public class Server {
                     try {
                         ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
                         for (WorkerStudent students : student) {
-                            if (students.getStuduntID() == stud.getStuduntID()) {
-                                System.out.println("false");
-                            } else {
-                                System.out.println("true");
                                 dao.addStudentToDB(stud);
                                 System.out.println(stud);
                                 out.writeObject("success");
-                                out.flush();
-
-                            }
+                                out.flush();                          
                         }
-
                     } catch (SQLException ex) {
-//                        out.writeObject("failed");
-//                        out.flush();
+                        out.writeObject("failed");
+                        out.flush();
                     }
-//                    catch (SQLException ex) {
-//                        JOptionPane.showMessageDialog(null, "Student Already Added");
-//                    }
+
 
 //                    //retreiving all students DONE
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
