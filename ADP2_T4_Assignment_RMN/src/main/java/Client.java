@@ -729,12 +729,12 @@ public class Client extends JFrame {
             ArrayList<String> populate = (ArrayList) in.readObject();
             System.out.println(populate);
             for (String pop : populate) {
-                cbo4.setSelectedItem(pop);
+                cbo4.addItem(pop);
             }
         } catch (IOException ex) {
-
+            JOptionPane.showMessageDialog(null, "Error getting in the courses you have requested");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(null,"error finding class");
         }
 
     }

@@ -209,7 +209,7 @@ public class Server {
                     closeConnection();
                     break;
                 }
-                if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
                     try {
                         out.writeObject("received");
                         out.flush();
@@ -227,7 +227,8 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } //else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                } 
+//else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
                 //                    try {
                 //                        out.writeObject("received");
                 //                        out.flush();
