@@ -20,6 +20,12 @@ public class WorkerSubject implements Serializable {
     public WorkerSubject() {
     }
 
+    public WorkerSubject(String subjectID1, String subjectName1, String courseID) {
+        this.subjectID1 = subjectID1;
+        this.subjectName1 = subjectName1;
+        this.courseID = courseID;
+    }
+
     public WorkerSubject(String subjectID1, String subjectName1, String subjectID2, String subjectName2, String subjectID3, String subjectName3, String subjectID4, String subjectName4, String courseID) {
         this.subjectID1 = subjectID1;
         this.subjectName1 = subjectName1;
@@ -31,14 +37,6 @@ public class WorkerSubject implements Serializable {
         this.subjectName4 = subjectName4;
         this.courseID = courseID;
     }
-
-    public WorkerSubject(String subjectID1, String subjectName1, String courseID) {
-        this.subjectID1 = subjectID1;
-        this.subjectName1 = subjectName1;
-        this.courseID = courseID;
-    }
-    
-    
 
     public String getSubjectID1() {
         return subjectID1;
@@ -114,7 +112,9 @@ public class WorkerSubject implements Serializable {
 
     @Override
     public String toString() {
-        return subjectID1 + " " + subjectName1 + " " + subjectID2 + " " + subjectName2 + " " + subjectID3 + " " + subjectName3 + " " + subjectID4 + " " + subjectName4 + " " + courseID;
+        return "WorkerSubject{" + "subjectID1=" + subjectID1 + ", subjectName1=" + subjectName1 + ", courseID=" + courseID + '}';
     }
+
+     
 
 }

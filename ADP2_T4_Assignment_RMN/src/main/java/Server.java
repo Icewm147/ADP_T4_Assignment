@@ -135,25 +135,8 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    //add subject to subject_table done
-                } else if (receivedObject instanceof WorkerSubject) {
-                    WorkerSubject subject = (WorkerSubject) receivedObject;
-                    try {
-                        WorkerSubject sub1 = new WorkerSubject(subject.getSubjectID1(), subject.getSubjectName1(), subject.getCourseID());
-                        dao.addSubject(sub1);
-                        WorkerSubject sub2 = new WorkerSubject(subject.getSubjectID2(), subject.getSubjectName2(), subject.getCourseID());
-                        dao.addSubject(sub2);
-                        WorkerSubject sub3 = new WorkerSubject(subject.getSubjectID3(), subject.getSubjectName3(), subject.getCourseID());
-                        dao.addSubject(sub3);
-                        WorkerSubject sub4 = new WorkerSubject(subject.getSubjectID4(), subject.getSubjectName4(), subject.getCourseID());
-                        dao.addSubject(sub4);
-                        out.writeObject("Success");
-                        out.flush();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }//populate combobox for enrol DONE
+                } //add subject to subject_table done               
+                //populate combobox for enrol DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("populate")) {
                     try {
 
@@ -178,11 +161,6 @@ public class Server {
                     }
 //                    out.writeObject("Course Added successfully");
 //                    out.flush();
-                } //Search for course
-                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Search")) {
-                    String course = (String) receivedObject;
-
-                    //DB Search method: searchCourse(course);
                 } //delete course
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")) {
                     int deleteCourse = (int) receivedObject;
@@ -208,17 +186,20 @@ public class Server {
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
                     closeConnection();
                     break;
-                }
-                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
                     try {
+                        String rec = (String) receivedObject;
                         out.writeObject("received");
                         out.flush();
-                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
                         String courseChosen = (String) in.readObject();
+                        System.out.println(rec);
+                        System.out.println(courseChosen);
+                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
                         ArrayList<WorkerSubject> courseList = new ArrayList<>();
                         for (WorkerSubject subject : subjectCourse) {
-                            if (subject.getCourseID().equals(courseChosen)) {
+                            if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
                                 courseList.add(subject);
+                                System.out.println(subject);
                             }
                         }
                         // Send the courseList
@@ -227,26 +208,7 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } 
-//else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
-                //                    try {
-                //                        out.writeObject("received");
-                //                        out.flush();
-                //                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
-                //                        String courseChosen = (String) in.readObject();
-                //                        for (WorkerSubject subject : subjectCourse) {
-                //                            if (subject.getCourseID().equals(courseChosen)) {
-                //                                subjectCourse.add(subject);
-                //                                out.writeObject(subjectCourse);
-                //                                out.flush();
-                //                            }
-                //                        }
-                //
-                //                    } catch (SQLException ex) {
-                //                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                //                    }
-                //
-                //                } //search course
+                } //search course
                 else if (receivedObject instanceof String) {
                     String search = (String) receivedObject;
                     List<WorkerCourse> searchC = new ArrayList<>();
@@ -290,6 +252,23 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                } else if (receivedObject instanceof WorkerSubject) {
+                    WorkerSubject subject = (WorkerSubject) receivedObject;
+                    try {
+                        WorkerSubject sub1 = new WorkerSubject(subject.getSubjectID1(), subject.getSubjectName1(), subject.getCourseID());
+                        dao.addSubject(sub1);
+                        WorkerSubject sub2 = new WorkerSubject(subject.getSubjectID2(), subject.getSubjectName2(), subject.getCourseID());
+                        dao.addSubject(sub2);
+                        WorkerSubject sub3 = new WorkerSubject(subject.getSubjectID3(), subject.getSubjectName3(), subject.getCourseID());
+                        dao.addSubject(sub3);
+                        WorkerSubject sub4 = new WorkerSubject(subject.getSubjectID4(), subject.getSubjectName4(), subject.getCourseID());
+                        dao.addSubject(sub4);
+                        out.writeObject("Success");
+                        out.flush();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 }
 
             } catch (IOException ex) {
