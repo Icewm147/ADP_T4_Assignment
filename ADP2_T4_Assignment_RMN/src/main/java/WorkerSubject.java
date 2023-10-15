@@ -118,5 +118,8 @@ public class WorkerSubject implements Serializable {
     public String toString() {
         return "WorkerSubject{" + "subjectID1=" + subjectID1 + ", subjectName1=" + subjectName1 + ", subjectID2=" + subjectID2 + ", subjectName2=" + subjectName2 + ", subjectID3=" + subjectID3 + ", subjectName3=" + subjectName3 + ", subjectID4=" + subjectID4 + ", subjectName4=" + subjectName4 + ", courseID=" + courseID + '}';
     }
-
+   
+// public String toString2() {
+//        return "WorkerSubject{" + "subjectID1=" + subjectID1 + ", subjectName1=" + subjectName1+ ", courseID= " + courseID ;
+//    }
 }

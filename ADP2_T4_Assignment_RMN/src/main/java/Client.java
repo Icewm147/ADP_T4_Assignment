@@ -456,7 +456,6 @@ public class Client extends JFrame {
 
                         if (result2 == JOptionPane.YES_OPTION) {
                             AddSubject();
-                            courseCodeTxt.setText("");
 
                         }
 

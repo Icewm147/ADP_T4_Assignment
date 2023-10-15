@@ -195,16 +195,16 @@ public class Server {
                         System.out.println(rec);
                         System.out.println(courseChosen);
                         List<WorkerSubject> subjectCourse = dao.getAllSubjects();
-                        ArrayList<WorkerSubject> courseList = new ArrayList<>();
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-                                courseList.add(subject);
+                                out.writeObject(subject);
                                 System.out.println(subject);
+                                out.flush();
+
                             }
                         }
                         // Send the courseList
-                        out.writeObject(courseList);
-                        out.flush();
+
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
