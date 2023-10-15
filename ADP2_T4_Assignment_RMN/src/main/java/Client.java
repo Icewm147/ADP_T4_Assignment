@@ -29,7 +29,7 @@ public class Client extends JFrame {
     private static JPasswordField passwordTxt;
     private static JButton btnLogin, btnLogout;
     private static JComboBox cbo, cbo3;
-    private static JComboBox<String> cbo1, cbo2, cbo4 = new JComboBox<>();
+    private static JComboBox<String> cbo1, cbo2, cbo4;
 
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
@@ -675,25 +675,31 @@ public class Client extends JFrame {
 //         String chosenC = cbo4.getSelectedItem().toString();
         try {
 
-             String chosenC = cbo4.getSelectedItem().toString();
+            String chosenC = cbo4.getSelectedItem().toString();
             out.writeObject("chosen course");
             out.flush();
             out.writeObject(chosenC);
             out.flush();
-
-// Read the response
             String receivedMsg = (String) in.readObject();
-            if (receivedMsg.equals("received")) {
-                ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
-                // Process the received data
-                for (int i = 0; i < display.size(); i++) {
-                    WorkerSubject workerSubject = display.get(i);
-                    ArrayList<Object> arrCon = converter4(workerSubject);
-                    Object[] arrConArray = arrCon.toArray();
-                    tableModel.addRow(arrConArray);
-                    System.out.println(arrConArray.toString());
-                }
-            }
+           if (receivedMsg.equals("received")) {
+            String obj = (String) in.readObject();
+            System.out.println(obj);
+            
+            
+           }
+// Read the response
+//            String receivedMsg = (String) in.readObject();
+//            if (receivedMsg.equals("received")) {
+//                ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
+//                // Process the received data
+//                for (int i = 0; i < display.size(); i++) {
+//                    WorkerSubject workerSubject = display.get(i);
+//                    ArrayList<Object> arrCon = converter4(workerSubject);
+//                    Object[] arrConArray = arrCon.toArray();
+//                    tableModel.addRow(arrConArray);
+//                    System.out.println(arrConArray.toString());
+//                }
+//            }
 
 //
 //            out.writeObject(send);
@@ -725,16 +731,21 @@ public class Client extends JFrame {
         try {
             out.writeObject("populate");
             out.flush();
-
-            ArrayList<String> populate = (ArrayList) in.readObject();
+            ArrayList<String> populate = (ArrayList<String>) in.readObject();
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(populate.toArray(new String[0]));
+            cbo4.setModel(model);
             System.out.println(populate);
-            for (String pop : populate) {
-                cbo4.addItem(pop);
-            }
+//            ArrayList<String> populate = (ArrayList) in.readObject();
+//            Object[] obj = populate.toArray();
+//            System.out.println(populate);
+//            for (int i = 0 ; i < populate.size();i++) {
+//                cbo4.setSelectedItem(obj);
+//                
+//            }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error getting in the courses you have requested");
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null,"error finding class");
+            JOptionPane.showMessageDialog(null, "error finding class");
         }
 
     }

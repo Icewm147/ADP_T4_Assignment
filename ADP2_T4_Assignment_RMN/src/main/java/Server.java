@@ -137,6 +137,7 @@ public class Server {
                     }
                 } //add subject to subject_table done               
                 //populate combobox for enrol DONE
+                
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("populate")) {
                     try {
 
@@ -145,7 +146,7 @@ public class Server {
                         out.writeObject(courseCodeList);
                         out.flush();
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Error populating");
                     }
 
                 } else if (receivedObject instanceof WorkerCourse) {
@@ -192,13 +193,13 @@ public class Server {
                         out.writeObject("received");
                         out.flush();
                         String courseChosen = (String) in.readObject();
-                        System.out.println(rec);
-                        System.out.println(courseChosen);
+                      //  System.out.println(rec);
+                      //  System.out.println(courseChosen);
                         List<WorkerSubject> subjectCourse = dao.getAllSubjects();
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-                                out.writeObject(subject);
-                                System.out.println(subject);
+                                out.writeObject(subject.toString2());
+                            //    System.out.println(subject.toString2());
                                 out.flush();
 
                             }
