@@ -456,6 +456,7 @@ public class Client extends JFrame {
 
                         if (result2 == JOptionPane.YES_OPTION) {
                             AddSubject();
+                            courseCodeTxt.setText("");
 
                         }
 
@@ -819,7 +820,6 @@ public class Client extends JFrame {
             if (recievedMsg.equalsIgnoreCase("success")) {
                 JOptionPane.showMessageDialog(null, "Course has been added.");
                 courseDesTxt.setText("");
-                courseCodeTxt.setText("");
                 checkBox.setSelected(false);
             }
 //            if (recievedMsg.equalsIgnoreCase("failed")) {
