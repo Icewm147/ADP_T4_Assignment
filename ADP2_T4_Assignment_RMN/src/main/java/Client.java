@@ -35,7 +35,7 @@ public class Client extends JFrame {
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
 
-    private static JButton btnEnrol, btnViewCourse;
+    private static JButton btnViewEnrol, btnViewCourse,btnEnroll;
 
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
@@ -149,10 +149,12 @@ public class Client extends JFrame {
         searchTxtStud = new JTextField(20);
         searchTxtCourse = new JTextField(20);
         //-----------------------------------------------------Student
-        btnEnrol = new JButton("Enroll In Course");
-        btnEnrol.setFont(font4);
+        btnViewEnrol = new JButton("Enroll In Course");
+        btnViewEnrol.setFont(font4);
         btnViewCourse = new JButton("View Available Courses");
         btnViewCourse.setFont(font4);
+        btnEnroll = new JButton("Enroll");
+        btnViewEnrol.setFont(font4);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -254,7 +256,7 @@ public class Client extends JFrame {
         panelSC.add(searchTxtCourse);
         panelSC.add(btnSearchCourse);
 
-        panelStud.add(btnEnrol);
+        panelStud.add(btnViewEnrol);
         panelStud.add(btnViewCourse);
 
         panelC.add(panelL);
@@ -265,6 +267,7 @@ public class Client extends JFrame {
         panelC.add(panelO);
         panelC.add(panelP);
         panelC.add(panelK);
+        panelC.add(btnEnroll);
 
         // panelS.add(new JScrollPane(table));
         panelS.add(btnLogin);
@@ -339,6 +342,7 @@ public class Client extends JFrame {
         panelP.setVisible(false);
         panelA.setVisible(false);
         panelStud.setVisible(false);
+        btnEnroll.setVisible(false);
 
         btnLogout.setVisible(false);
 
@@ -403,12 +407,14 @@ public class Client extends JFrame {
         }
         );
 
-        btnEnrol.addActionListener(new ActionListener() {
+        btnViewEnrol.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
-                if (e.getSource() == btnEnrol) {
+                if (e.getSource() == btnViewEnrol) {
+                    btnViewCourse.setEnabled(false);
                     panelO.setVisible(true);
+                    btnEnroll.setVisible(true);
                     clearTable();
                     populateCbo4();
                     tableModel.addColumn("Subject ID");
@@ -1161,7 +1167,7 @@ public class Client extends JFrame {
         Client log = new Client();
         log.getStreams();
         log.setTitle("Enrolment System");
-        log.setSize(730, 480);
+        log.setSize(730, 490);
         log.setGui();
         log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         log.setLocationRelativeTo(null);
