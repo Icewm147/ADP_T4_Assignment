@@ -199,7 +199,7 @@ public class Server {
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
                                 
-                                out.writeObject(subject);
+                                out.writeObject(subject.toString2());
                                 out.flush();
                                 System.out.println(subject.toString2());
                             }

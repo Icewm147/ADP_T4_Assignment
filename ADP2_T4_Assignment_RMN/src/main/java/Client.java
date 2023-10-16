@@ -685,10 +685,10 @@ public class Client extends JFrame {
             out.writeObject(chosenC);
             out.flush();
             String receivedMsg = (String) in.readObject();
-
+            
             ArrayList<WorkerSubject> display = new ArrayList<>();
             if (receivedMsg.equals("received")) {
-                for (WorkerSubject workersubjects : display) {
+              
                     String obj = (String) in.readObject();
                     System.out.println(obj);
                     // Assuming you have a method to convert a string to a WorkerSubject
@@ -703,7 +703,7 @@ public class Client extends JFrame {
                         tableModel.addRow(arrConArray);
                         System.out.println(Arrays.toString(arrConArray));
                     }
-                }
+                
             }
 
 //            if (receivedMsg.equals("received")) {
