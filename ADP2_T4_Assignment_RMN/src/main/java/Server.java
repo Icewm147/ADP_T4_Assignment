@@ -198,7 +198,8 @@ public class Server {
                         List<WorkerSubject> subjectCourse = dao.getAllSubjects();
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-                                out.writeObject(subject.toString2());
+                                
+                                out.writeObject(subject);
                                 out.flush();
                                 System.out.println(subject.toString2());
                             }

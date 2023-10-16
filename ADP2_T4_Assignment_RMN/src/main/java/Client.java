@@ -688,19 +688,21 @@ public class Client extends JFrame {
 
             ArrayList<WorkerSubject> display = new ArrayList<>();
             if (receivedMsg.equals("received")) {
-                String obj = (String) in.readObject();
+                for (WorkerSubject workersubjects : display) {
+                    String obj = (String) in.readObject();
+                    System.out.println(obj);
+                    // Assuming you have a method to convert a string to a WorkerSubject
+                    WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
+                    display.add(workerSubject);
 
-                // Assuming you have a method to convert a string to a WorkerSubject
-                WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
-                display.add(workerSubject);
+                    for (int i = 0; i < display.size(); i++) {
+                        workerSubject = display.get(i);
 
-                for (int i = 0; i < display.size(); i++) {
-                    workerSubject = display.get(i);
-
-                    ArrayList<Object> arrCon = converter4(workerSubject);
-                    Object[] arrConArray = arrCon.toArray();
-                    tableModel.addRow(arrConArray);
-                    System.out.println(Arrays.toString(arrConArray));
+                        ArrayList<Object> arrCon = converter4(workerSubject);
+                        Object[] arrConArray = arrCon.toArray();
+                        tableModel.addRow(arrConArray);
+                        System.out.println(Arrays.toString(arrConArray));
+                    }
                 }
             }
 
