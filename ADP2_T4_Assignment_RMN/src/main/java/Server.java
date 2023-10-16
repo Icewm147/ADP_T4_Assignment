@@ -163,7 +163,7 @@ public class Server {
                     int deleteCourse = (int) receivedObject;
                     try {
                         dao.deleteCourseFromDB(deleteCourse);
-                        out.writeObject(deleteCourse + " Has been deleted");
+                        out.writeObject("course deleted");
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,7 +174,7 @@ public class Server {
                     int delStudent = (int) receivedObject;
                     try {
                         dao.deleteStudent(delStudent);
-                        out.writeObject(delStudent + " Has been deleted");
+                        out.writeObject("student deleted");
                         out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,23 +189,45 @@ public class Server {
                         out.writeObject("received");
                         out.flush();
                         String courseChosen = (String) in.readObject();
-                        //  System.out.println(rec);
-                        //  System.out.println(courseChosen);
+
                         List<WorkerSubject> subjectCourse = dao.getAllSubjects();
+
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-
                                 out.writeObject(subject.toString2());
                                 out.flush();
                                 System.out.println(subject.toString2());
                             }
                         }
-                        // Send the courseList
+                        out.writeObject("No more content");
+                        out.flush();
 
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } //search course
+                } //                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
+                //                    try {
+                //                        String rec = (String) receivedObject;
+                //                        out.writeObject("received");
+                //                        out.flush();
+                //                        String courseChosen = (String) in.readObject();
+                //                        //  System.out.println(rec);
+                //                        //  System.out.println(courseChosen);
+                //                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
+                //                        for (WorkerSubject subject : subjectCourse) {
+                //                            if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
+                //
+                //                                out.writeObject(subject.toString2());
+                //                                out.flush();
+                //                                System.out.println(subject.toString2());
+                //                            }
+                //                        }
+                //                        // Send the courseList
+                //
+                //                    } catch (SQLException ex) {
+                //                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                //                    }
+                //                } //search course
                 else if (receivedObject instanceof String) {
                     String search = (String) receivedObject;
                     List<WorkerCourse> searchC = new ArrayList<>();

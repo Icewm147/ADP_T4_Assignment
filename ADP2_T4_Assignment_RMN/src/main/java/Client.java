@@ -687,36 +687,55 @@ public class Client extends JFrame {
     }
 
     public void chosenCourse() {
-//
+            
+//  
 //        String send = "chosen course";
 //         String chosenC = cbo4.getSelectedItem().toString();
         try {
-
             String chosenC = cbo4.getSelectedItem().toString();
             out.writeObject("chosen course");
             out.flush();
             out.writeObject(chosenC);
             out.flush();
             String receivedMsg = (String) in.readObject();
+            ArrayList<WorkerSubject> display = new ArrayList<>();
 
-            if (receivedMsg.equals("received")) {
-                ArrayList<WorkerSubject> display = new ArrayList<>();
+            while (true) {
                 String obj = (String) in.readObject();
                 System.out.println(obj);
-                // Assuming you have a method to convert a string to a WorkerSubject
+                if (obj.equals("No more content")) {
+                    break;
+                }
                 WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
                 display.add(workerSubject);
-
-                for (int i = 0; i < display.size(); i++) {
-                    workerSubject = display.get(i);
-                    area.append(display.toString());
-                    ArrayList<Object> arrCon = converter4(workerSubject);
-                    Object[] arrConArray = arrCon.toArray();
-                    tableModel.addRow(arrConArray);
-                    System.out.println(Arrays.toString(arrConArray));
-                }
-
             }
+
+            for (int i = 0; i < display.size(); i++) {
+                WorkerSubject workerSubject = display.get(i);
+                area.append(display.toString());
+                ArrayList<Object> arrCon = converter4(workerSubject);
+                Object[] arrConArray = arrCon.toArray();
+                tableModel.addRow(arrConArray);
+                System.out.println(Arrays.toString(arrConArray));
+            }
+//            if (receivedMsg.equals("received")) {
+//                ArrayList<WorkerSubject> display = new ArrayList<>();
+//                String obj = (String) in.readObject();
+//                System.out.println(obj);
+//                // Assuming you have a method to convert a string to a WorkerSubject
+//                WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
+//                display.add(workerSubject);
+//
+//                for (int i = 0; i < display.size(); i++) {
+//                    workerSubject = display.get(i);
+//                    area.append(display.toString());
+//                    ArrayList<Object> arrCon = converter4(workerSubject);
+//                    Object[] arrConArray = arrCon.toArray();
+//                    tableModel.addRow(arrConArray);
+//                    System.out.println(Arrays.toString(arrConArray));
+//                }
+//
+//            }
 
 //            if (receivedMsg.equals("received")) {
 //                ArrayList<WorkerSubject> display = new ArrayList<>();
