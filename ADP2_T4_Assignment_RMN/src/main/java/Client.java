@@ -35,7 +35,7 @@ public class Client extends JFrame {
     private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
     private static JTextField searchTxtStud, searchTxtCourse;
 
-    private static JButton btnViewEnrol, btnViewCourse,btnEnroll;
+    private static JButton btnViewEnrol, btnViewCourse, btnEnroll;
 
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
@@ -56,6 +56,8 @@ public class Client extends JFrame {
     private static boolean log;
 
     private static JLabel chooseCourse;
+
+    private static JTextArea area;
 
     public Client() {
 
@@ -155,6 +157,8 @@ public class Client extends JFrame {
         btnViewCourse.setFont(font4);
         btnEnroll = new JButton("Enroll");
         btnViewEnrol.setFont(font4);
+
+        area = new JTextArea(5, 5);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -268,6 +272,7 @@ public class Client extends JFrame {
         panelC.add(panelP);
         panelC.add(panelK);
         panelC.add(btnEnroll);
+        panelC.add(area);
 
         // panelS.add(new JScrollPane(table));
         panelS.add(btnLogin);
@@ -343,6 +348,7 @@ public class Client extends JFrame {
         panelA.setVisible(false);
         panelStud.setVisible(false);
         btnEnroll.setVisible(false);
+        area.setVisible(false);
 
         btnLogout.setVisible(false);
 
@@ -415,6 +421,7 @@ public class Client extends JFrame {
                     btnViewCourse.setEnabled(false);
                     panelO.setVisible(true);
                     btnEnroll.setVisible(true);
+                    area.setVisible(true);
                     clearTable();
                     populateCbo4();
                     tableModel.addColumn("Subject ID");
@@ -691,25 +698,24 @@ public class Client extends JFrame {
             out.writeObject(chosenC);
             out.flush();
             String receivedMsg = (String) in.readObject();
-            
-            ArrayList<WorkerSubject> display = new ArrayList<>();
+
             if (receivedMsg.equals("received")) {
-              
-                    String obj = (String) in.readObject();
-                    System.out.println(obj);
-                    // Assuming you have a method to convert a string to a WorkerSubject
-                    WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
-                    display.add(workerSubject);
+                ArrayList<WorkerSubject> display = new ArrayList<>();
+                String obj = (String) in.readObject();
+                System.out.println(obj);
+                // Assuming you have a method to convert a string to a WorkerSubject
+                WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
+                display.add(workerSubject);
 
-                    for (int i = 0; i < display.size(); i++) {
-                        workerSubject = display.get(i);
+                for (int i = 0; i < display.size(); i++) {
+                    workerSubject = display.get(i);
+                    area.append(display.toString());
+                    ArrayList<Object> arrCon = converter4(workerSubject);
+                    Object[] arrConArray = arrCon.toArray();
+                    tableModel.addRow(arrConArray);
+                    System.out.println(Arrays.toString(arrConArray));
+                }
 
-                        ArrayList<Object> arrCon = converter4(workerSubject);
-                        Object[] arrConArray = arrCon.toArray();
-                        tableModel.addRow(arrConArray);
-                        System.out.println(Arrays.toString(arrConArray));
-                    }
-                
             }
 
 //            if (receivedMsg.equals("received")) {
@@ -904,6 +910,11 @@ public class Client extends JFrame {
             System.out.println("IOException" + ex.getMessage());
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" + ex.getMessage());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid Student number.");
+            courseCodeTxt.setText("");
+            courseDesTxt.setText("");
+            courseCodeTxt.requestFocus();
         }
 
     }
@@ -944,7 +955,7 @@ public class Client extends JFrame {
         tableModel.addColumn("Student ID");
         tableModel.addColumn("First Name");
         tableModel.addColumn("Last Name");
-
+        System.out.println("Not writing again");
         try {
             out.writeObject("retrieve student");
             out.flush();
@@ -1167,7 +1178,7 @@ public class Client extends JFrame {
         Client log = new Client();
         log.getStreams();
         log.setTitle("Enrolment System");
-        log.setSize(730, 490);
+        log.setSize(730, 510);
         log.setGui();
         log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         log.setLocationRelativeTo(null);

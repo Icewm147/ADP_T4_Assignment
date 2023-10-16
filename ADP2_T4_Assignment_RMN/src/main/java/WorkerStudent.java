@@ -23,6 +23,13 @@ public class WorkerStudent implements Serializable{
         this.courseCode = courseCode;
     }
 
+    public WorkerStudent(int studuntID, String studentFirstName, String studentLastName, String courseCode) {
+        this.studuntID = studuntID;
+        this.studentFirstName = studentFirstName;
+        this.studentLastName = studentLastName;
+        this.courseCode = courseCode;
+    }
+    
     
     
 

@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import java.util.*;
 
 /**
@@ -85,13 +84,11 @@ public class Server {
                 else if (receivedObject instanceof WorkerStudent) {
                     WorkerStudent stud = (WorkerStudent) receivedObject;
                     try {
-                        ArrayList<WorkerStudent> student = (ArrayList) dao.getStudentInfo();
-                        for (WorkerStudent students : student) {
-                            dao.addStudentToDB(stud);
-                            System.out.println(stud);
-                            out.writeObject("success");
-                            out.flush();
-                        }
+                        dao.addStudentToDB(stud);
+                        System.out.println(stud);
+                        out.writeObject("success");
+                        out.flush();
+
                     } catch (SQLException ex) {
                         out.writeObject("failed");
                         out.flush();
@@ -100,7 +97,7 @@ public class Server {
 //                    //retreiving all students DONE
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student")) {
                     try {
-                        List<WorkerStudent> studentList = dao.getStudentInfo();
+                        ArrayList<WorkerStudent> studentList = (ArrayList) dao.getStudentInfo();
                         Object obj = studentList;
                         System.out.println(studentList.toString());
                         out.writeObject(obj);
@@ -115,7 +112,7 @@ public class Server {
                 } //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
-                        List<WorkerCourse> courseList = dao.getCourseInfo();
+                        ArrayList<WorkerCourse> courseList = (ArrayList) dao.getCourseInfo();
                         Object obj = courseList;
                         System.out.println(courseList.toString());
                         out.writeObject(obj);
@@ -137,7 +134,6 @@ public class Server {
                     }
                 } //add subject to subject_table done               
                 //populate combobox for enrol DONE
-                
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("populate")) {
                     try {
 
@@ -193,12 +189,12 @@ public class Server {
                         out.writeObject("received");
                         out.flush();
                         String courseChosen = (String) in.readObject();
-                      //  System.out.println(rec);
-                      //  System.out.println(courseChosen);
+                        //  System.out.println(rec);
+                        //  System.out.println(courseChosen);
                         List<WorkerSubject> subjectCourse = dao.getAllSubjects();
                         for (WorkerSubject subject : subjectCourse) {
                             if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-                                
+
                                 out.writeObject(subject.toString2());
                                 out.flush();
                                 System.out.println(subject.toString2());
