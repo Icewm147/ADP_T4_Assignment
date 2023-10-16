@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -410,6 +411,9 @@ public class Client extends JFrame {
                     panelO.setVisible(true);
                     clearTable();
                     populateCbo4();
+                    tableModel.addColumn("Subject ID");
+                    tableModel.addColumn("Subject Name");
+                    tableModel.addColumn("Course Code");
 
 //                    int result = JOptionPane.showOptionDialog(null, panelO,
 //                            "Add a Course",
@@ -681,12 +685,51 @@ public class Client extends JFrame {
             out.writeObject(chosenC);
             out.flush();
             String receivedMsg = (String) in.readObject();
-           if (receivedMsg.equals("received")) {
-            String obj = (String) in.readObject();
-            System.out.println(obj);
-            
-            
-           }
+
+            ArrayList<WorkerSubject> display = new ArrayList<>();
+            if (receivedMsg.equals("received")) {
+                String obj = (String) in.readObject();
+
+                // Assuming you have a method to convert a string to a WorkerSubject
+                WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
+                display.add(workerSubject);
+
+                for (int i = 0; i < display.size(); i++) {
+                    workerSubject = display.get(i);
+
+                    ArrayList<Object> arrCon = converter4(workerSubject);
+                    Object[] arrConArray = arrCon.toArray();
+                    tableModel.addRow(arrConArray);
+                    System.out.println(Arrays.toString(arrConArray));
+                }
+            }
+
+//            if (receivedMsg.equals("received")) {
+//                ArrayList<WorkerSubject> display = new ArrayList<>();
+//                String obj = (String) in.readObject();
+//                WorkerSubject workerSubject = new WorkerSubject(obj);
+//                display.add(workerSubject);
+//
+//                for (int i = 0; i < display.size(); i++) {
+//                     workerSubject = display.get(i);
+//
+//                    ArrayList<Object> arrCon = converter4(workerSubject);
+//                    Object[] arrConArray = arrCon.toArray();
+//                    tableModel.addRow(arrConArray);
+//                    System.out.println(Arrays.toString(arrConArray));
+//                }
+//               
+//
+//            }
+//                
+//                for (int i = 0; i < display.size(); i++) {
+//                    WorkerSubject workerSubject = display.get(i);
+//                    ArrayList<Object> arrCon = converter4(workerSubject);
+//                    Object[] arrConArray = arrCon.toArray();
+//                    tableModel.addRow(arrConArray);
+//                    System.out.println(arrConArray);
+//                }
+            //  }
 // Read the response
 //            String receivedMsg = (String) in.readObject();
 //            if (receivedMsg.equals("received")) {
@@ -700,7 +743,6 @@ public class Client extends JFrame {
 //                    System.out.println(arrConArray.toString());
 //                }
 //            }
-
 //
 //            out.writeObject(send);
 //            out.flush();
@@ -723,6 +765,19 @@ public class Client extends JFrame {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public WorkerSubject convertStringToWorkerSubject(String str) {
+        String[] parts = str.split(",");
+        if (parts.length >= 3) {
+            String subjectID = parts[0];
+            String subjectName = parts[1];
+            String courseID = parts[2];
+            return new WorkerSubject(subjectID, subjectName, courseID);
+        } else {
+            // Handle the case where the string format is incorrect
+            return null;
         }
     }
 
