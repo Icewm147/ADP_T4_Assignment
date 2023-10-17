@@ -498,7 +498,7 @@ public class Client extends JFrame {
                 if (e.getSource() == btnAddStud) {
 
                     panelW.setVisible(true);
-                    int result = JOptionPane.showOptionDialog(null, deregisterTxt,
+                    int result = JOptionPane.showOptionDialog(null, panelW,
                             "Add a Student",
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
