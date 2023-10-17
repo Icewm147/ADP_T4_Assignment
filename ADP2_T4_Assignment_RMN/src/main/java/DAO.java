@@ -71,16 +71,15 @@ public class DAO {
     //getting all information on Subjects
     public List<WorkerSubject> getAllSubjects() throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
-        String query = "SELECT * FROM Subject_Table ";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+        String query = "SELECT * FROM Subject_Table ";
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String studentNumber = result.getString("Subject_ID");
             String name = result.getString("Subject_Name");
             String course = result.getString("Course_Code");
-            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
             students.add(new WorkerSubject(studentNumber, name, course));
         }
         return students;
@@ -100,37 +99,64 @@ public class DAO {
 //        return courses;
 //    }
     //uncomment when implemented
-//    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
-//        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
+//    public List<WorkerStudent> studentsPerCourse() throws SQLException {
+//        String query = "SELECT FROM Student_Course"; //<--------- Ready to Test
 //
-//        List<WorkerStudent> studentsOfCourse = new ArrayList<>();
+//        List<WorkerStudent> students = new ArrayList<>();
 //
 //        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setInt(1, courseCode);   // -------  Note change to course_Code (Might not need to since it takes it as the passed variable in the method)
+//
+//        ResultSet results = statement.executeQuery();
+//        
+//        while (results.next()){
+//            WorkerStudent student = new WorkerStudent();
+//            
+//            //student.setInt(results.getInt("STUD_ID"));
+//        }
+//        return students;
+//    }
+
+//    public List<String> coursesPerStudent() throws SQLException {
+//        String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
+//
+//        List<String> coursesOfStudent = new ArrayList<>();
+//
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setInt(1, studentNumber);
 //        ResultSet result = statement.executeQuery();
 //        while (result.next()) {
-//            String studName = result.getString("courseID");
-//            String studLastName = result.getString("courseName");//FOR THE WHOLE METHOD DBL CHECK WHAT TABLE IT IS FETCHING STUDENTS FROM FOR CORRECT INFO TO BE INSERTED
-//            String studNum = result.getString("studNum");
-//            studentsOfCourse.add(new WorkerStudent(studName, studLastName, studNum));
+//            int stud_ID = result.getInt("stud_ID");
+//            String course_ID = result.getString("course_ID");
+//            coursesOfStudent.add(stud_ID, course_ID);
 //        }
-//        return studentsOfCourse;
+//        return coursesOfStudent;
 //    }
-    public List<String> coursesPerStudent(int studentNumber) throws SQLException {
-        String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
+    
+    public List<WorkerStudent> studentsPerCourse() throws SQLException {
+    String query = "SELECT stud_id, course_id FROM Student_Course";
+    
+    List<WorkerStudent> students = new ArrayList<>();
 
-        List<String> coursesOfStudent = new ArrayList<>();
+    PreparedStatement statement = connectToDB().prepareStatement(query);
 
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setInt(1, studentNumber);
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            int stud_ID = result.getInt("stud_ID");
-            String course_ID = result.getString("course_ID");
-            coursesOfStudent.add(stud_ID, course_ID);
-        }
-        return coursesOfStudent;
+    ResultSet results = statement.executeQuery();
+
+    while (results.next()) {
+        int studentId = results.getInt("Stud_ID");
+        String courseId = results.getString("Course_ID");
+
+        WorkerStudent ws = new WorkerStudent();
+        ws.setStuduntID(studentId);
+        ws.setCourseCode(courseId);
+
+        students.add(ws);
     }
+    results.close();
+    statement.close();
+    
+    return students;
+}
+
 
     //test
     public boolean authenticateUser(String username, String password, String userAccessType) {
@@ -165,7 +191,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            int studentNumber = result.getInt("Stud_ID");   //<<------------SHOULD BE RIGHT
+            int studentNumber = result.getInt("Stud_ID");
             String name = result.getString("STUD_FIRST_NAME");
             String course = result.getString("STUD_LAST_NAME");
 
@@ -183,7 +209,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             String desc = result.getString("Course_Description");
             Boolean availability = result.getBoolean("Available");
 
@@ -200,7 +226,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             String desc = result.getString("Course_Description");
             Boolean availability = result.getBoolean("Available");
 
@@ -215,7 +241,7 @@ public class DAO {
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             coursesCode.add(courseCode);
         }
         return coursesCode;
