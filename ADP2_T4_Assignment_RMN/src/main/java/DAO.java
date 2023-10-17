@@ -3,7 +3,6 @@ import java.io.*;
 import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
-import javax.swing.JCheckBox;
 
 /**
  *
@@ -11,9 +10,6 @@ import javax.swing.JCheckBox;
  */
 public class DAO {
 
-//    public DAO(){
-//        connectToDB(); <---------------------------CHECK IF IT'S NEEDED
-//    }
     public Connection connectToDB() {
         Connection con = null;
         try {
@@ -37,7 +33,7 @@ public class DAO {
     }
 
     public void deleteStudent(int studentNumber) throws SQLException {
-        String query = "DELETE FROM Student_Table WHERE Stud_ID = ?"; //<<----------should work now
+        String query = "DELETE FROM Student_Table WHERE Stud_ID = ?"; 
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, studentNumber);
@@ -45,7 +41,7 @@ public class DAO {
     }
 
     public void deleteCourseFromDB(int courseID) throws SQLException {
-        String query = "DELETE FROM Course WHERE Course_Code = ?"; //<<-------DOUBLE CHECK THAT Course_Code IS NOT ALL CAPS!!!!!!!!!!
+        String query = "DELETE FROM Course WHERE Course_Code = ?"; 
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, courseID);
@@ -64,7 +60,6 @@ public class DAO {
 
     //add Subject to Subject_Table
     public void addSubject(WorkerSubject subject) throws SQLException {
-        List<WorkerSubject> students = new ArrayList<>();
         String query = "INSERT INTO Subject_Table(Subject_ID,Subject_Name,Course_Code) VALUES (?,?,?)";
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setString(1, subject.getSubjectID1());
@@ -73,21 +68,6 @@ public class DAO {
         statement.executeUpdate();
     }
 
-//    public void addSubject(WorkerSubject subject) throws SQLException {
-//        List<WorkerSubject> students = new ArrayList<>();
-//        String query = "INSERT INTO Subject_Table(Subject_ID1,Subject_Name1,Subject_ID2,Subject_Name2, Subject_ID3,Subject_Name3,Subject_ID4,Subject_Name4,Course_Code) VALUES (?,?,?,?,?,?,?,?,?)";
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setString(1, subject.getSubjectID1());
-//        statement.setString(2, subject.getSubjectName1());
-//        statement.setString(3, subject.getSubjectID2());
-//        statement.setString(4, subject.getSubjectName2());
-//        statement.setString(5, subject.getSubjectID3());
-//        statement.setString(6, subject.getSubjectName3());
-//        statement.setString(7, subject.getSubjectID4());
-//        statement.setString(8, subject.getSubjectName4());
-//        statement.setString(9, subject.getCourseID());
-//        statement.executeUpdate();
-//    }
     //getting all information on Subjects
     public List<WorkerSubject> getAllSubjects() throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
@@ -176,75 +156,6 @@ public class DAO {
         }
     }
 
-//    public void authenticationLogin(String username, String password, String userAccessType) throws SQLException {
-//        String query = "SELECT * FROM LOGIN_CREDENTIALS WHERE USERNAME=? PASSWORD=? USER_ACCESS_TYPE=?";
-//
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//
-//        statement.setString(1, username);
-//        statement.setString(2, password);
-//        statement.setString(3, userAccessType);
-//
-//        ResultSet result = statement.executeQuery();
-//
-////        if(userAccessType.equals("Admin")){
-////            System.out.println("Admin Login succesfull");
-////        } else if (userAccessType.equals("Student")){
-////            System.out.println("Student lLogin Successful");
-////        } else {
-////            System.out.println("Login Failure");
-////            JOptionPane.showMessageDialog(null, "invalid type of user or login failure");
-////            System.out.println("Faield at authenticateLogin()");
-////        }
-//    }
-    //change this one to add user access type , change the table name also
-//    public void authenticateAdmin(String username, String password) throws SQLException{
-//        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?"; //---table name
-//        
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setString(1, username);
-//        statement.setString(1, password);
-//        ResultSet result = statement.executeQuery();
-//        if (!result.next()){
-//            JOptionPane.showMessageDialog(null, "Admin login failed!");
-//        }
-//    }
-//    //delete this method
-//    public void authenticateStudent(String username, String password) throws SQLException{
-//        String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
-//        
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setString(1, username);
-//        statement.setString(1, password);
-//        ResultSet result = statement.executeQuery();
-//        if (!result.next()){
-//            JOptionPane.showMessageDialog(null, "Student login failed!");
-//        }
-//    }
-//    //dont need this cuz we got one table for all logins
-//    public void authenticateAdmin(String username, String password) throws SQLException{
-//        String query = "SELECT * FROM ADMIN_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
-//        
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setString(1, username);
-//        statement.setString(1, password);
-//        ResultSet result = statement.executeQuery();
-//        if (!result.next()){
-//            JOptionPane.showMessageDialog(null, "Admin login failed!");
-//        }
-//    }
-//    //dont need this cuz we got one table for all logins
-//    public void authenticateStudent(String username, String password) throws SQLException{
-//        String query = "SELECT * FROM STUDENT_LOGIN WHERE USERNAME = ? AND PASSWORD = ?";
-//        
-//        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setString(1, username);
-//        statement.setString(1, password);
-//        ResultSet result = statement.executeQuery();
-//        if (!result.next()){
-//            JOptionPane.showMessageDialog(null, "Student login failed!");
-//        }
-//    }
     //get Just Student info
     public List<WorkerStudent> getStudentInfo() throws SQLException {
         List<WorkerStudent> students = new ArrayList<>();

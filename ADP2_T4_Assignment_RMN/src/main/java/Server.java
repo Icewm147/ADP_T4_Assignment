@@ -111,6 +111,7 @@ public class Server {
                     out.writeObject("request received");
                     out.flush();
                     WorkerStudent studID = (WorkerStudent) in.readObject();
+                    System.out.println("enrolled: " + studID);
                     dao.enrollStudent(studID.getStuduntID(),studID.getCourseCode());
                     out.writeObject("success");
                     out.flush();

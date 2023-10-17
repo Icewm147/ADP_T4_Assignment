@@ -35,13 +35,13 @@ public class Client extends JFrame {
     private static JButton btnAddCourse, btnAddStud, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject, btnStudDelete, btnCourseDelete;
     private static JTextField searchTxtStud, searchTxtCourse;
 
-    private static JButton btnViewEnrol, btnViewCourse, btnEnroll;
+    private static JButton btnViewEnrol, btnViewCourse, btnEnroll,btnDeregister;
 
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
 
-    private static JLabel studId, studName, studLastName, paneHeading2, paneHeading3, space0, space4, space5, space8;
-    private static JTextField studIdTxt, studNameTxt, studLastNameTxt;
+    private static JLabel studId, studName, studLastName, paneHeading2, paneHeading3, space0, space4, space5, space8, iD;
+    private static JTextField studIdTxt, studNameTxt, studLastNameTxt, IdTxt;
 
     private static DefaultTableModel tableModel;
     private static JTable table;
@@ -158,6 +158,12 @@ public class Client extends JFrame {
         btnViewCourse.setFont(font4);
         btnEnroll = new JButton("Enroll");
         btnViewEnrol.setFont(font4);
+        btnDeregister = new JButton("Deregister from course");
+        btnDeregister.setFont(font4);
+        iD = new JLabel("Enter Studnt ID: ");
+        iD.setFont(font2);
+        IdTxt = new JTextField(12);
+        IdTxt.setFont(font4);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -225,7 +231,7 @@ public class Client extends JFrame {
         chooseCourse.setFont(font2);
         cbo4 = new JComboBox<>();
         cbo4.setFont(font2);
-        cbo4.setPreferredSize(new Dimension(200, 35));
+        cbo4.setPreferredSize(new Dimension(150, 35));
 
     }
 
@@ -251,7 +257,6 @@ public class Client extends JFrame {
         panelA.add(btnAddStud);
         panelA.add(btnRetrieveStud);
         panelA.add(btnRetrieveCourse);
-        
 
         panelE.add(searchTxtStud);
         panelE.add(btnSearchStud);
@@ -263,6 +268,7 @@ public class Client extends JFrame {
 
         panelStud.add(btnViewEnrol);
         panelStud.add(btnViewCourse);
+        panelStud.add(btnDeregister);
 
         panelC.add(panelL);
         panelC.add(panelA);
@@ -324,6 +330,8 @@ public class Client extends JFrame {
 
         panelW.setVisible(false);
         //----------------------------- choose a course JOptionPane
+        panelO.add(iD);
+        panelO.add(IdTxt);
         panelO.add(chooseCourse);
         //panelO.add(space8);
         panelO.add(cbo4);
@@ -348,6 +356,7 @@ public class Client extends JFrame {
         panelA.setVisible(false);
         panelStud.setVisible(false);
         btnEnroll.setVisible(false);
+        btnDeregister.setVisible(false);
 
         btnLogout.setVisible(false);
 
@@ -414,8 +423,7 @@ public class Client extends JFrame {
 
         btnViewEnrol.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnViewEnrol) {
                     btnViewCourse.setEnabled(false);
                     panelO.setVisible(true);
@@ -427,24 +435,14 @@ public class Client extends JFrame {
                     tableModel.addColumn("Subject Name");
                     tableModel.addColumn("Course Code");
 
-//                    int result = JOptionPane.showOptionDialog(null, panelO,
-//                            "Add a Course",
-//                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-//                            new String[]{"View", "Cancel"}, "Yes");
-//                    if (result == JOptionPane.YES_OPTION) {
-//
-//                        panelO.setVisible(false);
-//                    }
                 }
             }
 
         }
         );
-        btnAddCourse.addActionListener(
-                new ActionListener() {
+        btnAddCourse.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnAddCourse) {
 
                     panelJ.setVisible(true);
@@ -474,34 +472,26 @@ public class Client extends JFrame {
                             AddSubject();
 
                         }
-
                     }
                 }
-
             }
-
         }
         );
 
-        btnLogout.addActionListener(
-                new ActionListener() {
+        btnLogout.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnLogout) {
 
                     closeConnection();
                 }
             }
-
         }
         );
 
-        btnAddStud.addActionListener(
-                new ActionListener() {
+        btnAddStud.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnAddStud) {
 
                     panelW.setVisible(true);
@@ -525,11 +515,8 @@ public class Client extends JFrame {
                         studIdTxt.requestFocus();
                         panelW.setVisible(false);
                     }
-
                 }
-
             }
-
         }
         );
 
@@ -569,70 +556,52 @@ public class Client extends JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "Cancelled");
                     }
-
                 }
-
             }
         }
         );
 
-        btnRetrieveStud.addActionListener(
-                new ActionListener() {
+        btnRetrieveStud.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveStud) {
 
-                    searchTxtStud.setText("student");
                     panelE.setVisible(true);
                     panelSC.setVisible(false);
                     panelP.setVisible(true);
                     retrieveStud();
                 }
-
             }
-
         }
         );
 
-        btnRetrieveCourse.addActionListener(
-                new ActionListener() {
+        btnRetrieveCourse.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnRetrieveCourse) {
 
-                    searchTxtCourse.setText("course");
                     panelSC.setVisible(true);
                     panelE.setVisible(false);
                     panelP.setVisible(true);
                     retrieveCourse();
                 }
-
             }
-
         }
         );
 
-        btnSearchStud.addActionListener(
-                new ActionListener() {
+        btnSearchStud.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearchStud) {
                     searchStud();
                     searchTxtStud.setText("");
                 }
-
             }
-
         }
         );
-        btnSearchCourse.addActionListener(
-                new ActionListener() {
+        btnSearchCourse.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearchCourse) {
                     searchCourse();
                     searchTxtCourse.setText("");
@@ -660,6 +629,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == cbo4) {
+
                     chosenCourse();
                 }
             }
@@ -667,9 +637,91 @@ public class Client extends JFrame {
         }
         );
 
+        btnEnroll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnEnroll) {
+                    enrolStud();
+
+                    panelStud.setVisible(true);
+                    panelL.setVisible(false);
+                    panelP.setVisible(true);
+                    btnLogin.setVisible(false);
+                    btnLogout.setVisible(true);
+                }
+
+            }
+
+        }
+        );
+        
+         btnDeregister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnDeregister) {
+               
+                    
+                    
+                    
+                }
+
+            }
+
+        }
+        );
+
     }
+    
+    
+    
+    //-------------------------------------------------Methods
 
     public void enrolStud() {
+
+        int id = Integer.parseInt(IdTxt.getText());
+        String course = (String) cbo4.getSelectedItem();
+
+        try {
+            out.writeObject("Enrolled");
+            out.flush();
+
+            String receivedMsg = (String) in.readObject();
+            if (receivedMsg.equalsIgnoreCase("request received")) {
+                WorkerStudent worker = new WorkerStudent(id, course);
+                System.out.println(worker);
+                out.writeObject(worker);
+                out.flush();
+            }
+            String receivedMsg2 = (String) in.readObject();
+            if (receivedMsg2.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "Success you have been enrolled.");
+                retrieveCourse();
+
+                btnViewCourse.setEnabled(true);
+                panelO.setVisible(false);
+                btnEnroll.setVisible(false);
+
+                panelStud.setVisible(true);
+                panelL.setVisible(false);
+                panelP.setVisible(true);
+                btnLogin.setVisible(false);
+                btnLogout.setVisible(true);
+                btnViewEnrol.setEnabled(false);
+                btnDeregister.setVisible(true);
+
+            }
+            if (receivedMsg2.equalsIgnoreCase("failed")) {
+                JOptionPane.showMessageDialog(null, "You are already enrolled.");
+            }
+
+        } catch (IOException ex) {
+            System.out.println("IOException" + ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException" + ex.getMessage());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid Student ID.");
+
+        }
 
     }
 
@@ -732,13 +784,7 @@ public class Client extends JFrame {
             DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>(populate.toArray(new String[0]));
             cbo4.setModel(model);
             System.out.println(populate);
-//            ArrayList<String> populate = (ArrayList) in.readObject();
-//            Object[] obj = populate.toArray();
-//            System.out.println(populate);
-//            for (int i = 0 ; i < populate.size();i++) {
-//                cbo4.setSelectedItem(obj);
-//                
-//            }
+
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error getting in the courses you have requested");
         } catch (ClassNotFoundException ex) {
@@ -839,7 +885,7 @@ public class Client extends JFrame {
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException" + ex.getMessage());
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid Student number.");
+            JOptionPane.showMessageDialog(null, "Please enter a valid Student ID.");
             courseCodeTxt.setText("");
             courseDesTxt.setText("");
             courseCodeTxt.requestFocus();
@@ -963,7 +1009,7 @@ public class Client extends JFrame {
             System.out.println("Error in IO");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error in ClassNotFound");
-        }catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Incorrect search , Please search for a valid student ID.");
         }
 
@@ -996,7 +1042,7 @@ public class Client extends JFrame {
             System.out.println("IOException");
         } catch (ClassNotFoundException ex) {
             System.out.println("ClassNotFoundException");
-        }catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Incorrect search , Please search for a valid course code.");
         }
 
@@ -1043,8 +1089,6 @@ public class Client extends JFrame {
                 JOptionPane.showMessageDialog(null, " Your request was not received");
 
             }
-//            
-//            textArea.append(combo);
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
