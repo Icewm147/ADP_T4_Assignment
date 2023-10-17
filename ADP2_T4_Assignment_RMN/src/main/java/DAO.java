@@ -192,7 +192,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            int studentNumber = result.getInt("Stud_ID");   //<<------------SHOULD BE RIGHT
+            int studentNumber = result.getInt("Stud_ID");
             String name = result.getString("STUD_FIRST_NAME");
             String course = result.getString("STUD_LAST_NAME");
 
@@ -210,7 +210,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             String desc = result.getString("Course_Description");
             Boolean availability = result.getBoolean("Available");
 
@@ -227,7 +227,7 @@ public class DAO {
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             String desc = result.getString("Course_Description");
             Boolean availability = result.getBoolean("Available");
 
@@ -242,7 +242,7 @@ public class DAO {
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
         while (result.next()) {
-            String courseCode = result.getString("Course_Code");   //<<------------SHOULD BE RIGHT
+            String courseCode = result.getString("Course_Code");
             coursesCode.add(courseCode);
         }
         return coursesCode;
