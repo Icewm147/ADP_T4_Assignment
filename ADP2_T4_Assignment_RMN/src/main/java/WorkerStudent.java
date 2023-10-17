@@ -57,6 +57,14 @@ public class WorkerStudent implements Serializable{
         this.studentLastName = studentLastName;
     }
 
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
     @Override
     public String toString() {
         return studuntID +" " + " " + studentFirstName + " " +studentLastName +"\n"  ;

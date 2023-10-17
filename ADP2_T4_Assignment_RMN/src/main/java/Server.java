@@ -107,8 +107,14 @@ public class Server {
                     }
 
                 } //enrol student
-                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("enrol")) {
-
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Enrolled")) {
+                    out.writeObject("request received");
+                    out.flush();
+                    WorkerStudent studID = (WorkerStudent) in.readObject();
+                    dao.enrollStudent(studID.getStuduntID(),studID.getCourseCode());
+                    out.writeObject("success");
+                    out.flush();
+                    
                 } //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
@@ -211,29 +217,7 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                } //                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
-                //                    try {
-                //                        String rec = (String) receivedObject;
-                //                        out.writeObject("received");
-                //                        out.flush();
-                //                        String courseChosen = (String) in.readObject();
-                //                        //  System.out.println(rec);
-                //                        //  System.out.println(courseChosen);
-                //                        List<WorkerSubject> subjectCourse = dao.getAllSubjects();
-                //                        for (WorkerSubject subject : subjectCourse) {
-                //                            if (subject.getCourseID().equalsIgnoreCase(courseChosen)) {
-                //
-                //                                out.writeObject(subject.toString2());
-                //                                out.flush();
-                //                                System.out.println(subject.toString2());
-                //                            }
-                //                        }
-                //                        // Send the courseList
-                //
-                //                    } catch (SQLException ex) {
-                //                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                //                    }
-                //                } //search course
+                }  //search course
                 else if (receivedObject instanceof String) {
                     String search = (String) receivedObject;
                     List<WorkerCourse> searchC = new ArrayList<>();
@@ -299,6 +283,8 @@ public class Server {
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
 
