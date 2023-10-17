@@ -224,6 +224,7 @@ public class Client extends JFrame {
         tableModel = new DefaultTableModel();
         table = new JTable(tableModel);
         scrollPane = new JScrollPane(table);
+        table.setEnabled(false);
 
         textArea = new JTextArea(5, 10);
         textArea1 = new JTextArea(5, 10);
@@ -464,17 +465,20 @@ public class Client extends JFrame {
                             courseCodeTxt.requestFocus();
                             return;
                         }
+
                         AddCourse();
-                        panelK.setVisible(true);
-                        int result2 = JOptionPane.showOptionDialog(null, panelK,
-                                "Add a Subject",
-                                JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                                new String[]{"save"}, "Yes");
-
-                        if (result2 == JOptionPane.YES_OPTION) {
-                            AddSubject();
-
-                        }
+                        courseCodeTxt.setText("");
+                        courseDesTxt.setText("");
+                        courseCodeTxt.requestFocus();
+//                        int result2 = JOptionPane.showOptionDialog(null, panelK,
+//                                "Add a Subject",
+//                                JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+//                                new String[]{"save"}, "Yes");
+//
+//                        if (result2 == JOptionPane.YES_OPTION) {
+//                            AddSubject();
+//
+//                        }
                     }
                 }
             }
@@ -535,6 +539,7 @@ public class Client extends JFrame {
                         //yes option
                         deleteStud();
                         JOptionPane.showMessageDialog(null, "Delete Successful");
+                        searchTxtStud.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, "Cancelled");
                     }
@@ -556,6 +561,7 @@ public class Client extends JFrame {
                         //yes option
                         deleteCourse();
                         JOptionPane.showMessageDialog(null, "Delete Successful");
+                        searchTxtCourse.setText("");
                     } else {
                         JOptionPane.showMessageDialog(null, "Cancelled");
                     }
@@ -597,7 +603,6 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearchStud) {
                     searchStud();
-                    searchTxtStud.setText("");
                 }
             }
         }
@@ -607,7 +612,6 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnSearchCourse) {
                     searchCourse();
-                    searchTxtCourse.setText("");
                 }
 
             }
@@ -619,7 +623,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnViewCourse) {
-                    
+
                     btnViewCourse.setBackground(Color.GREEN);
                     panelO.setVisible(false);
                     retrieveAvailableCourse();
@@ -645,7 +649,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnEnroll) {
-                    
+
                     enrolStud();
 
                     panelStud.setVisible(true);
@@ -699,7 +703,7 @@ public class Client extends JFrame {
 
     //-------------------------------------------------Methods
     public void deregisterStud() {
-        int id =Integer.parseInt( deregisterTxt.getText());
+        int id = Integer.parseInt(deregisterTxt.getText());
         try {
             out.writeObject("deregister");
             out.flush();
@@ -921,11 +925,22 @@ public class Client extends JFrame {
                 JOptionPane.showMessageDialog(null, "Course has been added.");
                 courseDesTxt.setText("");
                 checkBox.setSelected(false);
+                panelK.setVisible(true);
+                int result2 = JOptionPane.showOptionDialog(null, panelK,
+                        "Add a Subject",
+                        JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                        new String[]{"save"}, "Yes");
+
+                if (result2 == JOptionPane.YES_OPTION) {
+                    AddSubject();
+
+                }
+
             }
-//            if (recievedMsg.equalsIgnoreCase("failed")) {
-//
-//                JOptionPane.showMessageDialog(null, "This course has already been added.");
-//            }
+            if (recievedMsg.equalsIgnoreCase("failed")) {
+
+                JOptionPane.showMessageDialog(null, "This course has already been added.");
+            }
 
         } catch (IOException ex) {
             System.out.println("IOException" + ex.getMessage());
