@@ -660,7 +660,17 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnDeregister) {
                
+                    int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to deregister from your course?", "Deregistration", JOptionPane.WARNING_MESSAGE);
+                    if (choice == 0) {
+                      
+                        
+                        JOptionPane.showMessageDialog(null, "Successfully deregistered");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cancelled");
+                    }
                     
+                    
+                    //deregisterStud();
                     
                     
                 }
@@ -676,6 +686,14 @@ public class Client extends JFrame {
     
     //-------------------------------------------------Methods
 
+    
+    public void deregisterStud(){
+        
+    }
+    
+    
+    
+    
     public void enrolStud() {
 
         int id = Integer.parseInt(IdTxt.getText());
