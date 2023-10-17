@@ -310,4 +310,14 @@ public class DAO {
         return coursesCode;
     }
     
+    public void enrollStudent(int StudID, String courseCode) throws SQLException{
+        String query = "INSERT INTO StudentCourse (Stud_ID, Course_Code) VALUES (?, ?)";
+        
+        PreparedStatement statement = connectToDB().prepareStatement(query);
+        
+        statement.setInt(1, StudID);
+        statement.setString(2, courseCode);
+        
+        statement.executeUpdate();
+    }
 }
