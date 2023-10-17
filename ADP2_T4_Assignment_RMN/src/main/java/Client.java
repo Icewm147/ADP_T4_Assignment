@@ -37,7 +37,7 @@ public class Client extends JFrame {
 
     private static JButton btnViewEnrol, btnViewCourse, btnEnroll, btnDeregister;
 
-    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
+    private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7, enrolledStud;
     private static JTextField courseDesTxt, courseCodeTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, paneHeading3, space0, space4, space5, space8, iD;
@@ -49,6 +49,7 @@ public class Client extends JFrame {
 
     private static JTextArea textArea1, textArea;
     private static JCheckBox checkBox = new JCheckBox();
+    private static JCheckBox checkBox1 = new JCheckBox();
 
     private static JLabel lblSubjectID1, lblSubject1, lblSubjectID2, lblSubject2, lblSubjectID3, lblSubject3, lblSubjectID4, lblSubject4;
     private static JTextField subjectIDTxt1, subjectTxt1, subjectIDTxt2, subjectTxt2, subjectIDTxt3, subjectTxt3, subjectIDTxt4, subjectTxt4;
@@ -151,6 +152,9 @@ public class Client extends JFrame {
 
         searchTxtStud = new JTextField(20);
         searchTxtCourse = new JTextField(20);
+
+        enrolledStud = new JLabel("Students enrolled: ");
+        enrolledStud.setFont(font4);
         //-----------------------------------------------------Student
         btnViewEnrol = new JButton("Enroll In Course");
         btnViewEnrol.setFont(font4);
@@ -264,6 +268,8 @@ public class Client extends JFrame {
         panelE.add(searchTxtStud);
         panelE.add(btnSearchStud);
         panelE.add(btnStudDelete);
+        panelE.add(enrolledStud);
+        panelE.add(checkBox1);
 
         panelSC.add(searchTxtCourse);
         panelSC.add(btnSearchCourse);
@@ -699,9 +705,56 @@ public class Client extends JFrame {
         }
         );
 
+//        checkBox1.addItemListener(new ItemListener() {
+//            @Override
+//            public void itemStateChanged(ItemEvent e) {
+//                
+//            }
+//
+//        });
     }
 
     //-------------------------------------------------Methods
+    public void showEnrolledStud() {
+        boolean enroll = checkBox1.isSelected();
+        clearTable();
+        tableModel.addColumn("Student ID");
+        tableModel.addColumn("Course Code");
+        try {
+            out.writeObject("retrieve student_course");
+            out.flush();
+
+            String receivedMsg = (String) in.readObject();
+            if (receivedMsg.equalsIgnoreCase("request received")) {
+                System.out.println(enroll);
+                out.writeObject(enroll);
+                out.flush();
+            }
+            
+            ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
+            for (int i = 0; i < display.size(); i++) {
+                WorkerStudent workerStudent = display.get(i);
+
+                ArrayList<Object> arrCon = converter5(workerStudent);
+                Object[] arrConArray = arrCon.toArray();
+
+                tableModel.addRow(arrConArray);
+
+            }
+            
+            
+            
+            
+            
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public void deregisterStud() {
         int id = Integer.parseInt(deregisterTxt.getText());
         try {
@@ -1219,6 +1272,14 @@ public class Client extends JFrame {
         arrConvert.add(workerSubject.getSubjectID1());
         arrConvert.add(workerSubject.getSubjectName1());
         arrConvert.add(workerSubject.getCourseID());
+        return arrConvert;
+    }
+    
+    
+     public static ArrayList<Object> converter5(WorkerStudent workerStudent) {
+        ArrayList<Object> arrConvert = new ArrayList<>();
+        arrConvert.add(workerStudent.getStuduntID());
+        arrConvert.add(workerStudent.getCourseCode());
         return arrConvert;
     }
 
