@@ -100,37 +100,64 @@ public class DAO {
 //        return courses;
 //    }
     //uncomment when implemented
-//    public List<WorkerStudent> studentsPerCourse(int courseCode) throws SQLException {
-//        String query = "SELECT student.* FROM STUDENT JOIN STUDENT_COURSE ON STUDENT.ID = STUDENT_COURSE.STUD_ID WHERE STUDENT_COURSE.COURSE_ID = ?"; //<--------- Ready to Test
+//    public List<WorkerStudent> studentsPerCourse() throws SQLException {
+//        String query = "SELECT FROM Student_Course"; //<--------- Ready to Test
 //
-//        List<WorkerStudent> studentsOfCourse = new ArrayList<>();
+//        List<WorkerStudent> students = new ArrayList<>();
 //
 //        PreparedStatement statement = connectToDB().prepareStatement(query);
-//        statement.setInt(1, courseCode);   // -------  Note change to course_Code (Might not need to since it takes it as the passed variable in the method)
+//
+//        ResultSet results = statement.executeQuery();
+//        
+//        while (results.next()){
+//            WorkerStudent student = new WorkerStudent();
+//            
+//            //student.setInt(results.getInt("STUD_ID"));
+//        }
+//        return students;
+//    }
+
+//    public List<String> coursesPerStudent() throws SQLException {
+//        String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
+//
+//        List<String> coursesOfStudent = new ArrayList<>();
+//
+//        PreparedStatement statement = connectToDB().prepareStatement(query);
+//        statement.setInt(1, studentNumber);
 //        ResultSet result = statement.executeQuery();
 //        while (result.next()) {
-//            String studName = result.getString("courseID");
-//            String studLastName = result.getString("courseName");//FOR THE WHOLE METHOD DBL CHECK WHAT TABLE IT IS FETCHING STUDENTS FROM FOR CORRECT INFO TO BE INSERTED
-//            String studNum = result.getString("studNum");
-//            studentsOfCourse.add(new WorkerStudent(studName, studLastName, studNum));
+//            int stud_ID = result.getInt("stud_ID");
+//            String course_ID = result.getString("course_ID");
+//            coursesOfStudent.add(stud_ID, course_ID);
 //        }
-//        return studentsOfCourse;
+//        return coursesOfStudent;
 //    }
-    public List<String> coursesPerStudent(int studentNumber) throws SQLException {
-        String query = "SELECT COURSE.* FROM COURSE JOIN STUDENT_COURSE ON COURSE.COURSE_CODE = STUDENT_COURSE.COURSE_ID WHERE STUDENT_COURSE.STUD_ID = ?"; //<---- Ready to Test
+    
+    public List<WorkerStudent> studentsPerCourse() throws SQLException {
+    String query = "SELECT stud_id, course_id FROM Student_Course";
+    
+    List<WorkerStudent> students = new ArrayList<>();
 
-        List<String> coursesOfStudent = new ArrayList<>();
+    PreparedStatement statement = connectToDB().prepareStatement(query);
 
-        PreparedStatement statement = connectToDB().prepareStatement(query);
-        statement.setInt(1, studentNumber);
-        ResultSet result = statement.executeQuery();
-        while (result.next()) {
-            int stud_ID = result.getInt("stud_ID");
-            String course_ID = result.getString("course_ID");
-            coursesOfStudent.add(stud_ID, course_ID);
-        }
-        return coursesOfStudent;
+    ResultSet results = statement.executeQuery();
+
+    while (results.next()) {
+        int studentId = results.getInt("Stud_ID");
+        String courseId = results.getString("Course_ID");
+
+        WorkerStudent ws = new WorkerStudent();
+        ws.setStuduntID(studentId);
+        ws.setCourseCode(courseId);
+
+        students.add(ws);
     }
+    results.close();
+    statement.close();
+    
+    return students;
+}
+
 
     //test
     public boolean authenticateUser(String username, String password, String userAccessType) {
