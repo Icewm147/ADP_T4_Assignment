@@ -32,7 +32,7 @@ public class Client extends JFrame {
     private static JComboBox cbo, cbo3;
     private static JComboBox<String> cbo1, cbo2, cbo4;
 
-    private static JButton btnAddCourse, btnAddStud, btnDelete, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject;
+    private static JButton btnAddCourse, btnAddStud, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject, btnStudDelete, btnCourseDelete;
     private static JTextField searchTxtStud, searchTxtCourse;
 
     private static JButton btnViewEnrol, btnViewCourse, btnEnroll;
@@ -56,8 +56,6 @@ public class Client extends JFrame {
     private static boolean log;
 
     private static JLabel chooseCourse;
-
-    private static JTextArea area;
 
     public Client() {
 
@@ -142,8 +140,11 @@ public class Client extends JFrame {
         btnRetrieveCourse = new JButton("Retrieve Course");
         btnRetrieveCourse.setFont(font4);
 
-        btnDelete = new JButton("Delete Student/Course");
-        btnDelete.setFont(font4);
+        btnCourseDelete = new JButton("Delete Course");
+        btnCourseDelete.setFont(font4);
+
+        btnStudDelete = new JButton("Delete Student");
+        btnStudDelete.setFont(font4);
 
         btnAddStud = new JButton("Add student");
         btnAddStud.setFont(font4);
@@ -157,8 +158,6 @@ public class Client extends JFrame {
         btnViewCourse.setFont(font4);
         btnEnroll = new JButton("Enroll");
         btnViewEnrol.setFont(font4);
-
-        area = new JTextArea(5, 5);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -252,13 +251,15 @@ public class Client extends JFrame {
         panelA.add(btnAddStud);
         panelA.add(btnRetrieveStud);
         panelA.add(btnRetrieveCourse);
-        panelA.add(btnDelete);
+        
 
         panelE.add(searchTxtStud);
         panelE.add(btnSearchStud);
+        panelE.add(btnStudDelete);
 
         panelSC.add(searchTxtCourse);
         panelSC.add(btnSearchCourse);
+        panelSC.add(btnCourseDelete);
 
         panelStud.add(btnViewEnrol);
         panelStud.add(btnViewCourse);
@@ -272,7 +273,6 @@ public class Client extends JFrame {
         panelC.add(panelP);
         panelC.add(panelK);
         panelC.add(btnEnroll);
-        panelC.add(area);
 
         // panelS.add(new JScrollPane(table));
         panelS.add(btnLogin);
@@ -348,7 +348,6 @@ public class Client extends JFrame {
         panelA.setVisible(false);
         panelStud.setVisible(false);
         btnEnroll.setVisible(false);
-        area.setVisible(false);
 
         btnLogout.setVisible(false);
 
@@ -421,7 +420,7 @@ public class Client extends JFrame {
                     btnViewCourse.setEnabled(false);
                     panelO.setVisible(true);
                     btnEnroll.setVisible(true);
-                    area.setVisible(true);
+
                     clearTable();
                     populateCbo4();
                     tableModel.addColumn("Subject ID");
@@ -534,75 +533,46 @@ public class Client extends JFrame {
         }
         );
 
-        btnDelete.addActionListener(
-                new ActionListener() {
+        btnStudDelete.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
-                if (e.getSource() == btnDelete) {
-                    
-                    //working code
-//                    if(searchTxtStud.getText().isEmpty()){
-//                        JOptionPane.showMessageDialog(null, "Please enter a name in the searchbox");
-//                    }
-//                    int choice  = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + searchTxtStud.getText());
-//                    if(choice == 0 ){
-//                        //yes option
-//                        deleteStud();
-//                        JOptionPane.showMessageDialog(null,"Delete Successful");
-//                    }else{
-//                      JOptionPane.showMessageDialog(null,"Cancelled");
-//                    }
-//*---------------------------------------------
-
-                    int result = JOptionPane.showOptionDialog(null, "Choose which catagory that you would like to delete from. ",
-                            "Add a Course",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                            new String[]{"Student", "Course"}, "Yes");
-                    if (result == JOptionPane.YES_OPTION) {
-                        //------------------ Delete student
-                        int result1 = JOptionPane.showOptionDialog(null, panelDelStud,
-                                "Delete Student",
-                                JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                                new String[]{"Delete", "Cancel"}, "Yes");
-
-                        if (result1 == JOptionPane.YES_OPTION) {
-                            int answer1 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this student? ");
-                            if (answer1 == JOptionPane.YES_OPTION) {
-
-                                deleteStud();
-                                System.out.println("Student deleted");
-                            }
-
-                        }
-
-                    } else {
-                        //------------------ Delete Course
-                        int result1 = JOptionPane.showOptionDialog(null, panelDelC,
-                                "Delete Course",
-                                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                                new String[]{"Delete", "Cancel"}, "Yes");
-
-                        String combo = cbo2.getSelectedItem().toString();
-                        textArea1.append(combo);
-
-                        if (result1 == JOptionPane.YES_OPTION) {
-                            int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this course? ");
-                            if (answer == JOptionPane.YES_OPTION) {
-
-                                deleteCourse();
-                                System.out.println("Course deleted");
-                            }
-
-                        }
-
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == btnStudDelete) {
+                    if (searchTxtStud.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Please enter a name in the searchbox");
                     }
-
+                    int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + searchTxtStud.getText());
+                    if (choice == 0) {
+                        //yes option
+                        deleteStud();
+                        JOptionPane.showMessageDialog(null, "Delete Successful");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cancelled");
+                    }
                 }
             }
 
-                
-            
+        });
+
+        btnCourseDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e
+            ) {
+                if (e.getSource() == btnCourseDelete) {
+                    if (searchTxtCourse.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Please enter a name in the searchbox");
+                    }
+                    int choice2 = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + searchTxtCourse.getText());
+                    if (choice2 == 0) {
+                        //yes option
+                        deleteCourse();
+                        JOptionPane.showMessageDialog(null, "Delete Successful");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Cancelled");
+                    }
+
+                }
+
+            }
         }
         );
 
@@ -705,9 +675,6 @@ public class Client extends JFrame {
 
     public void chosenCourse() {
 
-//  
-//        String send = "chosen course";
-//         String chosenC = cbo4.getSelectedItem().toString();
         try {
             String chosenC = cbo4.getSelectedItem().toString();
             out.writeObject("chosen course");
@@ -729,88 +696,13 @@ public class Client extends JFrame {
 
             for (int i = 0; i < display.size(); i++) {
                 WorkerSubject workerSubject = display.get(i);
-                area.append(display.toString());
+
                 ArrayList<Object> arrCon = converter4(workerSubject);
                 Object[] arrConArray = arrCon.toArray();
                 tableModel.addRow(arrConArray);
                 System.out.println(Arrays.toString(arrConArray));
             }
-//            if (receivedMsg.equals("received")) {
-//                ArrayList<WorkerSubject> display = new ArrayList<>();
-//                String obj = (String) in.readObject();
-//                System.out.println(obj);
-//                // Assuming you have a method to convert a string to a WorkerSubject
-//                WorkerSubject workerSubject = convertStringToWorkerSubject(obj);
-//                display.add(workerSubject);
-//
-//                for (int i = 0; i < display.size(); i++) {
-//                    workerSubject = display.get(i);
-//                    area.append(display.toString());
-//                    ArrayList<Object> arrCon = converter4(workerSubject);
-//                    Object[] arrConArray = arrCon.toArray();
-//                    tableModel.addRow(arrConArray);
-//                    System.out.println(Arrays.toString(arrConArray));
-//                }
-//
-//            }
 
-//            if (receivedMsg.equals("received")) {
-//                ArrayList<WorkerSubject> display = new ArrayList<>();
-//                String obj = (String) in.readObject();
-//                WorkerSubject workerSubject = new WorkerSubject(obj);
-//                display.add(workerSubject);
-//
-//                for (int i = 0; i < display.size(); i++) {
-//                     workerSubject = display.get(i);
-//
-//                    ArrayList<Object> arrCon = converter4(workerSubject);
-//                    Object[] arrConArray = arrCon.toArray();
-//                    tableModel.addRow(arrConArray);
-//                    System.out.println(Arrays.toString(arrConArray));
-//                }
-//               
-//
-//            }
-//                
-//                for (int i = 0; i < display.size(); i++) {
-//                    WorkerSubject workerSubject = display.get(i);
-//                    ArrayList<Object> arrCon = converter4(workerSubject);
-//                    Object[] arrConArray = arrCon.toArray();
-//                    tableModel.addRow(arrConArray);
-//                    System.out.println(arrConArray);
-//                }
-            //  }
-// Read the response
-//            String receivedMsg = (String) in.readObject();
-//            if (receivedMsg.equals("received")) {
-//                ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
-//                // Process the received data
-//                for (int i = 0; i < display.size(); i++) {
-//                    WorkerSubject workerSubject = display.get(i);
-//                    ArrayList<Object> arrCon = converter4(workerSubject);
-//                    Object[] arrConArray = arrCon.toArray();
-//                    tableModel.addRow(arrConArray);
-//                    System.out.println(arrConArray.toString());
-//                }
-//            }
-//
-//            out.writeObject(send);
-//            out.flush();
-//            out.writeObject(chosenC);
-//            out.flush();
-//
-////            
-//            ArrayList<WorkerSubject> display = (ArrayList<WorkerSubject>) in.readObject();
-//            for (int i = 0; i < display.size(); i++) {
-//                WorkerSubject workerSubject = display.get(i);
-//
-//                ArrayList<Object> arrCon = converter4(workerSubject);
-//                Object[] arrConArray = arrCon.toArray();
-//
-//                tableModel.addRow(arrConArray);
-//                System.out.println(arrConArray.toString());
-//
-//            }
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -1071,6 +963,8 @@ public class Client extends JFrame {
             System.out.println("Error in IO");
         } catch (ClassNotFoundException ex) {
             System.out.println("Error in ClassNotFound");
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Incorrect search , Please search for a valid student ID.");
         }
 
     }
@@ -1099,9 +993,11 @@ public class Client extends JFrame {
                 System.out.println(arrCon2Obj.toString());
             }
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("IOException");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ClassNotFoundException");
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, "Incorrect search , Please search for a valid course code.");
         }
 
     }
@@ -1134,29 +1030,6 @@ public class Client extends JFrame {
         }
     }
 
-//    public static void deleteStudent(String studentID) {
-//    try {
-//        out.writeObject("Delete Student");
-//        out.flush();
-//
-//        out.writeObject(studentID);
-//        out.flush();
-//
-//        String response = (String) in.readObject();
-//
-//        if (response.equalsIgnoreCase("success")) {
-//            JOptionPane.showMessageDialog(null, studentID + " has been deleted");
-//        } else {
-//            JOptionPane.showMessageDialog(null, studentID + " could not be deleted");
-//        }
-//    } catch (IOException ex) {
-//        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, "IO Exception", ex);
-//        // Handle or display an error message for the user.
-//    } catch (ClassNotFoundException ex) {
-//        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, "Class Not Found Exception", ex);
-//        // Handle or display an error message for the user.
-//    }
-//}
     public static void deleteStud() {
         try {
             out.writeObject("Delete Student");
@@ -1180,10 +1053,10 @@ public class Client extends JFrame {
     }
 
     public static void deleteCourse() {
-         try {
+        try {
             out.writeObject("Delete course");
             out.flush();
-            int courseIDDelete = Integer.parseInt(searchTxtStud.getText());
+            int courseIDDelete = Integer.parseInt(searchTxtCourse.getText());
             String received = (String) in.readObject();
             if (received.equalsIgnoreCase("request received")) {
                 out.writeObject(courseIDDelete);

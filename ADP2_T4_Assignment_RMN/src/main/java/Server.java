@@ -162,7 +162,7 @@ public class Server {
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")) {
                     out.writeObject("request received");
                     out.flush();
-                    int deleteCourse = (int) receivedObject; //course Code
+                    int deleteCourse = (int) in.readObject(); //course Code
                     try {
                         dao.deleteCourseFromDB(deleteCourse);
                         System.out.println(deleteCourse);
