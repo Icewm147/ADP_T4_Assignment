@@ -35,13 +35,13 @@ public class Client extends JFrame {
     private static JButton btnAddCourse, btnAddStud, btnSearchStud, btnSearchCourse, btnRetrieveStud, btnRetrieveCourse, btnAddSubject, btnStudDelete, btnCourseDelete;
     private static JTextField searchTxtStud, searchTxtCourse;
 
-    private static JButton btnViewEnrol, btnViewCourse, btnEnroll,btnDeregister;
+    private static JButton btnViewEnrol, btnViewCourse, btnEnroll, btnDeregister;
 
     private static JLabel courseDes, courseCode, paneHeading, panelHeading2, space1, space2, space3, space6, space7;
     private static JTextField courseDesTxt, courseCodeTxt;
 
     private static JLabel studId, studName, studLastName, paneHeading2, paneHeading3, space0, space4, space5, space8, iD;
-    private static JTextField studIdTxt, studNameTxt, studLastNameTxt, IdTxt;
+    private static JTextField studIdTxt, studNameTxt, studLastNameTxt, IdTxt, deregisterTxt;
 
     private static DefaultTableModel tableModel;
     private static JTable table;
@@ -164,6 +164,8 @@ public class Client extends JFrame {
         iD.setFont(font2);
         IdTxt = new JTextField(12);
         IdTxt.setFont(font4);
+
+        deregisterTxt = new JTextField(20);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -495,7 +497,7 @@ public class Client extends JFrame {
                 if (e.getSource() == btnAddStud) {
 
                     panelW.setVisible(true);
-                    int result = JOptionPane.showOptionDialog(null, panelW,
+                    int result = JOptionPane.showOptionDialog(null, deregisterTxt,
                             "Add a Student",
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Add", "Cancel"}, "Yes");
@@ -654,46 +656,68 @@ public class Client extends JFrame {
 
         }
         );
-        
-         btnDeregister.addActionListener(new ActionListener() {
+
+        btnDeregister.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnDeregister) {
-               
-                    int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to deregister from your course?", "Deregistration", JOptionPane.WARNING_MESSAGE);
-                    if (choice == 0) {
-                      
-                        
-                        JOptionPane.showMessageDialog(null, "Successfully deregistered");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Cancelled");
-                    }
-                    
-                    
-                    //deregisterStud();
-                    
-                    
-                }
 
+                    int result = JOptionPane.showOptionDialog(null, deregisterTxt,
+                            "Deregister",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                            new String[]{"Deregister", "Cancel"}, "Yes");
+                    if (result == JOptionPane.YES_OPTION) {
+                        if (studIdTxt.getText().isEmpty() || studNameTxt.getText().isEmpty() || studLastNameTxt.getText().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Please enter a valid Student ID.");
+
+                            return;
+                        }
+
+                        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to deregister from your course?", "Deregistration", JOptionPane.WARNING_MESSAGE);
+                        if (choice == 0) {
+
+                            JOptionPane.showMessageDialog(null, "Successfully deregistered");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cancelled");
+                        }
+
+                        //deregisterStud();
+                    }
+
+                }
             }
 
         }
         );
 
     }
-    
-    
-    
-    //-------------------------------------------------Methods
 
-    
-    public void deregisterStud(){
-        
+    //-------------------------------------------------Methods
+    public void deregisterStud() {
+        String id = deregisterTxt.getText();
+        try {
+            out.writeObject("deregister");
+            out.flush();
+
+            String receivedMsg = (String) in.readObject();
+            if (receivedMsg.equalsIgnoreCase("request received")) {
+                System.out.println(id);
+                out.writeObject(id);
+                out.flush();
+            }
+            String receivedMsg2 = (String) in.readObject();
+            if (receivedMsg2.equalsIgnoreCase("success")) {
+                JOptionPane.showMessageDialog(null, "You have successfully been deregistered.");
+
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    
-    
-    
+
     public void enrolStud() {
 
         int id = Integer.parseInt(IdTxt.getText());
