@@ -232,13 +232,12 @@ public class DAO {
         statement.executeUpdate();
     }
     
-    public void deregisterStudent(int StudID, String courseCode) throws SQLException{
-        String query = "DELETE FROM Student_Course WHERE Stud_ID = ? AND Course_Code = ?";
+    public void deregisterStudent(int StudID) throws SQLException{
+        String query = "DELETE FROM Student_Course WHERE Stud_ID = ? ";
         
         PreparedStatement statement = connectToDB().prepareStatement(query);
         
         statement.setInt(1, StudID);
-        statement.setString(2, courseCode);
         
         statement.executeUpdate();
     }

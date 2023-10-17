@@ -427,6 +427,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnViewEnrol) {
+                    IdTxt.setText("");
                     btnViewCourse.setEnabled(false);
                     panelO.setVisible(true);
                     btnEnroll.setVisible(true);
@@ -618,6 +619,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnViewCourse) {
+                    
                     btnViewCourse.setBackground(Color.GREEN);
                     panelO.setVisible(false);
                     retrieveAvailableCourse();
@@ -643,6 +645,7 @@ public class Client extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == btnEnroll) {
+                    
                     enrolStud();
 
                     panelStud.setVisible(true);
@@ -667,7 +670,7 @@ public class Client extends JFrame {
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                             new String[]{"Deregister", "Cancel"}, "Yes");
                     if (result == JOptionPane.YES_OPTION) {
-                        if (studIdTxt.getText().isEmpty() || studNameTxt.getText().isEmpty() || studLastNameTxt.getText().isEmpty()) {
+                        if (deregisterTxt.getText().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Please enter a valid Student ID.");
 
                             return;
@@ -675,8 +678,10 @@ public class Client extends JFrame {
 
                         int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to deregister from your course?", "Deregistration", JOptionPane.WARNING_MESSAGE);
                         if (choice == 0) {
-
-                            JOptionPane.showMessageDialog(null, "Successfully deregistered");
+                            deregisterStud();
+                            System.out.println("successfully deregistered");
+                            btnViewEnrol.setEnabled(true);
+                            btnDeregister.setVisible(false);
                         } else {
                             JOptionPane.showMessageDialog(null, "Cancelled");
                         }
@@ -694,7 +699,7 @@ public class Client extends JFrame {
 
     //-------------------------------------------------Methods
     public void deregisterStud() {
-        String id = deregisterTxt.getText();
+        int id =Integer.parseInt( deregisterTxt.getText());
         try {
             out.writeObject("deregister");
             out.flush();

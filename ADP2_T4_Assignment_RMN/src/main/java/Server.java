@@ -116,7 +116,19 @@ public class Server {
                     out.writeObject("success");
                     out.flush();
                     
-                } //retrieve all courses DONE
+                }
+                //deregister
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("deregister")) {
+                    out.writeObject("request received");
+                    out.flush();
+                    int studID = (Integer) in.readObject();                    
+                    dao.deregisterStudent(studID);                 
+                    out.writeObject("success");
+                    out.flush();
+                    System.out.println(studID);
+                    
+                }
+                //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
                         ArrayList<WorkerCourse> courseList = (ArrayList) dao.getCourseInfo();
