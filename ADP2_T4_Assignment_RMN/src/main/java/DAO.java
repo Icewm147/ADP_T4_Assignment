@@ -37,7 +37,7 @@ public class DAO {
     }
 
     public void deleteStudent(int studentNumber) throws SQLException {
-        String query = "DELETE FROM Students WHERE Stud_ID = ?"; //<<----------should work now
+        String query = "DELETE FROM Student_Table WHERE Stud_ID = ?"; //<<----------should work now
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         statement.setInt(1, studentNumber);

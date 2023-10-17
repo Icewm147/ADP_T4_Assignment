@@ -160,22 +160,28 @@ public class Server {
 //                    out.flush();
                 } //delete course
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")) {
-                    int deleteCourse = (int) receivedObject;
+                    out.writeObject("request received");
+                    out.flush();
+                    int deleteCourse = (int) receivedObject; //course Code
                     try {
                         dao.deleteCourseFromDB(deleteCourse);
-                        out.writeObject("course deleted");
-                        out.flush();
+                        System.out.println(deleteCourse);
+//                        out.writeObject("success");
+//                        out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
                 } //Delete student
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete student")) {
-                    int delStudent = (int) receivedObject;
+                    out.writeObject("request received");
+                    out.flush();
+                    int delStudent = (int) in.readObject();//Student Number as int
                     try {
                         dao.deleteStudent(delStudent);
-                        out.writeObject("student deleted");
-                        out.flush();
+                        System.out.println(delStudent);
+//                        out.writeObject("success");
+//                        out.flush();
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }

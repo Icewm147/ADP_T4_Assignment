@@ -540,6 +540,21 @@ public class Client extends JFrame {
             public void actionPerformed(ActionEvent e
             ) {
                 if (e.getSource() == btnDelete) {
+                    
+                    //working code
+//                    if(searchTxtStud.getText().isEmpty()){
+//                        JOptionPane.showMessageDialog(null, "Please enter a name in the searchbox");
+//                    }
+//                    int choice  = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete " + searchTxtStud.getText());
+//                    if(choice == 0 ){
+//                        //yes option
+//                        deleteStud();
+//                        JOptionPane.showMessageDialog(null,"Delete Successful");
+//                    }else{
+//                      JOptionPane.showMessageDialog(null,"Cancelled");
+//                    }
+//*---------------------------------------------
+
                     int result = JOptionPane.showOptionDialog(null, "Choose which catagory that you would like to delete from. ",
                             "Add a Course",
                             JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null,
@@ -586,6 +601,8 @@ public class Client extends JFrame {
                 }
             }
 
+                
+            
         }
         );
 
@@ -687,7 +704,7 @@ public class Client extends JFrame {
     }
 
     public void chosenCourse() {
-            
+
 //  
 //        String send = "chosen course";
 //         String chosenC = cbo4.getSelectedItem().toString();
@@ -1117,14 +1134,71 @@ public class Client extends JFrame {
         }
     }
 
+//    public static void deleteStudent(String studentID) {
+//    try {
+//        out.writeObject("Delete Student");
+//        out.flush();
+//
+//        out.writeObject(studentID);
+//        out.flush();
+//
+//        String response = (String) in.readObject();
+//
+//        if (response.equalsIgnoreCase("success")) {
+//            JOptionPane.showMessageDialog(null, studentID + " has been deleted");
+//        } else {
+//            JOptionPane.showMessageDialog(null, studentID + " could not be deleted");
+//        }
+//    } catch (IOException ex) {
+//        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, "IO Exception", ex);
+//        // Handle or display an error message for the user.
+//    } catch (ClassNotFoundException ex) {
+//        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, "Class Not Found Exception", ex);
+//        // Handle or display an error message for the user.
+//    }
+//}
     public static void deleteStud() {
-//        String combo = cbo1.getSelectedItem().toString();
-//        textArea.append(combo);
+        try {
+            out.writeObject("Delete Student");
+            out.flush();
+            int studIDDelete = Integer.parseInt(searchTxtStud.getText());
+            String received = (String) in.readObject();
+            if (received.equalsIgnoreCase("request received")) {
+                out.writeObject(studIDDelete);
+                out.flush();
+            } else {
+                JOptionPane.showMessageDialog(null, " Your request was not received");
+
+            }
+//            
+//            textArea.append(combo);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void deleteCourse() {
-        String combo = cbo2.getSelectedItem().toString();
-        textArea1.append(combo);
+         try {
+            out.writeObject("Delete course");
+            out.flush();
+            int courseIDDelete = Integer.parseInt(searchTxtStud.getText());
+            String received = (String) in.readObject();
+            if (received.equalsIgnoreCase("request received")) {
+                out.writeObject(courseIDDelete);
+                out.flush();
+            } else {
+                JOptionPane.showMessageDialog(null, " Your request was not received");
+
+            }
+//            
+//            textArea.append(combo);
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private static void clearTable() {
