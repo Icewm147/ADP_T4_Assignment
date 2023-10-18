@@ -71,16 +71,15 @@ public class DAO {
     //getting all information on Subjects
     public List<WorkerSubject> getAllSubjects() throws SQLException {
         List<WorkerSubject> students = new ArrayList<>();
-        String query = "SELECT * FROM Subject_Table ";//<<-------DOUBLE CHECK THAT Studetn_Subject IS NOT ALL CAPS!!!!!!!!!!
+        String query = "SELECT * FROM Subject_Table ";
 
         PreparedStatement statement = connectToDB().prepareStatement(query);
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            String studentNumber = result.getString("Subject_ID");   //<<------------ENTER CORRECT INFO FROM DB AND GETTERS AND SETTERS FOR STUDENTS
+            String studentNumber = result.getString("Subject_ID");
             String name = result.getString("Subject_Name");
             String course = result.getString("Course_Code");
-            //WorkerStudent student = new WorkerStudent(studentNumber, name, course); <------Delete after testing if not needed
             students.add(new WorkerSubject(studentNumber, name, course));
         }
         return students;
