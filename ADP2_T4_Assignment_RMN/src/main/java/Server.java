@@ -47,24 +47,11 @@ public class Server {
         }
     }
 
-    /*in process client,
-    ----Authenticate user login
-    (Under admin)
-    ----add student       Working
-    ----retrieve all student 
-    ----search student    
-    ----add course        Working
-    ----retrieve all course
-    (Under Student)
-    search course
-    *Enroll for course?
-    //(accept enrollment requests from client(students), storing enrollment data in the Derby DB, Retrieving enrollment data from the DB, Authentication of admin and student users)
-     */
     //added code up above
     public void processClient() {
         while (true) {
             try {
-                //test
+
                 receivedObject = in.readObject();
 
                 if (receivedObject instanceof WorkerLogin) {
@@ -112,18 +99,18 @@ public class Server {
                     out.flush();
                     try {
                         boolean receive = (boolean) in.readObject();
-                        if(receive == true){
-                        ArrayList<WorkerStudent> studentCourseList = (ArrayList) dao.studentsPerCourse();
-                        Object obj = studentCourseList;
-                        System.out.println(studentCourseList.toString());
-                        out.writeObject(obj);
-                        System.out.println("moo" + obj);
-                        out.flush();
-                        }else{
+                        if (receive == true) {
+                            ArrayList<WorkerStudent> studentCourseList = (ArrayList) dao.studentsPerCourse();
+                            Object obj = studentCourseList;
+                            System.out.println(studentCourseList.toString());
+                            out.writeObject(obj);
+                            System.out.println("moo" + obj);
+                            out.flush();
+                        } else {
                             System.out.println("False vibes");
                         }
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot retrieve enrolled students");
                     }
 
                 } //enrol student
@@ -155,7 +142,7 @@ public class Server {
                         out.writeObject(obj);
                         out.flush();
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot retrieve all courses");
                     }
 
                 } //retrieve Available courses DONE
@@ -167,7 +154,7 @@ public class Server {
                         out.writeObject(obj);
                         out.flush();
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot retrieve available courses");
                     }
                 } //add subject to subject_table done               
                 //populate combobox for enrol DONE
@@ -182,7 +169,8 @@ public class Server {
                         System.out.println("Error populating");
                     }
 
-                } else if (receivedObject instanceof WorkerCourse) {
+                } //add course to db
+                else if (receivedObject instanceof WorkerCourse) {
                     WorkerCourse course = (WorkerCourse) receivedObject;
                     try {
                         dao.addCourseToDB(course);
@@ -193,8 +181,7 @@ public class Server {
                         out.writeObject("failed");
                         out.flush();
                     }
-//                    out.writeObject("Course Added successfully");
-//                    out.flush();
+
                 } //delete course
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete course")) {
                     out.writeObject("request received");
@@ -213,19 +200,20 @@ public class Server {
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Delete student")) {
                     out.writeObject("request received");
                     out.flush();
-                    int delStudent = (int) in.readObject();//Student Number as int
+                    int delStudent = (int) in.readObject();
                     try {
                         dao.deleteStudent(delStudent);
                         System.out.println(delStudent);
-//                        out.writeObject("success");
-//                        out.flush();
+
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot delete student");
                     }
 
-                } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
+                } //exit program
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Exit")) {
                     closeConnection();
                     break;
+                    //disply chosen course
                 } else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("chosen course")) {
                     try {
                         String rec = (String) receivedObject;
@@ -246,7 +234,7 @@ public class Server {
                         out.flush();
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot display chosen course");
                     }
                 } //search course
                 else if (receivedObject instanceof String) {
@@ -267,17 +255,15 @@ public class Server {
                         out.flush();
                         System.out.println("Course search" + searchC);
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot search course");
                     }
 
                 } //search student
                 else if (receivedObject instanceof Integer) {
 
                     List<WorkerStudent> searched = new ArrayList<>();
-                    //List<WorkerCourse> searchC = new ArrayList<>();
                     try {
                         List<WorkerStudent> searchStudent = dao.getStudentInfo();
-                        //   List<WorkerCourse> searchCourse = dao.getAllCourses();
                         int search = (Integer) receivedObject;
                         for (WorkerStudent student : searchStudent) {
                             if (student.getStuduntID() == search) {
@@ -290,7 +276,7 @@ public class Server {
                         }
 
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot search student");
                     }
                 } else if (receivedObject instanceof WorkerSubject) {
                     WorkerSubject subject = (WorkerSubject) receivedObject;
@@ -306,17 +292,17 @@ public class Server {
                         out.writeObject("Success");
                         out.flush();
                     } catch (SQLException ex) {
-                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("cannot add subjects");
                     }
 
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: " + ex);
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: " + ex);
             } catch (SQLException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error: " + ex);
             }
 
         }
