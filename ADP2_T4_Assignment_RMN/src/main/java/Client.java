@@ -166,10 +166,10 @@ public class Client extends JFrame {
         btnDeregister.setFont(font4);
         iD = new JLabel("Enter Studnt ID: ");
         iD.setFont(font2);
-        IdTxt = new JTextField(12);
+        IdTxt = new JTextField(9);
         IdTxt.setFont(font4);
 
-        deregisterTxt = new JTextField(20);
+        deregisterTxt = new JTextField(9);
 
         //----------------------------------------------------- JOptionPane
         courseDes = new JLabel("Course Description: ");
@@ -372,21 +372,6 @@ public class Client extends JFrame {
         String combo = cbo1.getSelectedItem().toString();
         textArea.setText(combo);
 
-        //-------------------------------------------ActionListeners
-//        searchTxt.addFocusListener(new FocusListener(){
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//                searchTxt.setText("");
-//                
-//            }
-//
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//              searchTxt.setText("Search by Student ID");
-//              
-//            }
-//
-//        });
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -476,15 +461,6 @@ public class Client extends JFrame {
                         courseCodeTxt.setText("");
                         courseDesTxt.setText("");
                         courseCodeTxt.requestFocus();
-//                        int result2 = JOptionPane.showOptionDialog(null, panelK,
-//                                "Add a Subject",
-//                                JOptionPane.YES_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-//                                new String[]{"save"}, "Yes");
-//
-//                        if (result2 == JOptionPane.YES_OPTION) {
-//                            AddSubject();
-//
-//                        }
                     }
                 }
             }
@@ -708,10 +684,17 @@ public class Client extends JFrame {
         checkBox1.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(checkBox1.isSelected()){
-                   showEnrolledStud(); 
-                }else{
+                if (checkBox1.isSelected()) {
+                    showEnrolledStud();
+                    searchTxtStud.setVisible(false);
+                    btnSearchStud.setVisible(false);
+                    btnStudDelete.setVisible(false);
+
+                } else {
                     retrieveStud();
+                    searchTxtStud.setVisible(true);
+                    btnSearchStud.setVisible(true);
+                    btnStudDelete.setVisible(true);
                     System.out.println("Not selected");
                 }
             }
@@ -735,7 +718,7 @@ public class Client extends JFrame {
                 out.writeObject(enroll);
                 out.flush();
             }
-            
+
             ArrayList<WorkerStudent> display = (ArrayList<WorkerStudent>) in.readObject();
             for (int i = 0; i < display.size(); i++) {
                 WorkerStudent workerStudent = display.get(i);
@@ -746,11 +729,6 @@ public class Client extends JFrame {
                 tableModel.addRow(arrConArray);
 
             }
-            
-            
-            
-            
-            
 
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -789,17 +767,20 @@ public class Client extends JFrame {
 
         int id = Integer.parseInt(IdTxt.getText());
         String course = (String) cbo4.getSelectedItem();
-
+        
         try {
             out.writeObject("Enrolled");
             out.flush();
 
             String receivedMsg = (String) in.readObject();
             if (receivedMsg.equalsIgnoreCase("request received")) {
+
                 WorkerStudent worker = new WorkerStudent(id, course);
                 System.out.println(worker);
                 out.writeObject(worker);
                 out.flush();
+
+               
             }
             String receivedMsg2 = (String) in.readObject();
             if (receivedMsg2.equalsIgnoreCase("success")) {
@@ -825,9 +806,9 @@ public class Client extends JFrame {
 
         } catch (IOException ex) {
             System.out.println("IOException" + ex.getMessage());
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException" + ex.getMessage());
-        } catch (NumberFormatException ex) {
+        } catch (ClassNotFoundException cnf) {
+            System.out.println("ClassNotFoundException" + cnf.getMessage());
+        } catch (NumberFormatException nf) {
             JOptionPane.showMessageDialog(null, "Please enter a valid Student ID.");
 
         }
@@ -1279,9 +1260,8 @@ public class Client extends JFrame {
         arrConvert.add(workerSubject.getCourseID());
         return arrConvert;
     }
-    
-    
-     public static ArrayList<Object> converter5(WorkerStudent workerStudent) {
+
+    public static ArrayList<Object> converter5(WorkerStudent workerStudent) {
         ArrayList<Object> arrConvert = new ArrayList<>();
         arrConvert.add(workerStudent.getStuduntID());
         arrConvert.add(workerStudent.getCourseCode());
