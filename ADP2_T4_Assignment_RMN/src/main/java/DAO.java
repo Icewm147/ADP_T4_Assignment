@@ -133,7 +133,7 @@ public class DAO {
 //    }
     
     public List<WorkerStudent> studentsPerCourse() throws SQLException {
-    String query = "SELECT stud_id, course_id FROM Student_Course";
+    String query = "SELECT stud_id, course_code FROM Student_Course";
     
     List<WorkerStudent> students = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class DAO {
 
     while (results.next()) {
         int studentId = results.getInt("Stud_ID");
-        String courseId = results.getString("Course_ID");
+        String courseId = results.getString("Course_Code");
 
         WorkerStudent ws = new WorkerStudent();
         ws.setStuduntID(studentId);

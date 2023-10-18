@@ -106,29 +106,47 @@ public class Server {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
+                } //student_Course table
+                else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve student_course")) {
+                    out.writeObject("request received");
+                    out.flush();
+                    try {
+                        boolean receive = (boolean) in.readObject();
+                        if(receive == true){
+                        ArrayList<WorkerStudent> studentCourseList = (ArrayList) dao.studentsPerCourse();
+                        Object obj = studentCourseList;
+                        System.out.println(studentCourseList.toString());
+                        out.writeObject(obj);
+                        System.out.println("moo" + obj);
+                        out.flush();
+                        }else{
+                            System.out.println("False vibes");
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                 } //enrol student
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("Enrolled")) {
                     out.writeObject("request received");
                     out.flush();
                     WorkerStudent studID = (WorkerStudent) in.readObject();
                     System.out.println("enrolled: " + studID);
-                    dao.enrollStudent(studID.getStuduntID(),studID.getCourseCode());
+                    dao.enrollStudent(studID.getStuduntID(), studID.getCourseCode());
                     out.writeObject("success");
                     out.flush();
-                    
-                }
-                //deregister
+
+                } //deregister
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("deregister")) {
                     out.writeObject("request received");
                     out.flush();
-                    int studID = (Integer) in.readObject();                    
-                    dao.deregisterStudent(studID);                 
+                    int studID = (Integer) in.readObject();
+                    dao.deregisterStudent(studID);
                     out.writeObject("success");
                     out.flush();
                     System.out.println(studID);
-                    
-                }
-                //retrieve all courses DONE
+
+                } //retrieve all courses DONE
                 else if (receivedObject instanceof String && ((String) receivedObject).equalsIgnoreCase("retrieve all courses")) {
                     try {
                         ArrayList<WorkerCourse> courseList = (ArrayList) dao.getCourseInfo();
@@ -230,7 +248,7 @@ public class Server {
                     } catch (SQLException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }  //search course
+                } //search course
                 else if (receivedObject instanceof String) {
                     String search = (String) receivedObject;
                     List<WorkerCourse> searchC = new ArrayList<>();

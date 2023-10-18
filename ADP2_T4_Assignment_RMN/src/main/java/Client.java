@@ -705,13 +705,18 @@ public class Client extends JFrame {
         }
         );
 
-//        checkBox1.addItemListener(new ItemListener() {
-//            @Override
-//            public void itemStateChanged(ItemEvent e) {
-//                
-//            }
-//
-//        });
+        checkBox1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(checkBox1.isSelected()){
+                   showEnrolledStud(); 
+                }else{
+                    retrieveStud();
+                    System.out.println("Not selected");
+                }
+            }
+
+        });
     }
 
     //-------------------------------------------------Methods
